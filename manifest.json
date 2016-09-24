@@ -9,8 +9,8 @@
   "content_scripts": [
     {
       "matches": [
-        "http://twitter.com/mentions",
-        "https://twitter.com/mentions"
+        "http://twitter.com/*",
+        "https://twitter.com/*"
       ],
       "js": ["background.js"]
     }
