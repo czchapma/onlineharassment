@@ -8,7 +8,7 @@
             "128": "icon.png" },
   "content_scripts": [
     {
-      "matches": ["http://twitter.com/*", "https://twitter.com/*"],
+      "matches": ["http://twitter.com/notifications/*", "https://twitter.com/notifications/*"],
       "js": ["stop_harassment.js"]
     }
   ],
