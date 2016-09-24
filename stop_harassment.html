@@ -8,9 +8,13 @@
   <head>
     <title>Getting Started Extension's Popup</title>
     <style>
+      html {
+        width: 300px;
+      }
       body {
         font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
         font-size: 100%;
+        width: 300px
       }
       #status {
         /* avoid an excessively wide status text */
@@ -91,16 +95,20 @@
     <img src="icon.png" width="75px"/>
     <p>Stop Harassment</p>
     <div id="status"></div>
+    <div class"filters">
     <label>Filters On</label>
     <label class="switch">
       <input type="checkbox">
       <div class="slider round"></div>
     </label>
-    <form>
-      <input type="radio" name="filter" value="hide_tweets" checked>Hide Tweets<br>
-      <input type="radio" name="filter" value="word_substitutes"> Word Substitutes<br>
-      <input type="radio" name="filter" value="other"> Other Cool Option<br>
-    </form>
+  </div>
+    <div class="radios">
+      <form>
+        <input type="radio" name="filter" value="hide_tweets" checked>Hide Tweets<br>
+        <input type="radio" name="filter" value="word_substitutes"> Word Substitutes<br>
+        <input type="radio" name="filter" value="other"> Other Cool Option<br>
+      </form>
+    </div>
     <button type="button">Word Settings</button>
   </body>
 </html>
