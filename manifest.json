@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
 
-  "name": "Getting started example",
+  "name": "Stop Harassment",
   "description": "This extension shows a Google Image search result for the current page",
   "icons": { "16": "icon.png",
              "48": "icon.png",
