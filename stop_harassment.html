@@ -88,13 +88,18 @@
   </head>
   <body>
     <img src="icon.png" width="75px"/>
-    <p> Ending Online Harassment</p>
+    <p>Stop Harassment</p>
     <div id="status"></div>
     <label>Filters On</label>
     <label class="switch">
       <input type="checkbox">
       <div class="slider round"></div>
     </label>
-    <button type="button">Settings</button>
+    <form>
+      <input type="radio" name="filter" value="hide_tweets" checked>Hide Tweets<br>
+      <input type="radio" name="filter" value="word_substitutes"> Word Substitutes<br>
+      <input type="radio" name="filter" value="other"> Other Cool Option<br>
+    </form>
+    <button type="button">Word Settings</button>
   </body>
 </html>
