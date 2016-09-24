@@ -8,8 +8,11 @@
             "128": "icon.png" },
   "content_scripts": [
     {
-      "matches": ["http://twitter.com/notifications/*", "https://twitter.com/notifications/*"],
-      "js": ["stop_harassment.js"]
+      "matches": [
+        "http://twitter.com/mentions",
+        "https://twitter.com/mentions"
+      ],
+      "js": ["background.js"]
     }
   ],
   "version": "1.0",
