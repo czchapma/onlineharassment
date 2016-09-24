@@ -9,12 +9,18 @@
     <title>Getting Started Extension's Popup</title>
     <style>
       html {
-        width: 300px;
+        width: 250px;
       }
       body {
         font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
         font-size: 100%;
-        width: 300px
+        width: 250px
+      }
+      .mini {
+        font-size: 60%;
+      }
+      .medium {
+        font-size: 75%;
       }
       #status {
         /* avoid an excessively wide status text */
@@ -30,10 +36,8 @@
         height: 17px;
       }
 
-      /* Hide default HTML checkbox */
       .switch input {display:none;}
 
-      /* The slider */
       .slider {
         position: absolute;
         cursor: pointer;
@@ -100,8 +104,9 @@
       <input type="checkbox">
       <div class="slider round"></div>
     </label>
+    <div class="mini">Application is enabled</div>
   </div>
-    <div class="radios">
+    <div class="medium">
       <form>
         <input type="radio" name="filter" value="hide_tweets" checked>Hide Tweets<br>
         <input type="radio" name="filter" value="word_substitutes"> Word Substitutes<br>
