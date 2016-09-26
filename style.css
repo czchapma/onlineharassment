@@ -6,6 +6,13 @@ body {
   font-size: 100%;
   width: 200px
 }
+/*.filters-status {
+  display: inline;
+}*/
+.radios {
+  padding: 10px;
+}
+
 .mini {
   font-size: 60%;
 }

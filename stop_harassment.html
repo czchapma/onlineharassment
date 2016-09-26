@@ -7,6 +7,7 @@
 <html>
   <head>
     <title>Getting Started Extension's Popup</title>
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="style.css">
 
     <!--
@@ -21,7 +22,7 @@
     <img src="icon.png" width="75px"/>
     <h3>Stop Harassment</h3>
 
-    <div class"filters">
+    <div class"filters-status">
       <label>Filters On</label>
       <label class="switch">
         <input type="checkbox">
@@ -29,14 +30,15 @@
       </label>
       <div class="mini">Application is enabled</div>
     </div>
-    <br>
-    <div class="medium">
+    <div class="medium radios">
       <form>
         <input type="radio" name="filter" value="hide_tweets" checked>Hide Tweets<br>
         <input type="radio" name="filter" value="word_substitutes"> Word Substitutes<br>
         <input type="radio" name="filter" value="other"> Other Cool Option<br>
       </form>
     </div>
-    <button type="button">Word Settings</button>
+    <div>
+      <button type="button"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;&nbsp;Word Settings</button>
+    </div>
   </body>
 </html>
