@@ -1,0 +1,19 @@
+{
+  "name": "onlineharassment",
+  "version": "1.0.0",
+  "description": "Ending online harassment",
+  "main": "client.jsx",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/czchapma/onlineharassment.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/czchapma/onlineharassment/issues"
+  },
+  "homepage": "https://github.com/czchapma/onlineharassment#readme"
+}
