@@ -21,9 +21,10 @@ module.exports = {
     loaders: [
       {
         test: /\.(jsx|js)?$/,
-        loader: 'babel',
-        exclude: /(node_modules)/,
-        include: path.join(__dirname, 'src'),
+        loader: 'babel-loader',
+        exclude: /node_modules/,
+        //this is causing errors in webpack
+        // include: path.join(__dirname, 'src'),
         query: {
           presets: ['es2015', 'react']
         }
