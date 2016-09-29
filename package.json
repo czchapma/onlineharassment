@@ -15,5 +15,13 @@
   "bugs": {
     "url": "https://github.com/czchapma/onlineharassment/issues"
   },
-  "homepage": "https://github.com/czchapma/onlineharassment#readme"
+  "homepage": "https://github.com/czchapma/onlineharassment#readme",
+  "dependencies": {
+    "babel-core": "^6.14.0",
+    "babel-loader": "^6.2.5",
+    "babel-preset-react": "^6.11.1",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "webpack": "^1.13.2"
+  }
 }
