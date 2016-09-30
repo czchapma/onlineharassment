@@ -2,7 +2,7 @@
   "manifest_version": 2,
 
   "name": "Stop Harassment",
-  "description": "This extension shows a Google Image search result for the current page",
+  "description": "This extension is to filter out hateful comments",
   "icons": { "16": "icon.png",
              "48": "icon.png",
             "128": "icon.png" },

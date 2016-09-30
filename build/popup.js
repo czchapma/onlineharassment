@@ -53,6 +53,10 @@
 
 	'use strict';
 
+	var _react = __webpack_require__(168);
+
+	var _react2 = _interopRequireDefault(_react);
+
 	var _reactDom = __webpack_require__(2);
 
 	var _main = __webpack_require__(167);
@@ -61,8 +65,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	// import React from 'react';
-	(0, _reactDom.render)(React.createElement(_main2.default, null), document.getElementById('content'));
+	(0, _reactDom.render)(_react2.default.createElement(_main2.default, null), document.getElementById('content'));
 
 /***/ },
 /* 2 */

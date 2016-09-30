@@ -18,7 +18,7 @@ The problem is the harassing content, not the users, so the solution needs to li
 * Extensive settings for users (see UX in presentation) allowing the user to add additional words, whitelist users, and show hidden tweets
 * Firefox and Safari extensions
 * Hide harassing images
-* Solution for Mobile 
+* Solution for Mobile
 
 ## Project History
 This project began at the Lesbians Who Tech Social Good Hackathon on 9/24/16.
@@ -28,5 +28,5 @@ This project began at the Lesbians Who Tech Social Good Hackathon on 9/24/16.
 * Taylor Banning (Data Analysis)
 * Bejal Lewis (Parsing twitter and removing harassing content, Javascript)
 * Bradley Dettmer (Parsing twitter and removing harassing content, Javascript)
-* Christine Lio (Chrome Extension UI, HTML/CSS)
+* Christine Liao (Chrome Extension UI, HTML/CSS)
 * Christine Chapman (Project Management / Uplift Representative)
