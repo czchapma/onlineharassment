@@ -4,6 +4,6 @@ import {render} from 'react-dom';
 import App from './components/main';
 
 render(
-  <div>Testing</div>,
+  <App />,
   document.getElementById('content')
 );

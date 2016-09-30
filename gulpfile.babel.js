@@ -5,7 +5,7 @@ import rimraf from 'rimraf';
 
 const plugins = loadPlugins();
 
-import popupWebpackConfig from './webpack.config';
+import popupWebpackConfig from './popup/webpack.config';
 // import eventWebpackConfig from './event/webpack.config';
 // import contentWebpackConfig from './content/webpack.config';
 
@@ -40,7 +40,7 @@ gulp.task('popup-js', ['clean'], (cb) => {
 // });
 
 gulp.task('popup-html', ['clean'], () => {
-  return gulp.src('popup/src/index.html')
+  return gulp.src('popup/source/index.html')
     .pipe(plugins.rename('popup.html'))
     .pipe(gulp.dest('./build'))
 });
