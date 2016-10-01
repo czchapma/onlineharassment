@@ -10,6 +10,8 @@ const proxyStore = new Store({
   portName: 'STOP_HARASSMENT'
 });
 
+window.Store = proxyStore;
+
 render(
   <Provider store={proxyStore}>
     <App />

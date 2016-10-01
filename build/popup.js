@@ -73,6 +73,8 @@
 	  portName: 'STOP_HARASSMENT'
 	});
 
+	window.Store = proxyStore;
+
 	(0, _reactDom.render)(_react2.default.createElement(
 	  _reactRedux.Provider,
 	  { store: proxyStore },
@@ -21488,7 +21490,10 @@
 	      console.log('component mounted');
 	      document.addEventListener('click', function () {
 	        console.log('before', _this2.props.filter_on);
-	        console.log(_this2.props.toggleFilter);
+	        console.log(_this2.props);
+	        _this2.props.dispatch({
+	          type: 'TOGGLE'
+	        });
 	        console.log('after', _this2.props.filter_on);
 	      });
 	    }
@@ -21522,15 +21527,11 @@
 	  };
 	};
 
-	var mapDispatchtoProps = function mapDispatchtoProps(dispatch) {
-	  return {
-	    toggleFilter: function toggleFilter() {
-	      return dispatch({ type: 'TOGGLE' });
-	    }
-	  };
-	};
+	// const mapDispatchtoProps = dispatch => ({
+	//   toggleFilter: () => dispatch({type: 'TOGGLE'})
+	// })
 
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchtoProps)(App);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps)(App);
 
 /***/ },
 /* 174 */

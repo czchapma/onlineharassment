@@ -1163,9 +1163,10 @@
 	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { filter_on: true };
 	  var action = arguments[1];
 
+	  console.log('in filter reducer');
 	  switch (action.type) {
 	    case 'TOGGLE':
-	      return { filter_on: !state.filter_on };
+	      return !state.filter_on;
 	      break;
 	    default:
 	      return state;

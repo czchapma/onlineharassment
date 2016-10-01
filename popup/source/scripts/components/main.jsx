@@ -11,7 +11,10 @@ class App extends Component{
     console.log('component mounted');
     document.addEventListener('click', () => {
       console.log('before', this.props.filter_on);
-      console.log(this.props.toggleFilter);
+      console.log(this.props);
+      this.props.dispatch({
+        type: 'TOGGLE'
+      });
       console.log('after', this.props.filter_on);
    });
   }
@@ -26,15 +29,16 @@ class App extends Component{
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => {
+  return {
     filter_on: state.filter_on
-})
+  };
+};
 
-const mapDispatchtoProps = dispatch => ({
-  toggleFilter: () => dispatch({type: 'TOGGLE'})
-})
+// const mapDispatchtoProps = dispatch => ({
+//   toggleFilter: () => dispatch({type: 'TOGGLE'})
+// })
 
 export default connect(
-  mapStateToProps,
-  mapDispatchtoProps
+  mapStateToProps
   )(App);
