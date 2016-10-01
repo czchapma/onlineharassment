@@ -6,6 +6,12 @@
   "icons": { "16": "icon.png",
              "48": "icon.png",
             "128": "icon.png" },
+  "background": {
+    "scripts": [
+      "event.js"
+    ],
+    "persistent": true
+  },
   "content_scripts": [
     {
       "matches": [
