@@ -21401,6 +21401,12 @@
 	          'h1',
 	          null,
 	          'Stop Harassment'
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          'Filter is ',
+	          this.props.filter_status
 	        )
 	      );
 	    }
@@ -21411,7 +21417,7 @@
 
 	var mapStateToProps = function mapStateToProps(state) {
 	  return {
-	    filter_status: state.filter_status
+	    filter_status: 'on'
 	  };
 	};
 

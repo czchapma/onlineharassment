@@ -11,14 +11,14 @@ class App extends Component{
     return (
       <div>
         <h1>Stop Harassment</h1>
-        
+        <p>Filter is {this.props.filter_status}</p>
       </div>
     )
   }
 }
 
 const mapStateToProps = state => ({
-    filter_status: state.filter_status
+    filter_status: 'on'
 })
 
 export default connect(mapStateToProps)(App);

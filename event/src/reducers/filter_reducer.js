@@ -7,7 +7,7 @@ const FilterReducer = function(state, action) {
       return 'off';
       break;
     default:
-      return state;
+      return 'on';
   }
 }
 
