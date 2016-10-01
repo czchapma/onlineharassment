@@ -1,10 +1,11 @@
 const FilterReducer = function(state = {filter_status: 'on'}, action) {
   switch(action.type){
-    case 'TURN_ON':
-      return 'on';
-      break;
-    case 'TURN_OFF':
-      return 'off';
+    case 'TOGGLE':
+      if (state.filter_status === 'on') {
+        return 'off'
+      } else {
+        return 'on'
+      }
       break;
     default:
       return state;

@@ -7,6 +7,14 @@ class App extends Component{
     super(props);
   }
 
+  componentDidMount(){
+    document.addEventListener('click', () => {
+     this.props.dispatch({
+       type: 'TOGGLE'
+     });
+   });
+  }
+
   render() {
     return (
       <div>
