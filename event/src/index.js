@@ -10,7 +10,10 @@ import {wrapStore} from 'react-chrome-redux';
   //words to filter: {}
 //}
 
-const store = createStore(RootReducer, { filter_status: 'off' });
+const store = createStore(
+  RootReducer,
+  { filter_status: 'on' }
+);
 
 wrapStore(store, {
   portName: 'STOP_HARASSMENT'

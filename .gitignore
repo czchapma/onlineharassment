@@ -1,5 +1,8 @@
 node_modules
 popup.js
+popup.html
+event.js
+
 
 .DS_Store
 

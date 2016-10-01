@@ -1,4 +1,4 @@
-const FilterReducer = function(state, action) {
+const FilterReducer = function(state = {filter_status: 'on'}, action) {
   switch(action.type){
     case 'TURN_ON':
       return 'on';
@@ -7,7 +7,7 @@ const FilterReducer = function(state, action) {
       return 'off';
       break;
     default:
-      return 'on';
+      return state;
   }
 }
 

@@ -70,7 +70,7 @@
 	//words to filter: {}
 	//}
 
-	var store = (0, _redux.createStore)(_root_reducer2.default, { filter_status: 'off' });
+	var store = (0, _redux.createStore)(_root_reducer2.default, { filter_status: 'on' });
 
 	(0, _reactChromeRedux.wrapStore)(store, {
 	  portName: 'STOP_HARASSMENT'
@@ -1158,7 +1158,10 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	var FilterReducer = function FilterReducer(state, action) {
+	var FilterReducer = function FilterReducer() {
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { filter_status: 'on' };
+	  var action = arguments[1];
+
 	  switch (action.type) {
 	    case 'TURN_ON':
 	      return 'on';
@@ -1167,7 +1170,7 @@
 	      return 'off';
 	      break;
 	    default:
-	      return 'on';
+	      return state;
 	  }
 	};
 
