@@ -1,12 +1,7 @@
-const FilterReducer = function(state = {filter_status: 'on'}, action) {
+const FilterReducer = function(state = {filter_on: true}, action) {
   switch(action.type){
     case 'TOGGLE':
-      console.log('toggle fired');
-      if (state.filter_status === 'on') {
-        return 'off'
-      } else {
-        return 'on'
-      }
+      return {filter_on: !state.filter_on};
       break;
     default:
       return state;

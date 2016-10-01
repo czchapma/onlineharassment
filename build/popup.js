@@ -21487,10 +21487,9 @@
 
 	      console.log('component mounted');
 	      document.addEventListener('click', function () {
-	        console.log('adding listener');
-	        _this2.props.dispatch({
-	          type: 'TOGGLE'
-	        });
+	        console.log('before', _this2.props.filter_on);
+	        console.log(_this2.props.toggleFilter);
+	        console.log('after', _this2.props.filter_on);
 	      });
 	    }
 	  }, {
@@ -21508,7 +21507,7 @@
 	          'p',
 	          null,
 	          'Filter is ',
-	          this.props.filter_status
+	          this.props.filter_on
 	        )
 	      );
 	    }
@@ -21519,11 +21518,19 @@
 
 	var mapStateToProps = function mapStateToProps(state) {
 	  return {
-	    filter_status: state.filter_status
+	    filter_on: state.filter_on
 	  };
 	};
 
-	exports.default = (0, _reactRedux.connect)(mapStateToProps)(App);
+	var mapDispatchtoProps = function mapDispatchtoProps(dispatch) {
+	  return {
+	    toggleFilter: function toggleFilter() {
+	      return dispatch({ type: 'TOGGLE' });
+	    }
+	  };
+	};
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchtoProps)(App);
 
 /***/ },
 /* 174 */

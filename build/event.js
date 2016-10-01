@@ -64,13 +64,14 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	//const defaultState = {
-	//filter_status: 'on' or off
+	//filter_on: 'on' or off
 	//filter_types: { #filters and on or off?}
 	//word settings...
 	//words to filter: {}
 	//}
 
-	var store = (0, _redux.createStore)(_root_reducer2.default, { filter_status: 'on' });
+	var store = (0, _redux.createStore)(_root_reducer2.default, { filter_on: true } //preloaded state
+	);
 
 	(0, _reactChromeRedux.wrapStore)(store, {
 	  portName: 'STOP_HARASSMENT'
@@ -1144,7 +1145,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var RootReducer = (0, _redux.combineReducers)({
-	  filter_status: _filter_reducer2.default
+	  filter_on: _filter_reducer2.default
 	});
 
 	exports.default = RootReducer;
@@ -1159,17 +1160,12 @@
 	  value: true
 	});
 	var FilterReducer = function FilterReducer() {
-	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { filter_status: 'on' };
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { filter_on: true };
 	  var action = arguments[1];
 
 	  switch (action.type) {
 	    case 'TOGGLE':
-	      console.log('toggle fired');
-	      if (state.filter_status === 'on') {
-	        return 'off';
-	      } else {
-	        return 'on';
-	      }
+	      return { filter_on: !state.filter_on };
 	      break;
 	    default:
 	      return state;
