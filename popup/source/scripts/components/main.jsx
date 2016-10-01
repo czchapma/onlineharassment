@@ -18,7 +18,7 @@ class App extends Component{
 }
 
 const mapStateToProps = state => ({
-    filter_status: 'on'
+    filter_status: state.filter_status
 })
 
 export default connect(mapStateToProps)(App);
