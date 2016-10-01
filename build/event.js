@@ -1163,11 +1163,13 @@
 	  var action = arguments[1];
 
 	  switch (action.type) {
-	    case 'TURN_ON':
-	      return 'on';
-	      break;
-	    case 'TURN_OFF':
-	      return 'off';
+	    case 'TOGGLE':
+	      console.log('toggle fired');
+	      if (state.filter_status === 'on') {
+	        return 'off';
+	      } else {
+	        return 'on';
+	      }
 	      break;
 	    default:
 	      return state;

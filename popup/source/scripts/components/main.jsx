@@ -8,7 +8,9 @@ class App extends Component{
   }
 
   componentDidMount(){
+    console.log('component mounted');
     document.addEventListener('click', () => {
+      console.log('adding listener');
      this.props.dispatch({
        type: 'TOGGLE'
      });
