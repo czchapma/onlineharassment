@@ -9,3 +9,5 @@ event.js
 /log/*
 !/log/.keep
 /tmp
+
+build/
