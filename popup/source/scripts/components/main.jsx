@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
+import ToggleSwitch from './toggle';
+
 function toggleFilter() {
   return ({
     type: 'TOGGLE_FILTER'
@@ -25,6 +27,7 @@ class App extends Component{
         <h1>Stop Harassment</h1>
         <h5>'Kind words can be short and easy to speak but their echoes are truly endless.' --Mother Theresa</h5>
         <h3>Word Filtering</h3>
+         <ToggleSwitch />
         <p>Application is {filter_status}</p>
       </div>
     )

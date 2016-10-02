@@ -63,7 +63,7 @@
 
 	var _main2 = _interopRequireDefault(_main);
 
-	var _reactChromeRedux = __webpack_require__(197);
+	var _reactChromeRedux = __webpack_require__(199);
 
 	var _reactRedux = __webpack_require__(174);
 
@@ -190,14 +190,103 @@
 /***/ function(module, exports) {
 
 	// shim for using process in browser
-
 	var process = module.exports = {};
+
+	// cached from whatever global is present so that test runners that stub it
+	// don't break things.  But we need to wrap it in a try catch in case it is
+	// wrapped in strict mode code which doesn't define any globals.  It's inside a
+	// function because try/catches deoptimize in certain engines.
+
+	var cachedSetTimeout;
+	var cachedClearTimeout;
+
+	function defaultSetTimout() {
+	    throw new Error('setTimeout has not been defined');
+	}
+	function defaultClearTimeout () {
+	    throw new Error('clearTimeout has not been defined');
+	}
+	(function () {
+	    try {
+	        if (typeof setTimeout === 'function') {
+	            cachedSetTimeout = setTimeout;
+	        } else {
+	            cachedSetTimeout = defaultSetTimout;
+	        }
+	    } catch (e) {
+	        cachedSetTimeout = defaultSetTimout;
+	    }
+	    try {
+	        if (typeof clearTimeout === 'function') {
+	            cachedClearTimeout = clearTimeout;
+	        } else {
+	            cachedClearTimeout = defaultClearTimeout;
+	        }
+	    } catch (e) {
+	        cachedClearTimeout = defaultClearTimeout;
+	    }
+	} ())
+	function runTimeout(fun) {
+	    if (cachedSetTimeout === setTimeout) {
+	        //normal enviroments in sane situations
+	        return setTimeout(fun, 0);
+	    }
+	    // if setTimeout wasn't available but was latter defined
+	    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+	        cachedSetTimeout = setTimeout;
+	        return setTimeout(fun, 0);
+	    }
+	    try {
+	        // when when somebody has screwed with setTimeout but no I.E. maddness
+	        return cachedSetTimeout(fun, 0);
+	    } catch(e){
+	        try {
+	            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+	            return cachedSetTimeout.call(null, fun, 0);
+	        } catch(e){
+	            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+	            return cachedSetTimeout.call(this, fun, 0);
+	        }
+	    }
+
+
+	}
+	function runClearTimeout(marker) {
+	    if (cachedClearTimeout === clearTimeout) {
+	        //normal enviroments in sane situations
+	        return clearTimeout(marker);
+	    }
+	    // if clearTimeout wasn't available but was latter defined
+	    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+	        cachedClearTimeout = clearTimeout;
+	        return clearTimeout(marker);
+	    }
+	    try {
+	        // when when somebody has screwed with setTimeout but no I.E. maddness
+	        return cachedClearTimeout(marker);
+	    } catch (e){
+	        try {
+	            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+	            return cachedClearTimeout.call(null, marker);
+	        } catch (e){
+	            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+	            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+	            return cachedClearTimeout.call(this, marker);
+	        }
+	    }
+
+
+
+	}
 	var queue = [];
 	var draining = false;
 	var currentQueue;
 	var queueIndex = -1;
 
 	function cleanUpNextTick() {
+	    if (!draining || !currentQueue) {
+	        return;
+	    }
 	    draining = false;
 	    if (currentQueue.length) {
 	        queue = currentQueue.concat(queue);
@@ -213,7 +302,7 @@
 	    if (draining) {
 	        return;
 	    }
-	    var timeout = setTimeout(cleanUpNextTick);
+	    var timeout = runTimeout(cleanUpNextTick);
 	    draining = true;
 
 	    var len = queue.length;
@@ -230,7 +319,7 @@
 	    }
 	    currentQueue = null;
 	    draining = false;
-	    clearTimeout(timeout);
+	    runClearTimeout(timeout);
 	}
 
 	process.nextTick = function (fun) {
@@ -242,7 +331,7 @@
 	    }
 	    queue.push(new Item(fun, args));
 	    if (queue.length === 1 && !draining) {
-	        setTimeout(drainQueue, 0);
+	        runTimeout(drainQueue);
 	    }
 	};
 
@@ -21376,6 +21465,10 @@
 
 	var _reactRedux = __webpack_require__(174);
 
+	var _toggle = __webpack_require__(197);
+
+	var _toggle2 = _interopRequireDefault(_toggle);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -21430,6 +21523,7 @@
 	          null,
 	          'Word Filtering'
 	        ),
+	        _react2.default.createElement(_toggle2.default, null),
 	        _react2.default.createElement(
 	          'p',
 	          null,
@@ -23039,17 +23133,160 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactToggleSwitch = __webpack_require__(198);
+
+	var _reactToggleSwitch2 = _interopRequireDefault(_reactToggleSwitch);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	// import {render} from 'react-dom';
+
+
+	var ToggleSwitch = function (_React$Component) {
+	  _inherits(ToggleSwitch, _React$Component);
+
+	  function ToggleSwitch() {
+	    _classCallCheck(this, ToggleSwitch);
+
+	    return _possibleConstructorReturn(this, (ToggleSwitch.__proto__ || Object.getPrototypeOf(ToggleSwitch)).apply(this, arguments));
+	  }
+
+	  _createClass(ToggleSwitch, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(_reactToggleSwitch2.default, { onClick: console.log('clicked') })
+	      );
+	    }
+	  }]);
+
+	  return ToggleSwitch;
+	}(_react2.default.Component);
+
+	exports.default = ToggleSwitch;
+
+/***/ },
+/* 198 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var Switch = (function (_React$Component) {
+	  _inherits(Switch, _React$Component);
+
+	  _createClass(Switch, null, [{
+	    key: 'propTypes',
+	    value: {
+	      on: _react2['default'].PropTypes.bool,
+	      onClick: _react2['default'].PropTypes.func,
+	      enabled: _react2['default'].PropTypes.bool,
+	      className: _react2['default'].PropTypes.string
+	    },
+	    enumerable: true
+	  }, {
+	    key: 'defaultProps',
+	    value: {
+	      on: false,
+	      onClick: function onClick() {},
+	      enabled: true,
+	      className: ''
+	    },
+	    enumerable: true
+	  }]);
+
+	  function Switch(props) {
+	    var _this = this;
+
+	    _classCallCheck(this, Switch);
+
+	    _get(Object.getPrototypeOf(Switch.prototype), 'constructor', this).call(this, props);
+
+	    this.handleClick = function (e) {
+	      e.preventDefault();
+	      if (_this.props.enabled) {
+	        _this.props.onClick();
+	        _this.setState({ on: !_this.state.on });
+	      }
+	    };
+
+	    this.state = { on: this.props.on };
+	  }
+
+	  _createClass(Switch, [{
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(nextProps) {
+	      this.setState({ on: nextProps.on });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var className = ['switch', this.props.className, this.state.on ? 'on ' : '', this.props.enabled ? '' : 'disabled '].join(' ');
+	      return _react2['default'].createElement(
+	        'div',
+	        { className: className, onClick: this.handleClick },
+	        _react2['default'].createElement('div', { className: 'switch-toggle', children: this.props.children })
+	      );
+	    }
+	  }]);
+
+	  return Switch;
+	})(_react2['default'].Component);
+
+	exports['default'] = Switch;
+	module.exports = exports['default'];
+
+/***/ },
+/* 199 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 	exports.alias = exports.wrapStore = exports.Store = undefined;
 
-	var _Store = __webpack_require__(198);
+	var _Store = __webpack_require__(200);
 
 	var _Store2 = _interopRequireDefault(_Store);
 
-	var _wrapStore = __webpack_require__(238);
+	var _wrapStore = __webpack_require__(240);
 
 	var _wrapStore2 = _interopRequireDefault(_wrapStore);
 
-	var _alias = __webpack_require__(239);
+	var _alias = __webpack_require__(241);
 
 	var _alias2 = _interopRequireDefault(_alias);
 
@@ -23060,7 +23297,7 @@
 	exports.alias = _alias2.default;
 
 /***/ },
-/* 198 */
+/* 200 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23071,11 +23308,11 @@
 	  value: true
 	});
 
-	var _assignIn = __webpack_require__(199);
+	var _assignIn = __webpack_require__(201);
 
 	var _assignIn2 = _interopRequireDefault(_assignIn);
 
-	var _constants = __webpack_require__(237);
+	var _constants = __webpack_require__(239);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -23190,12 +23427,12 @@
 	exports.default = Store;
 
 /***/ },
-/* 199 */
+/* 201 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var copyObject = __webpack_require__(200),
-	    createAssigner = __webpack_require__(204),
-	    keysIn = __webpack_require__(228);
+	var copyObject = __webpack_require__(202),
+	    createAssigner = __webpack_require__(206),
+	    keysIn = __webpack_require__(230);
 
 	/**
 	 * This method is like `_.assign` except that it iterates over own and
@@ -23236,11 +23473,11 @@
 
 
 /***/ },
-/* 200 */
+/* 202 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var assignValue = __webpack_require__(201),
-	    baseAssignValue = __webpack_require__(202);
+	var assignValue = __webpack_require__(203),
+	    baseAssignValue = __webpack_require__(204);
 
 	/**
 	 * Copies properties of `source` to `object`.
@@ -23282,11 +23519,11 @@
 
 
 /***/ },
-/* 201 */
+/* 203 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseAssignValue = __webpack_require__(202),
-	    eq = __webpack_require__(203);
+	var baseAssignValue = __webpack_require__(204),
+	    eq = __webpack_require__(205);
 
 	/** Used for built-in method references. */
 	var objectProto = Object.prototype;
@@ -23316,7 +23553,7 @@
 
 
 /***/ },
-/* 202 */
+/* 204 */
 /***/ function(module, exports) {
 
 	/** Built-in value references. */
@@ -23348,7 +23585,7 @@
 
 
 /***/ },
-/* 203 */
+/* 205 */
 /***/ function(module, exports) {
 
 	/**
@@ -23391,11 +23628,11 @@
 
 
 /***/ },
-/* 204 */
+/* 206 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseRest = __webpack_require__(205),
-	    isIterateeCall = __webpack_require__(224);
+	var baseRest = __webpack_require__(207),
+	    isIterateeCall = __webpack_require__(226);
 
 	/**
 	 * Creates a function like `_.assign`.
@@ -23434,12 +23671,12 @@
 
 
 /***/ },
-/* 205 */
+/* 207 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var identity = __webpack_require__(206),
-	    overRest = __webpack_require__(207),
-	    setToString = __webpack_require__(209);
+	var identity = __webpack_require__(208),
+	    overRest = __webpack_require__(209),
+	    setToString = __webpack_require__(211);
 
 	/**
 	 * The base implementation of `_.rest` which doesn't validate or coerce arguments.
@@ -23457,7 +23694,7 @@
 
 
 /***/ },
-/* 206 */
+/* 208 */
 /***/ function(module, exports) {
 
 	/**
@@ -23484,10 +23721,10 @@
 
 
 /***/ },
-/* 207 */
+/* 209 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var apply = __webpack_require__(208);
+	var apply = __webpack_require__(210);
 
 	/* Built-in method references for those with the same name as other `lodash` methods. */
 	var nativeMax = Math.max;
@@ -23526,7 +23763,7 @@
 
 
 /***/ },
-/* 208 */
+/* 210 */
 /***/ function(module, exports) {
 
 	/**
@@ -23553,11 +23790,11 @@
 
 
 /***/ },
-/* 209 */
+/* 211 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseSetToString = __webpack_require__(210),
-	    shortOut = __webpack_require__(223);
+	var baseSetToString = __webpack_require__(212),
+	    shortOut = __webpack_require__(225);
 
 	/**
 	 * Sets the `toString` method of `func` to return `string`.
@@ -23573,12 +23810,12 @@
 
 
 /***/ },
-/* 210 */
+/* 212 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var constant = __webpack_require__(211),
-	    identity = __webpack_require__(206),
-	    nativeDefineProperty = __webpack_require__(212);
+	var constant = __webpack_require__(213),
+	    identity = __webpack_require__(208),
+	    nativeDefineProperty = __webpack_require__(214);
 
 	/**
 	 * The base implementation of `setToString` without support for hot loop shorting.
@@ -23601,7 +23838,7 @@
 
 
 /***/ },
-/* 211 */
+/* 213 */
 /***/ function(module, exports) {
 
 	/**
@@ -23633,10 +23870,10 @@
 
 
 /***/ },
-/* 212 */
+/* 214 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var getNative = __webpack_require__(213);
+	var getNative = __webpack_require__(215);
 
 	/* Built-in method references that are verified to be native. */
 	var nativeDefineProperty = getNative(Object, 'defineProperty');
@@ -23645,11 +23882,11 @@
 
 
 /***/ },
-/* 213 */
+/* 215 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseIsNative = __webpack_require__(214),
-	    getValue = __webpack_require__(222);
+	var baseIsNative = __webpack_require__(216),
+	    getValue = __webpack_require__(224);
 
 	/**
 	 * Gets the native function at `key` of `object`.
@@ -23668,13 +23905,13 @@
 
 
 /***/ },
-/* 214 */
+/* 216 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isFunction = __webpack_require__(215),
-	    isMasked = __webpack_require__(217),
-	    isObject = __webpack_require__(216),
-	    toSource = __webpack_require__(221);
+	var isFunction = __webpack_require__(217),
+	    isMasked = __webpack_require__(219),
+	    isObject = __webpack_require__(218),
+	    toSource = __webpack_require__(223);
 
 	/**
 	 * Used to match `RegExp`
@@ -23721,10 +23958,10 @@
 
 
 /***/ },
-/* 215 */
+/* 217 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isObject = __webpack_require__(216);
+	var isObject = __webpack_require__(218);
 
 	/** `Object#toString` result references. */
 	var funcTag = '[object Function]',
@@ -23768,7 +24005,7 @@
 
 
 /***/ },
-/* 216 */
+/* 218 */
 /***/ function(module, exports) {
 
 	/**
@@ -23805,10 +24042,10 @@
 
 
 /***/ },
-/* 217 */
+/* 219 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var coreJsData = __webpack_require__(218);
+	var coreJsData = __webpack_require__(220);
 
 	/** Used to detect methods masquerading as native. */
 	var maskSrcKey = (function() {
@@ -23831,10 +24068,10 @@
 
 
 /***/ },
-/* 218 */
+/* 220 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var root = __webpack_require__(219);
+	var root = __webpack_require__(221);
 
 	/** Used to detect overreaching core-js shims. */
 	var coreJsData = root['__core-js_shared__'];
@@ -23843,10 +24080,10 @@
 
 
 /***/ },
-/* 219 */
+/* 221 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var freeGlobal = __webpack_require__(220);
+	var freeGlobal = __webpack_require__(222);
 
 	/** Detect free variable `self`. */
 	var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
@@ -23858,7 +24095,7 @@
 
 
 /***/ },
-/* 220 */
+/* 222 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/** Detect free variable `global` from Node.js. */
@@ -23869,7 +24106,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 221 */
+/* 223 */
 /***/ function(module, exports) {
 
 	/** Used for built-in method references. */
@@ -23901,7 +24138,7 @@
 
 
 /***/ },
-/* 222 */
+/* 224 */
 /***/ function(module, exports) {
 
 	/**
@@ -23920,7 +24157,7 @@
 
 
 /***/ },
-/* 223 */
+/* 225 */
 /***/ function(module, exports) {
 
 	/** Used to detect hot functions by number of calls within a span of milliseconds. */
@@ -23963,13 +24200,13 @@
 
 
 /***/ },
-/* 224 */
+/* 226 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var eq = __webpack_require__(203),
-	    isArrayLike = __webpack_require__(225),
-	    isIndex = __webpack_require__(227),
-	    isObject = __webpack_require__(216);
+	var eq = __webpack_require__(205),
+	    isArrayLike = __webpack_require__(227),
+	    isIndex = __webpack_require__(229),
+	    isObject = __webpack_require__(218);
 
 	/**
 	 * Checks if the given arguments are from an iteratee call.
@@ -23999,11 +24236,11 @@
 
 
 /***/ },
-/* 225 */
+/* 227 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isFunction = __webpack_require__(215),
-	    isLength = __webpack_require__(226);
+	var isFunction = __webpack_require__(217),
+	    isLength = __webpack_require__(228);
 
 	/**
 	 * Checks if `value` is array-like. A value is considered array-like if it's
@@ -24038,7 +24275,7 @@
 
 
 /***/ },
-/* 226 */
+/* 228 */
 /***/ function(module, exports) {
 
 	/** Used as references for various `Number` constants. */
@@ -24079,7 +24316,7 @@
 
 
 /***/ },
-/* 227 */
+/* 229 */
 /***/ function(module, exports) {
 
 	/** Used as references for various `Number` constants. */
@@ -24107,12 +24344,12 @@
 
 
 /***/ },
-/* 228 */
+/* 230 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var arrayLikeKeys = __webpack_require__(229),
-	    baseKeysIn = __webpack_require__(234),
-	    isArrayLike = __webpack_require__(225);
+	var arrayLikeKeys = __webpack_require__(231),
+	    baseKeysIn = __webpack_require__(236),
+	    isArrayLike = __webpack_require__(227);
 
 	/**
 	 * Creates an array of the own and inherited enumerable property names of `object`.
@@ -24145,13 +24382,13 @@
 
 
 /***/ },
-/* 229 */
+/* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseTimes = __webpack_require__(230),
-	    isArguments = __webpack_require__(231),
-	    isArray = __webpack_require__(233),
-	    isIndex = __webpack_require__(227);
+	var baseTimes = __webpack_require__(232),
+	    isArguments = __webpack_require__(233),
+	    isArray = __webpack_require__(235),
+	    isIndex = __webpack_require__(229);
 
 	/** Used for built-in method references. */
 	var objectProto = Object.prototype;
@@ -24190,7 +24427,7 @@
 
 
 /***/ },
-/* 230 */
+/* 232 */
 /***/ function(module, exports) {
 
 	/**
@@ -24216,10 +24453,10 @@
 
 
 /***/ },
-/* 231 */
+/* 233 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isArrayLikeObject = __webpack_require__(232);
+	var isArrayLikeObject = __webpack_require__(234);
 
 	/** `Object#toString` result references. */
 	var argsTag = '[object Arguments]';
@@ -24268,10 +24505,10 @@
 
 
 /***/ },
-/* 232 */
+/* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isArrayLike = __webpack_require__(225),
+	var isArrayLike = __webpack_require__(227),
 	    isObjectLike = __webpack_require__(186);
 
 	/**
@@ -24307,7 +24544,7 @@
 
 
 /***/ },
-/* 233 */
+/* 235 */
 /***/ function(module, exports) {
 
 	/**
@@ -24339,12 +24576,12 @@
 
 
 /***/ },
-/* 234 */
+/* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isObject = __webpack_require__(216),
-	    isPrototype = __webpack_require__(235),
-	    nativeKeysIn = __webpack_require__(236);
+	var isObject = __webpack_require__(218),
+	    isPrototype = __webpack_require__(237),
+	    nativeKeysIn = __webpack_require__(238);
 
 	/** Used for built-in method references. */
 	var objectProto = Object.prototype;
@@ -24378,7 +24615,7 @@
 
 
 /***/ },
-/* 235 */
+/* 237 */
 /***/ function(module, exports) {
 
 	/** Used for built-in method references. */
@@ -24402,7 +24639,7 @@
 
 
 /***/ },
-/* 236 */
+/* 238 */
 /***/ function(module, exports) {
 
 	/**
@@ -24428,7 +24665,7 @@
 
 
 /***/ },
-/* 237 */
+/* 239 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -24445,7 +24682,7 @@
 	var STATE_TYPE = exports.STATE_TYPE = 'chromex.state';
 
 /***/ },
-/* 238 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24454,7 +24691,7 @@
 	  value: true
 	});
 
-	var _constants = __webpack_require__(237);
+	var _constants = __webpack_require__(239);
 
 	/**
 	 * Responder for promisified results
@@ -24530,7 +24767,7 @@
 	};
 
 /***/ },
-/* 239 */
+/* 241 */
 /***/ function(module, exports) {
 
 	"use strict";
