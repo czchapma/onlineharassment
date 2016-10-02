@@ -19,11 +19,13 @@ class App extends Component{
   }
 
   render() {
-    let filter_status = (this.props.filter_on) ? 'on' : 'off';
+    let filter_status = (this.props.filter_on) ? 'enabled' : 'disabled';
     return (
       <div>
         <h1>Stop Harassment</h1>
-        <p>Filter is {filter_status}</p>
+        <h5>'Kind words can be short and easy to speak but their echoes are truly endless.' --Mother Theresa</h5>
+        <h3>Word Filtering</h3>
+        <p>Application is {filter_status}</p>
       </div>
     )
   }
