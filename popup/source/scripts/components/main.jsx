@@ -14,11 +14,7 @@ class App extends Component{
 
   componentDidMount(){
     document.addEventListener('click', () => {
-      console.log('before', this.props.filter_on);
-      if (this.props.dispatch(toggleFilter())) {
-        console.log('dispatched');
-      };
-      console.log('after', this.props.filter_on);
+      this.props.dispatch(toggleFilter());
    });
   }
 

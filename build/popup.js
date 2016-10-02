@@ -21494,11 +21494,7 @@
 	      var _this2 = this;
 
 	      document.addEventListener('click', function () {
-	        console.log('before', _this2.props.filter_on);
-	        if (_this2.props.dispatch(toggleFilter())) {
-	          console.log('dispatched');
-	        };
-	        console.log('after', _this2.props.filter_on);
+	        _this2.props.dispatch(toggleFilter());
 	      });
 	    }
 	  }, {
