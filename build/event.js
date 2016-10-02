@@ -70,7 +70,7 @@
 	//words to filter: {}
 	//}
 
-	var store = (0, _redux.createStore)(_root_reducer2.default, { filter_on: true } //preloaded state
+	var store = (0, _redux.createStore)(_root_reducer2.default, {} //preloaded state
 	);
 
 	(0, _reactChromeRedux.wrapStore)(store, {
@@ -1160,7 +1160,7 @@
 	  value: true
 	});
 	var FilterReducer = function FilterReducer() {
-	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { filter_on: true };
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
 	  var action = arguments[1];
 
 	  console.log('in filter reducer');

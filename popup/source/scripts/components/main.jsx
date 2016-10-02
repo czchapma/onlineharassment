@@ -1,6 +1,11 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
+function toggleFilter() {
+  return ({
+    type: 'TOGGLE_FILTER'
+  })
+}
 
 class App extends Component{
   constructor(props){
@@ -12,18 +17,18 @@ class App extends Component{
     document.addEventListener('click', () => {
       console.log('before', this.props.filter_on);
       console.log(this.props);
-      this.props.dispatch({
-        type: 'TOGGLE'
-      });
+      console.log(toggleFilter);
+      this.props.dispatch(toggleFilter());
       console.log('after', this.props.filter_on);
    });
   }
 
   render() {
+    let filter_status = (this.props.filter_on) ? 'on' : 'off';
     return (
       <div>
         <h1>Stop Harassment</h1>
-        <p>Filter is {this.props.filter_on}</p>
+        <p>Filter is {filter_status}</p>
       </div>
     )
   }

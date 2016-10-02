@@ -18,7 +18,7 @@
         "http://twitter.com/*",
         "https://twitter.com/*"
       ],
-      "js": ["background.js"]
+      "js": ["event.js"]
     }
   ],
   "version": "1.0",

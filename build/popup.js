@@ -21473,6 +21473,12 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+	function toggleFilter() {
+	  return {
+	    type: 'TOGGLE_FILTER'
+	  };
+	}
+
 	var App = function (_Component) {
 	  _inherits(App, _Component);
 
@@ -21491,15 +21497,15 @@
 	      document.addEventListener('click', function () {
 	        console.log('before', _this2.props.filter_on);
 	        console.log(_this2.props);
-	        _this2.props.dispatch({
-	          type: 'TOGGLE'
-	        });
+	        console.log(toggleFilter);
+	        _this2.props.dispatch(toggleFilter());
 	        console.log('after', _this2.props.filter_on);
 	      });
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var filter_status = this.props.filter_on ? 'on' : 'off';
 	      return _react2.default.createElement(
 	        'div',
 	        null,
@@ -21512,7 +21518,7 @@
 	          'p',
 	          null,
 	          'Filter is ',
-	          this.props.filter_on
+	          filter_status
 	        )
 	      );
 	    }

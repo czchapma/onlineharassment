@@ -12,7 +12,7 @@ import {wrapStore} from 'react-chrome-redux';
 
 const store = createStore(
   RootReducer,
-  { filter_on: true } //preloaded state
+  {} //preloaded state
 );
 
 wrapStore(store, {
