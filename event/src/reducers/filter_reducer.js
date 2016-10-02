@@ -1,8 +1,10 @@
-const FilterReducer = function(state = true, action) {
-  console.log('in filter reducer');
+const initialState = true;
+
+const FilterReducer = function(state = initialState, action) {
   switch(action.type){
-    case 'TOGGLE':
-      return !state.filter_on;
+    case 'TOGGLE_FILTER':
+      let toggled = state ? false : true;
+      return toggled;
       break;
     default:
       return state;

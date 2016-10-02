@@ -21493,12 +21493,11 @@
 	    value: function componentDidMount() {
 	      var _this2 = this;
 
-	      console.log('component mounted');
 	      document.addEventListener('click', function () {
 	        console.log('before', _this2.props.filter_on);
-	        console.log(_this2.props);
-	        console.log(toggleFilter);
-	        _this2.props.dispatch(toggleFilter());
+	        if (_this2.props.dispatch(toggleFilter())) {
+	          console.log('dispatched');
+	        };
 	        console.log('after', _this2.props.filter_on);
 	      });
 	    }

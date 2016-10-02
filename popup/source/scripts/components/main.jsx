@@ -13,12 +13,11 @@ class App extends Component{
   }
 
   componentDidMount(){
-    console.log('component mounted');
     document.addEventListener('click', () => {
       console.log('before', this.props.filter_on);
-      console.log(this.props);
-      console.log(toggleFilter);
-      this.props.dispatch(toggleFilter());
+      if (this.props.dispatch(toggleFilter())) {
+        console.log('dispatched');
+      };
       console.log('after', this.props.filter_on);
    });
   }
