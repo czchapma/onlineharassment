@@ -6,7 +6,7 @@ class ToggleSwitch extends React.Component {
   render() {
     return (
       <div>
-        <Switch onClick={console.log('clicked')} />
+        <Switch onClick={console.log('clicked')} on={true}/>
       </div>
     )
   }

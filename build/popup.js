@@ -23169,7 +23169,7 @@
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement(_reactToggleSwitch2.default, { onClick: console.log('clicked') })
+	        _react2.default.createElement(_reactToggleSwitch2.default, { onClick: console.log('clicked'), on: true })
 	      );
 	    }
 	  }]);
