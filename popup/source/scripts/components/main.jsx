@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
-import ToggleSwitch from './toggle';
+import Switch from 'react-toggle-switch';
 
 function toggleFilter() {
   return ({
@@ -26,8 +26,10 @@ class App extends Component{
       <div>
         <h1>Stop Harassment</h1>
         <h5>'Kind words can be short and easy to speak but their echoes are truly endless.' --Mother Theresa</h5>
-        <h3>Word Filtering</h3>
-         <ToggleSwitch />
+        <div>
+          <h3>Word Filtering</h3>
+          <Switch on={this.props.filter_on}/>
+        </div>
         <p>Application is {filter_status}</p>
       </div>
     )
