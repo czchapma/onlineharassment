@@ -3,21 +3,9 @@ import {connect} from 'react-redux';
 
 import Switch from 'react-toggle-switch';
 
-function toggleFilter() {
-  return ({
-    type: 'TOGGLE_FILTER'
-  })
-}
-
 class App extends Component{
   constructor(props){
     super(props);
-  }
-
-  componentDidMount(){
-    document.addEventListener('click', () => {
-      this.props.dispatch(toggleFilter());
-   });
   }
 
   render() {
@@ -28,7 +16,7 @@ class App extends Component{
         <h5>'Kind words can be short and easy to speak but their echoes are truly endless.' --Mother Theresa</h5>
         <div>
           <h3>Word Filtering</h3>
-          <Switch on={this.props.filter_on}/>
+          <Switch onClick={this.props.toggleFilter} on={this.props.filter_on}/>
         </div>
         <p>Application is {filter_status}</p>
       </div>
@@ -42,10 +30,11 @@ const mapStateToProps = (state) => {
   };
 };
 
-// const mapDispatchtoProps = dispatch => ({
-//   toggleFilter: () => dispatch({type: 'TOGGLE'})
-// })
+const mapDispatchtoProps = dispatch => ({
+  toggleFilter: () => dispatch({type: 'TOGGLE_FILTER'})
+})
 
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchtoProps
   )(App);

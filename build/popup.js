@@ -21477,12 +21477,6 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	function toggleFilter() {
-	  return {
-	    type: 'TOGGLE_FILTER'
-	  };
-	}
-
 	var App = function (_Component) {
 	  _inherits(App, _Component);
 
@@ -21493,15 +21487,6 @@
 	  }
 
 	  _createClass(App, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      var _this2 = this;
-
-	      document.addEventListener('click', function () {
-	        _this2.props.dispatch(toggleFilter());
-	      });
-	    }
-	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var filter_status = this.props.filter_on ? 'enabled' : 'disabled';
@@ -21526,7 +21511,7 @@
 	            null,
 	            'Word Filtering'
 	          ),
-	          _react2.default.createElement(_reactToggleSwitch2.default, { on: this.props.filter_on })
+	          _react2.default.createElement(_reactToggleSwitch2.default, { onClick: this.props.toggleFilter, on: this.props.filter_on })
 	        ),
 	        _react2.default.createElement(
 	          'p',
@@ -21547,11 +21532,15 @@
 	  };
 	};
 
-	// const mapDispatchtoProps = dispatch => ({
-	//   toggleFilter: () => dispatch({type: 'TOGGLE'})
-	// })
+	var mapDispatchtoProps = function mapDispatchtoProps(dispatch) {
+	  return {
+	    toggleFilter: function toggleFilter() {
+	      return dispatch({ type: 'TOGGLE_FILTER' });
+	    }
+	  };
+	};
 
-	exports.default = (0, _reactRedux.connect)(mapStateToProps)(App);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchtoProps)(App);
 
 /***/ },
 /* 174 */
