@@ -10,6 +10,14 @@ class App extends Component{
 
   render() {
     let filter_status = (this.props.filter_on) ? 'enabled' : 'disabled';
+    let filter_options = (this.props.filter_on) ?
+      <div>
+        <h4>Hide Tweets</h4>
+        <h4>Word Substitutes</h4>
+        <h4>Other Cool Option</h4>
+        <button>Word Settings</button>
+      </div> :
+      <div></div>
     return (
       <div>
         <h1>Stop Harassment</h1>
@@ -19,6 +27,7 @@ class App extends Component{
           <Switch onClick={this.props.toggleFilter} on={this.props.filter_on}/>
         </div>
         <p>Application is {filter_status}</p>
+        {filter_options}
       </div>
     )
   }

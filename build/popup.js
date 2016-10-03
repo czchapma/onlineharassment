@@ -21490,6 +21490,30 @@
 	    key: 'render',
 	    value: function render() {
 	      var filter_status = this.props.filter_on ? 'enabled' : 'disabled';
+	      var filter_options = this.props.filter_on ? _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'h4',
+	          null,
+	          'Hide Tweets'
+	        ),
+	        _react2.default.createElement(
+	          'h4',
+	          null,
+	          'Word Substitutes'
+	        ),
+	        _react2.default.createElement(
+	          'h4',
+	          null,
+	          'Other Cool Option'
+	        ),
+	        _react2.default.createElement(
+	          'button',
+	          null,
+	          'Word Settings'
+	        )
+	      ) : _react2.default.createElement('div', null);
 	      return _react2.default.createElement(
 	        'div',
 	        null,
@@ -21518,7 +21542,8 @@
 	          null,
 	          'Application is ',
 	          filter_status
-	        )
+	        ),
+	        filter_options
 	      );
 	    }
 	  }]);
