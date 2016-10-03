@@ -45,6 +45,18 @@ gulp.task('popup-html', ['clean'], () => {
     .pipe(gulp.dest('./build'))
 });
 
+gulp.task('popup-css', ['clean'], () => {
+  return gulp.src('popup/source/style.css')
+    .pipe(plugins.rename('popup.css'))
+    .pipe(gulp.dest('./build'))
+});
+
+gulp.task('toggleswitch-css', ['clean'], () => {
+  return gulp.src('node_modules/react-toggle-switch/dist/css/switch.min.css')
+    .pipe(plugins.rename('toggleswitch.css'))
+    .pipe(gulp.dest('./build'))
+});
+
 gulp.task('copy-manifest', ['clean'], () => {
   return gulp.src('manifest.json')
     .pipe(gulp.dest('./build'));
@@ -65,7 +77,7 @@ gulp.task('clean', (cb) => {
   rimraf('./build', cb);
 });
 
-gulp.task('build', ['copy-manifest', 'popup-js', 'popup-html', 'copy-icon', 'copy-background', 'event-js']);
+gulp.task('build', ['copy-manifest', 'popup-js', 'popup-html', 'popup-css', 'toggleswitch-css', 'copy-icon', 'copy-background', 'event-js']);
 
 gulp.task('watch', ['default'], () => {
   gulp.watch('popup/**/*', ['build']);
