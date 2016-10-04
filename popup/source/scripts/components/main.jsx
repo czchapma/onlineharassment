@@ -29,12 +29,14 @@ class App extends Component{
 
 const mapStateToProps = (state) => {
   return {
-    filter_on: state.filter_on
+    filter_on: state.filter_on,
+    filter_options: state.filter_options
   };
 };
 
 const mapDispatchtoProps = dispatch => ({
-  toggleFilter: () => dispatch({type: 'TOGGLE_FILTER'})
+  toggleFilter: () => dispatch({type: 'TOGGLE_FILTER'}),
+  checkFilterOption: (filter) => dispatch({type: 'CHOOSE_FILTER'}, filter)
 })
 
 export default connect(

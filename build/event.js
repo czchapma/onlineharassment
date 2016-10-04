@@ -2633,7 +2633,15 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	var FilterOptionsReducer = function FilterOptionsReducer(state, action) {};
+	var FilterOptionsReducer = function FilterOptionsReducer() {
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { hide_tweets: false, word_substitutes: false, option3: false };
+	  var action = arguments[1];
+
+	  switch (action.type) {
+	    default:
+	      return state;
+	  }
+	};
 
 	exports.default = FilterOptionsReducer;
 
