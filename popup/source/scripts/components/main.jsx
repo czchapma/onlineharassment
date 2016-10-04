@@ -11,7 +11,7 @@ class App extends Component{
 
   render() {
     let filter_status = (this.props.filter_on) ? 'enabled' : 'disabled';
-    let filter_options = (this.props.filter_on) ? <FilterOptions /> : <div></div>;
+    let filter_options = (this.props.filter_on) ? <FilterOptions checkFilterOption={this.props.checkFilterOption} filter_options={this.props.filter_options}/> : <div></div>;
     return (
       <div>
         <h1>Stop Harassment</h1>
@@ -36,7 +36,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchtoProps = dispatch => ({
   toggleFilter: () => dispatch({type: 'TOGGLE_FILTER'}),
-  checkFilterOption: (filter) => dispatch({type: 'CHOOSE_FILTER'}, filter)
+  checkFilterOption: (filter_option) => dispatch({type: 'CHOOSE_FILTER'}, filter: filter_option)
 })
 
 export default connect(
