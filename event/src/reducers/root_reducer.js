@@ -1,8 +1,10 @@
 import {combineReducers} from 'redux';
-import FilterReducer from './filter_reducer';
+import FilterStatusReducer from './filter_status_reducer';
+import FilterOptionsReducer from './filter_options_reducer';
 
 const RootReducer = combineReducers({
-  filter_on: FilterReducer
+  filter_on: FilterStatusReducer,
+  filter_options: FilterOptionsReducer
 });
 
 export default RootReducer;

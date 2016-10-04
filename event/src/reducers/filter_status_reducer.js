@@ -1,6 +1,6 @@
 const initialState = true;
 
-const FilterReducer = function(state = initialState, action) {
+const FilterStatusReducer = function(state = initialState, action) {
   switch(action.type){
     case 'TOGGLE_FILTER':
       let toggled = state ? false : true; //to not mutate state
@@ -11,4 +11,4 @@ const FilterReducer = function(state = initialState, action) {
   }
 }
 
-export default FilterReducer;
+export default FilterStatusReducer;
