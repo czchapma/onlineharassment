@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
 import Switch from 'react-toggle-switch';
+import FilterOptions from './filterOptions'
 
 class App extends Component{
   constructor(props){
@@ -10,31 +11,7 @@ class App extends Component{
 
   render() {
     let filter_status = (this.props.filter_on) ? 'enabled' : 'disabled';
-    let filter_options = (this.props.filter_on) ?
-      <div>
-        <form>
-          <div className="radio">
-            <label>
-              <input type="radio" name="filter_options" value="hide_tweets" />
-              Hide Tweets
-            </label>
-          </div>
-          <div className="radio">
-            <label>
-              <input type="radio" name="filter_options" value="word_substitutes" />
-              Word Substitutes
-            </label>
-          </div>
-          <div className="radio">
-            <label>
-              <input type="radio" name="filter_options" value="option3" />
-              Other Cool Option
-            </label>
-          </div>
-        </form>
-        <button>Word Settings</button>
-      </div> :
-      <div></div>;
+    let filter_options = (this.props.filter_on) ? <FilterOptions /> : <div></div>;
     return (
       <div>
         <h1>Stop Harassment</h1>
