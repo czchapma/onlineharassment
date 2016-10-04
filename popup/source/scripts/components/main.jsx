@@ -12,12 +12,29 @@ class App extends Component{
     let filter_status = (this.props.filter_on) ? 'enabled' : 'disabled';
     let filter_options = (this.props.filter_on) ?
       <div>
-        <h4>Hide Tweets</h4>
-        <h4>Word Substitutes</h4>
-        <h4>Other Cool Option</h4>
+        <form>
+          <div className="radio">
+            <label>
+              <input type="radio" value="hide_tweets" checked={true} />
+              Hide Tweets
+            </label>
+          </div>
+          <div className="radio">
+            <label>
+              <input type="radio" value="word_substitutes" />
+              Word Substitutes
+            </label>
+          </div>
+          <div className="radio">
+            <label>
+              <input type="radio" value="option3" />
+              Other Cool Option
+            </label>
+          </div>
+        </form>
         <button>Word Settings</button>
       </div> :
-      <div></div>
+      <div></div>;
     return (
       <div>
         <h1>Stop Harassment</h1>

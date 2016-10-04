@@ -21494,19 +21494,38 @@
 	        'div',
 	        null,
 	        _react2.default.createElement(
-	          'h4',
+	          'form',
 	          null,
-	          'Hide Tweets'
-	        ),
-	        _react2.default.createElement(
-	          'h4',
-	          null,
-	          'Word Substitutes'
-	        ),
-	        _react2.default.createElement(
-	          'h4',
-	          null,
-	          'Other Cool Option'
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'radio' },
+	            _react2.default.createElement(
+	              'label',
+	              null,
+	              _react2.default.createElement('input', { type: 'radio', value: 'hide_tweets', checked: true }),
+	              'Hide Tweets'
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'radio' },
+	            _react2.default.createElement(
+	              'label',
+	              null,
+	              _react2.default.createElement('input', { type: 'radio', value: 'word_substitutes' }),
+	              'Word Substitutes'
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'radio' },
+	            _react2.default.createElement(
+	              'label',
+	              null,
+	              _react2.default.createElement('input', { type: 'radio', value: 'option3' }),
+	              'Other Cool Option'
+	            )
+	          )
 	        ),
 	        _react2.default.createElement(
 	          'button',
