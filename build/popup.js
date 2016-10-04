@@ -21502,7 +21502,7 @@
 	            _react2.default.createElement(
 	              'label',
 	              null,
-	              _react2.default.createElement('input', { type: 'radio', value: 'hide_tweets', checked: true }),
+	              _react2.default.createElement('input', { type: 'radio', name: 'filter_options', value: 'hide_tweets' }),
 	              'Hide Tweets'
 	            )
 	          ),
@@ -21512,7 +21512,7 @@
 	            _react2.default.createElement(
 	              'label',
 	              null,
-	              _react2.default.createElement('input', { type: 'radio', value: 'word_substitutes' }),
+	              _react2.default.createElement('input', { type: 'radio', name: 'filter_options', value: 'word_substitutes' }),
 	              'Word Substitutes'
 	            )
 	          ),
@@ -21522,7 +21522,7 @@
 	            _react2.default.createElement(
 	              'label',
 	              null,
-	              _react2.default.createElement('input', { type: 'radio', value: 'option3' }),
+	              _react2.default.createElement('input', { type: 'radio', name: 'filter_options', value: 'option3' }),
 	              'Other Cool Option'
 	            )
 	          )
