@@ -36,7 +36,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchtoProps = dispatch => ({
   toggleFilter: () => dispatch({type: 'TOGGLE_FILTER'}),
-  checkFilterOption: (filter_option) => dispatch({type: 'CHOOSE_FILTER'}, filter: filter_option)
+  checkFilterOption: filter => dispatch({type: 'CHOOSE_FILTER', filter})
 })
 
 export default connect(
