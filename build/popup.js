@@ -23266,7 +23266,6 @@
 	    key: 'render',
 	    value: function render() {
 	      var filters = this.props.filter_options;
-	      console.log(filters.hide_tweets, filters.word_substitutes, filters.option3);
 	      return _react2.default.createElement(
 	        'div',
 	        null,
