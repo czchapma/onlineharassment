@@ -67,6 +67,11 @@ gulp.task('copy-icon', ['clean'], () => {
     .pipe(gulp.dest('./build'));
 });
 
+gulp.task('copy-options', ['clean'], () => {
+  return gulp.src('options.html')
+    .pipe(gulp.dest('./build'));
+});
+
 //this is temporary
 gulp.task('copy-background', ['clean'], () => {
   return gulp.src('background.js')
@@ -77,7 +82,7 @@ gulp.task('clean', (cb) => {
   rimraf('./build', cb);
 });
 
-gulp.task('build', ['copy-manifest', 'popup-js', 'popup-html', 'popup-css', 'toggleswitch-css', 'copy-icon', 'copy-background', 'event-js']);
+gulp.task('build', ['copy-manifest', 'popup-js', 'popup-html', 'popup-css', 'toggleswitch-css', 'copy-icon', 'copy-options', 'copy-background', 'event-js']);
 
 gulp.task('watch', ['default'], () => {
   gulp.watch('popup/**/*', ['build']);
