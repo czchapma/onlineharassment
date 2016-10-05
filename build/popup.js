@@ -23219,7 +23219,7 @@
 /* 198 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -23249,57 +23249,68 @@
 	  }
 
 	  _createClass(FilterOptions, [{
-	    key: "set_filter",
-	    value: function set_filter(e) {
+	    key: 'setFilter',
+	    value: function setFilter(e) {
 	      // e.preventDefault();
 	      this.props.checkFilterOption(e.currentTarget.value);
 	    }
 	  }, {
-	    key: "render",
+	    key: 'openSettings',
+	    value: function openSettings() {
+	      if (chrome.runtime.openOptionsPage) {
+	        // New way to open options pages, if supported (Chrome 42+).
+	        chrome.runtime.openOptionsPage();
+	      } else {
+	        // Reasonable fallback.
+	        window.open(chrome.runtime.getURL('options.html'));
+	      }
+	    }
+	  }, {
+	    key: 'render',
 	    value: function render() {
 	      var filters = this.props.filter_options;
 	      console.log(filters.hide_tweets, filters.word_substitutes, filters.option3);
 	      return _react2.default.createElement(
-	        "div",
+	        'div',
 	        null,
 	        _react2.default.createElement(
-	          "form",
+	          'form',
 	          null,
 	          _react2.default.createElement(
-	            "div",
-	            { className: "radio" },
+	            'div',
+	            { className: 'radio' },
 	            _react2.default.createElement(
-	              "label",
+	              'label',
 	              null,
-	              _react2.default.createElement("input", { type: "radio", name: "filter_options", value: "hide_tweets", onChange: this.set_filter.bind(this), checked: filters.hide_tweets }),
-	              "Hide Tweets"
+	              _react2.default.createElement('input', { type: 'radio', name: 'filter_options', value: 'hide_tweets', onChange: this.setFilter.bind(this), checked: filters.hide_tweets }),
+	              'Hide Tweets'
 	            )
 	          ),
 	          _react2.default.createElement(
-	            "div",
-	            { className: "radio" },
+	            'div',
+	            { className: 'radio' },
 	            _react2.default.createElement(
-	              "label",
+	              'label',
 	              null,
-	              _react2.default.createElement("input", { type: "radio", name: "filter_options", value: "word_substitutes", onChange: this.set_filter.bind(this), checked: filters.word_substitutes }),
-	              "Word Substitutes"
+	              _react2.default.createElement('input', { type: 'radio', name: 'filter_options', value: 'word_substitutes', onChange: this.setFilter.bind(this), checked: filters.word_substitutes }),
+	              'Word Substitutes'
 	            )
 	          ),
 	          _react2.default.createElement(
-	            "div",
-	            { className: "radio" },
+	            'div',
+	            { className: 'radio' },
 	            _react2.default.createElement(
-	              "label",
+	              'label',
 	              null,
-	              _react2.default.createElement("input", { type: "radio", name: "filter_options", value: "option3", onChange: this.set_filter.bind(this), checked: filters.option3 }),
-	              "Other Filter"
+	              _react2.default.createElement('input', { type: 'radio', name: 'filter_options', value: 'option3', onChange: this.setFilter.bind(this), checked: filters.option3 }),
+	              'Other Filter'
 	            )
 	          )
 	        ),
 	        _react2.default.createElement(
-	          "button",
-	          null,
-	          "Word Settings"
+	          'button',
+	          { onClick: this.openSettings },
+	          'Word Settings'
 	        )
 	      );
 	    }

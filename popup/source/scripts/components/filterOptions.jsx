@@ -5,9 +5,19 @@ class FilterOptions extends React.Component{
     super(props)
   }
 
-  set_filter(e){
+  setFilter(e){
     // e.preventDefault();
     this.props.checkFilterOption(e.currentTarget.value);
+  }
+
+  openSettings(){
+    if (chrome.runtime.openOptionsPage) {
+      // New way to open options pages, if supported (Chrome 42+).
+      chrome.runtime.openOptionsPage();
+    } else {
+      // Reasonable fallback.
+      window.open(chrome.runtime.getURL('options.html'));
+    }
   }
 
   render(){
@@ -18,24 +28,24 @@ class FilterOptions extends React.Component{
         <form>
           <div className="radio">
             <label>
-              <input type="radio" name="filter_options" value="hide_tweets" onChange={this.set_filter.bind(this)} checked={filters.hide_tweets}/>
+              <input type="radio" name="filter_options" value="hide_tweets" onChange={this.setFilter.bind(this)} checked={filters.hide_tweets}/>
               Hide Tweets
             </label>
           </div>
           <div className="radio">
             <label>
-              <input type="radio" name="filter_options" value="word_substitutes" onChange={this.set_filter.bind(this)} checked={filters.word_substitutes}/>
+              <input type="radio" name="filter_options" value="word_substitutes" onChange={this.setFilter.bind(this)} checked={filters.word_substitutes}/>
               Word Substitutes
             </label>
           </div>
           <div className="radio">
             <label>
-              <input type="radio" name="filter_options" value="option3" onChange={this.set_filter.bind(this)} checked={filters.option3}/>
+              <input type="radio" name="filter_options" value="option3" onChange={this.setFilter.bind(this)} checked={filters.option3}/>
               Other Filter
             </label>
           </div>
         </form>
-        <button>Word Settings</button>
+        <button onClick={this.openSettings}>Word Settings</button>
       </div>
     )
   }
