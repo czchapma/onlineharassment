@@ -23251,17 +23251,14 @@
 	  _createClass(FilterOptions, [{
 	    key: 'setFilter',
 	    value: function setFilter(e) {
-	      // e.preventDefault();
 	      this.props.checkFilterOption(e.currentTarget.value);
 	    }
 	  }, {
 	    key: 'openSettings',
 	    value: function openSettings() {
 	      if (chrome.runtime.openOptionsPage) {
-	        // New way to open options pages, if supported (Chrome 42+).
 	        chrome.runtime.openOptionsPage();
 	      } else {
-	        // Reasonable fallback.
 	        window.open(chrome.runtime.getURL('options.html'));
 	      }
 	    }
@@ -23273,6 +23270,11 @@
 	      return _react2.default.createElement(
 	        'div',
 	        null,
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          'Choose your filter type:'
+	        ),
 	        _react2.default.createElement(
 	          'form',
 	          null,

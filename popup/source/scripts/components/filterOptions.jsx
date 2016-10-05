@@ -6,25 +6,22 @@ class FilterOptions extends React.Component{
   }
 
   setFilter(e){
-    // e.preventDefault();
     this.props.checkFilterOption(e.currentTarget.value);
   }
 
   openSettings(){
     if (chrome.runtime.openOptionsPage) {
-      // New way to open options pages, if supported (Chrome 42+).
       chrome.runtime.openOptionsPage();
     } else {
-      // Reasonable fallback.
       window.open(chrome.runtime.getURL('options.html'));
     }
   }
 
   render(){
     let filters = this.props.filter_options;
-    console.log(filters.hide_tweets, filters.word_substitutes, filters.option3);
     return (
       <div>
+        <p>Choose your filter type:</p>
         <form>
           <div className="radio">
             <label>
