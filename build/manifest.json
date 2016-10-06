@@ -18,7 +18,7 @@
         "http://twitter.com/*",
         "https://twitter.com/*"
       ],
-      "js": ["event.js"]
+      "js": ["background.js"]
     }
   ],
   "options_page": "options.html",

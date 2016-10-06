@@ -3,7 +3,6 @@
 // const store;
 //
 // wrapStore(store, {portName: 'STOP_HARASSMENT'});
-
 var elements = document.getElementsByTagName('*');
 
 for (var i = 0; i < elements.length; i++) {
