@@ -18,6 +18,12 @@ class App extends Component{
     this.props.removeWord(e.target.value);
   }
 
+  _handleKeyPress(e){
+    console.log(this.props.harmful_words.filter(word => {
+      return word.includes(e.target.value);
+    }));
+  }
+
   render(){
     let word_list = this.props.harmful_words;
     let harmful_words = word_list ?
@@ -30,6 +36,7 @@ class App extends Component{
     return (
       <div>
         <h1>Stop Harassment Word Settings</h1>
+        <input type="text" placeholder="Search" onKeyUp={this._handleKeyPress.bind(this)} />
         <h4>Word List</h4>
         <input type="text" placeholder='Add Word and Press Enter' onKeyPress={this.addWord.bind(this)} />
         <div>{harmful_words}</div>
