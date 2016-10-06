@@ -3,7 +3,11 @@ import {connect} from 'react-redux'
 
 class App extends Component{
   constructor(props){
-    super(props)
+    super(props);
+
+    this.state = {
+      inputVal: ''
+    }
   }
 
   addWord(e){
@@ -19,9 +23,14 @@ class App extends Component{
   }
 
   _handleKeyPress(e){
-    console.log(this.props.harmful_words.filter(word => {
-      return word.includes(e.target.value);
-    }));
+    this.setState({
+      inputVal: e.target.value
+    });
+    // console.log(this.props.harmful_words.filter(word => {
+    //   return word.includes(e.target.value);
+    // }));
+    console.log(e.target.value);
+    console.log(this.state.inputVal);
   }
 
   render(){
