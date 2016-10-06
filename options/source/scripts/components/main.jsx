@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux'
+import {connect} from 'react-redux';
+import linkState from 'react-link-state'; //deprecated, but working? 
 
 class App extends Component{
   constructor(props){
@@ -22,33 +23,24 @@ class App extends Component{
     this.props.removeWord(e.target.value);
   }
 
-  _handleKeyPress(e){
-    this.setState({
-      inputVal: e.target.value
-    });
-    // console.log(this.props.harmful_words.filter(word => {
-    //   return word.includes(e.target.value);
-    // }));
-    console.log(e.target.value);
-    console.log(this.state.inputVal);
-  }
-
   render(){
-    let word_list = this.props.harmful_words;
-    let harmful_words = word_list ?
+    let word_list = this.props.harmful_words || [];
+    let filtered_words = word_list.filter(word => {
+      return word.includes(this.state.inputVal);
+    }) //list of words in the full list that include what has been typed in search
+    let autocomplete =
     <ul>
-      {word_list.map((word, i) => {
+      {filtered_words.map((word, i) => {
         return (<li key={i}>{word}<button value={word} onClick={this.removeWord.bind(this)}>remove</button></li>);
       })}
     </ul>
-      : <div></div>;
     return (
       <div>
         <h1>Stop Harassment Word Settings</h1>
-        <input type="text" placeholder="Search" onKeyUp={this._handleKeyPress.bind(this)} />
+        <input type="text" placeholder="Search" valueLink={linkState(this, 'inputVal')} />
         <h4>Word List</h4>
         <input type="text" placeholder='Add Word and Press Enter' onKeyPress={this.addWord.bind(this)} />
-        <div>{harmful_words}</div>
+        <div>{autocomplete}</div>
       </div>
     )
   }
