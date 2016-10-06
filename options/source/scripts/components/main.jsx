@@ -13,12 +13,16 @@ class App extends Component{
     }
   }
 
+  removeWord(e){
+    console.log(e.target, e.currentTarget);
+  }
+
   render(){
     let word_list = this.props.harmful_words;
     let harmful_words = word_list ?
     <ul>
       {word_list.map((word, i) => {
-        return (<li key={i}>{word}</li>);
+        return (<li key={i}>{word}<button onClick={this.removeWord}>remove</button></li>);
       })}
     </ul>
       : <div></div>;
@@ -39,7 +43,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addWord: word => dispatch({type: 'ADD_WORD', word})
+  addWord: word => dispatch({type: 'ADD_WORD', word}),
+  removeWord: word => dispatch({type: 'REMOVE_WORD', word})
 })
 
 export default connect(
