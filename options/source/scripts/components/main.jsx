@@ -6,12 +6,18 @@ class App extends Component{
     super(props)
   }
 
+  addWord(e){
+    if (e.key === 'Enter') {
+      console.log(e.target.value);
+    }
+  }
+
   render(){
     let word_list = this.props.harmful_words;
     let harmful_words = word_list ?
     <ul>
-      {word_list.map(word => {
-        return (<li>{word}</li>);
+      {word_list.map((word, i) => {
+        return (<li key={i}>{word}</li>);
       })}
     </ul>
       : <div></div>;
@@ -19,6 +25,7 @@ class App extends Component{
       <div>
         <h1>Stop Harassment Word Settings</h1>
         <h4>Word List</h4>
+        <input type="text" placeholder='Add Word and Press Enter' onKeyPress={this.addWord} />
         <div>{harmful_words}</div>
       </div>
     )
