@@ -8,7 +8,8 @@ class App extends Component{
 
   addWord(e){
     if (e.key === 'Enter') {
-      console.log(e.target.value);
+      this.props.addWord(e.target.value);
+      e.target.value = '';
     }
   }
 
@@ -25,20 +26,23 @@ class App extends Component{
       <div>
         <h1>Stop Harassment Word Settings</h1>
         <h4>Word List</h4>
-        <input type="text" placeholder='Add Word and Press Enter' onKeyPress={this.addWord} />
+        <input type="text" placeholder='Add Word and Press Enter' onKeyPress={this.addWord.bind(this)} />
         <div>{harmful_words}</div>
       </div>
     )
   }
 }
 
-const mapStateToProps = state => {
-  return {
+const mapStateToProps = state => ({
     filter_options: state.filter_options,
     harmful_words: state.harmful_words
-  }
-}
+});
+
+const mapDispatchToProps = dispatch => ({
+  addWord: word => dispatch({type: 'ADD_WORD', word})
+})
 
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
   )(App);
