@@ -1237,6 +1237,10 @@
 	    case 'ADD_WORD':
 	      return [].concat(_toConsumableArray(state), [action.word]);
 	      break;
+	    case 'REMOVE_WORD':
+	      var index = state.indexOf(action.word);
+	      return [].concat(_toConsumableArray(state.slice(0, index)), _toConsumableArray(state.slice(index + 1)));
+	      break;
 	    default:
 	      return state;
 	  }

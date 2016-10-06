@@ -14,7 +14,8 @@ class App extends Component{
   }
 
   removeWord(e){
-    console.log(e.target, e.currentTarget);
+    console.log(e.target.value);
+    this.props.removeWord(e.target.value);
   }
 
   render(){
@@ -22,7 +23,7 @@ class App extends Component{
     let harmful_words = word_list ?
     <ul>
       {word_list.map((word, i) => {
-        return (<li key={i}>{word}<button onClick={this.removeWord}>remove</button></li>);
+        return (<li key={i}>{word}<button value={word} onClick={this.removeWord.bind(this)}>remove</button></li>);
       })}
     </ul>
       : <div></div>;
