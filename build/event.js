@@ -77,6 +77,12 @@
 	  portName: 'STOP_HARASSMENT'
 	});
 
+	chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+	  chrome.tabs.sendMessage(tabs[0].id, { greeting: "hello" }, function (response) {
+	    console.log('in the background script');
+	  });
+	});
+
 /***/ },
 /* 2 */
 /***/ function(module, exports, __webpack_require__) {

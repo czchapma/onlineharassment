@@ -1,17 +1,37 @@
-// import {wrapStore} from 'react-chrome-redux';
-//
-// const store;
-//
-// wrapStore(store, {portName: 'STOP_HARASSMENT'});
+import {Store} from 'react-chrome-redux';
+
+const proxyStore = new Store({
+  portName: 'STOP_HARASSMENT'
+});
+
+console.log(proxyStore.getStore());
 
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
-    console.log(sender.tab ?
-                "from a content script:" + sender.tab.url :
-                "from the extension");
-    if (request.greeting == "hello")
-      sendResponse({farewell: "goodbye"});
+    console.log('adding listener');
+    // if (request.greeting == "hello")
+    //   sendResponse({farewell: "goodbye"});
   });
+
+  
+
+
+
+  // var displayPageAction = function (tabId, changeInfo, tab) {
+  //   var match = regexAIESEC.exec(tab.url); // var regexAIESEC = new RegExp(/http:\/\/www.myaiesec.net\//);
+  //   // We only display the Page Action if we are inside a MyAIESEC Tab.
+  //   if(match && changeInfo.status == 'complete') {
+  //       //We send the proper information to the content script to render our app.
+  //       chrome.tabs.sendMessage(tab.id, {load: true}, function(response) { // We don't do anything if we don't have a response
+  //       if(response) {
+  //            console.log("Inside Background Response script, we had a response:");
+  //            //After successfully getting the response, we show a Page Action Icon.
+  //           chrome.pageAction.show(tab.id);
+  //       }
+  //   });
+  //   }
+  //   };
+
 
 // var elements = document.getElementsByTagName('*');
 //
