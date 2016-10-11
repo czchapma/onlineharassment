@@ -11,11 +11,7 @@ const proxyStore = new Store({
 });
 
 window.Store = proxyStore;
-console.log(proxyStore);
-console.log(proxyStore.getState());
-setTimeout(function() {
-  console.log(proxyStore.getState());
-}, 3000);
+
 
 render(
   <Provider store={proxyStore}>

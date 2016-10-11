@@ -74,11 +74,6 @@
 	});
 
 	window.Store = proxyStore;
-	console.log(proxyStore);
-	console.log(proxyStore.getState());
-	setTimeout(function () {
-	  console.log(proxyStore.getState());
-	}, 3000);
 
 	(0, _reactDom.render)(_react2.default.createElement(
 	  _reactRedux.Provider,
@@ -21498,7 +21493,6 @@
 	  _createClass(App, [{
 	    key: 'render',
 	    value: function render() {
-	      console.log(this.props.filter_options);
 	      var filter_status = this.props.filter_on ? 'enabled' : 'disabled';
 	      var filter_options = this.props.filter_on ? _react2.default.createElement(_filterOptions2.default, { checkFilterOption: this.props.checkFilterOption, filter_options: this.props.filter_options }) : _react2.default.createElement('div', null);
 	      return _react2.default.createElement(

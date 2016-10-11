@@ -10,7 +10,6 @@ class App extends Component{
   }
 
   render() {
-    console.log(this.props.filter_options);
     let filter_status = (this.props.filter_on) ? 'enabled' : 'disabled';
     let filter_options = (this.props.filter_on) ? <FilterOptions checkFilterOption={this.props.checkFilterOption} filter_options={this.props.filter_options}/> : <div></div>;
     return (

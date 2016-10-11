@@ -63,13 +63,6 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	//const defaultState = {
-	//filter_on: 'on' or off
-	//filter_types: { #filters and on or off?}
-	//word settings...
-	//words to filter: {}
-	//}
-
 	var store = (0, _redux.createStore)(_root_reducer2.default, {} //preloaded state
 	);
 
