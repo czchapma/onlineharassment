@@ -13,8 +13,8 @@ wrapStore(store, {
   portName: 'STOP_HARASSMENT'
 });
 
-chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-    chrome.tabs.sendMessage(tabId, {greeting: "hello"}, function(response) {
-    console.log("in background");
-    });
-});
+// chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+//     chrome.tabs.sendMessage(tabId, {greeting: "hello"}, function(response) {
+//     console.log("in background");
+//     });
+// });

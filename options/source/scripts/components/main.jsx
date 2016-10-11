@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import linkState from 'react-link-state'; //deprecated, but working? 
+import linkState from 'react-link-state'; //deprecated, but working?
 
 class App extends Component{
   constructor(props){
@@ -24,6 +24,7 @@ class App extends Component{
   }
 
   render(){
+    let harmful_words = this.props.harmful_words;
     let word_list = this.props.harmful_words || [];
     let filtered_words = word_list.filter(word => {
       return word.includes(this.state.inputVal);

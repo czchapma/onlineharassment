@@ -37,8 +37,6 @@ const filter = function() {
 
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
-    // console.log('adding listener');
-    // console.log(proxyStore.getState());
-    filter();
+    proxyStore.subscribe(filter);
   }
 );
