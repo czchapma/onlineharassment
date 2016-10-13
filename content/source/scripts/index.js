@@ -27,9 +27,15 @@ const filterAndRemove = function() {
 
 //Replaces the tweet with a nice phrase
 const filterAndReplace = function() {
+  let state = proxyStore.getState();
+  let harmful_words = state.harmful_words;
+
+  var elements = document.getElementsByTagName('*');
+
+  for (var i = 0; i < elements.length; i++) {
+    var element = elements[i];
     for (var j = 0; j < element.childNodes.length; j++) {
       var node = element.childNodes[j];
-
       if (node.nodeType === 3) {
         var text = node.nodeValue;
         harmful_words.forEach( word => {
@@ -39,16 +45,26 @@ const filterAndReplace = function() {
             element.replaceChild(document.createTextNode(replacedText), node);
           }
         })
-        var replacedText = text.replace(/test_word/gi, ' I bet you sweat glitter! ');
-        replacedText = replacedText.replace(/badword1/gi, ' All my friends have birthdays this year! ');
-        replacedText = replacedText.replace(/badword2/gi, ' I\'m pedaling backward!');
+        // var replacedText = text.replace(/test_word/gi, ' I bet you sweat glitter! ');
+        // replacedText = replacedText.replace(/badword1/gi, ' All my friends have birthdays this year! ');
+        // replacedText = replacedText.replace(/badword2/gi, ' I\'m pedaling backward!');
 
       }
     }
   }
+}
 
-// chrome.runtime.onMessage.addListener(
-//   function(request, sender, sendResponse) {
-    proxyStore.subscribe(filterAndRemove);
-  // }
-// );
+const filter = function(){
+  let state = proxyStore.getState();
+  let filter_options = state.filter_options;
+  if (filter_options.hide_tweets){
+    filterAndRemove();
+  } else if (filter_options.word_substitutes){
+    filterAndReplace();
+  } else if (filter_options.option3){
+    console.log('options 3');
+  }
+}
+
+proxyStore.subscribe(filter);
+// proxyStore.subscribe(filterAndRemove);
