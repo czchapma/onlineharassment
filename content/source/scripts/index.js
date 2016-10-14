@@ -16,7 +16,9 @@ const filterAndRemove = function() {
     var tweetElement = elements[i];
     var text = tweetElement.getElementsByClassName('tweet-text')[0];
     if (text) {
+      text = text.toLowerCase();
       harmful_words.forEach( word => {
+        word = word.toLowerCase();
         if (text.textContent.indexOf(word) != -1) {
           tweetElement.style.visibility = "hidden";
         }
@@ -57,14 +59,16 @@ const filterAndReplace = function() {
 const filter = function(){
   let state = proxyStore.getState();
   let filter_options = state.filter_options;
-  if (filter_options.hide_tweets){
-    filterAndRemove();
-  } else if (filter_options.word_substitutes){
-    filterAndReplace();
-  } else if (filter_options.option3){
-    console.log('options 3');
+  //Only run if the filter is enabled
+  if (state.filter_on) {
+    if (filter_options.hide_tweets){
+      filterAndRemove();
+    } else if (filter_options.word_substitutes){
+      filterAndReplace();
+    } else if (filter_options.option3){
+      console.log('options 3');
+    }
   }
 }
 
 proxyStore.subscribe(filter);
-// proxyStore.subscribe(filterAndRemove);
