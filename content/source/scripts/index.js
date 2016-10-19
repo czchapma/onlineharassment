@@ -8,7 +8,6 @@ const proxyStore = new Store({
 const filterAndRemove = function() {
   let state = proxyStore.getState();
   let harmful_words = state.harmful_words;
-  console.log(harmful_words);
 
   var elements = document.getElementsByClassName('tweet');
 
@@ -31,7 +30,6 @@ const filterAndRemove = function() {
 const undoFilterAndRemove = function(){
   let state = proxyStore.getState();
   let harmful_words = state.harmful_words;
-  console.log(harmful_words);
 
   var elements = document.getElementsByClassName('tweet');
 
