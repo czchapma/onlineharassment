@@ -40,7 +40,8 @@ const undoFilterAndRemove = function(){
     var text = tweetElement.getElementsByClassName('tweet-text')[0];
     if (text) {
       harmful_words.forEach( word => {
-        if (text.textContent.indexOf(word) != -1) {
+        var regex = new RegExp(word, "gi");
+        if (regex.test(text.textContent)) {
           tweetElement.style.visibility = "visible";
         }
       });
