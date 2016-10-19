@@ -21495,6 +21495,8 @@
 	    value: function render() {
 	      var filter_status = this.props.filter_on ? 'enabled' : 'disabled';
 	      var filter_options = this.props.filter_on ? _react2.default.createElement(_filterOptions2.default, { checkFilterOption: this.props.checkFilterOption, filter_options: this.props.filter_options }) : _react2.default.createElement('div', null);
+	      var quotes = ["'Kind words can be short and easy to speak but their echoes are truly endless.' --Mother Theresa", "'You are braver than you believe, stronger than you seem, and smarter than you think.' --Christopher Robin", "'Be who you are and say what you feel, because those who mind don't matter and those who matter don't mind.' -- Dr. Seuss", "'One must always be careful of books and what is inside them, for words have the power to change us.' - Tessa Gray", "'Don't let the Muggles get you down.' --Ron Weasley"];
+	      var inspirational_quote = quotes[Math.floor(Math.random() * quotes.length)];
 	      return _react2.default.createElement(
 	        'div',
 	        null,
@@ -21506,7 +21508,7 @@
 	        _react2.default.createElement(
 	          'h5',
 	          null,
-	          '\'Kind words can be short and easy to speak but their echoes are truly endless.\' --Mother Theresa'
+	          inspirational_quote
 	        ),
 	        _react2.default.createElement(
 	          'div',
