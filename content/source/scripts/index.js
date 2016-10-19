@@ -4,10 +4,12 @@ const proxyStore = new Store({
   portName: 'STOP_HARASSMENT'
 });
 
-//Removes the tweet entirely
-const filterAndRemove = function() {
+//Removes the tweet entirely, previously known as filterAndRemove
+//trying to refactor to combine?
+const filterOnType = function() {
   let state = proxyStore.getState();
   let harmful_words = state.harmful_words;
+  let filter_options = state.filter_options; //testing
 
   var elements = document.getElementsByClassName('tweet');
 
@@ -18,8 +20,15 @@ const filterAndRemove = function() {
       text = text.toLowerCase();
       harmful_words.forEach( word => {
         var regex = new RegExp(word, "gi");
-        if (regex.test(text.textContent)) {
-          tweetElement.style.visibility = "hidden";
+        var text_content = text.textContent;
+        if (regex.test(text_content)) {
+          if (filter_options.hide_tweets){
+            tweetElement.style.visibility = "hidden";
+          } else if (filter_options.word_substitutes) {
+            tweetElement.style.visibility = "visible";
+            var replacedText = text_content.replace(regex, 'I bet you sweat glitter!');
+            text.innerHTML = replacedText;
+          }
         }
       });
     }
@@ -58,6 +67,7 @@ const filterAndReplace = function() {
     var element = elements[i];
     for (var j = 0; j < element.childNodes.length; j++) {
       var node = element.childNodes[j];
+      console.log(node);
       if (node.nodeType === 3) {
         var text = node.nodeValue;
         harmful_words.forEach( word => {
@@ -78,19 +88,19 @@ const filterAndReplace = function() {
 
 const filter = function(){
   let state = proxyStore.getState();
-  let filter_options = state.filter_options;
 
-  //Only run if the filter is enabled
   if (state.filter_on) {
-    if (filter_options.hide_tweets){
-      filterAndRemove();
-    } else if (filter_options.word_substitutes){
-      undoFilterAndRemove();
-      filterAndReplace();
-    } else if (filter_options.option3){
-      console.log('options 3');
-    }
-  }
+    filterOnType();
+  };
+  // let filter_options = state.filter_options;
+  // if (filter_options.hide_tweets){
+  //   filterAndRemove();
+  // } else if (filter_options.word_substitutes){
+  //   undoFilterAndRemove();
+  //   filterAndReplace();
+  // } else if (filter_options.option3){
+  //   console.log('options 3');
+  // }
 }
 
 proxyStore.subscribe(filter);
