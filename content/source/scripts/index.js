@@ -22,9 +22,10 @@ const filterOnType = function() {
         var text_content = text.textContent;
         if (regex.test(text_content)) {
           if (filter_options.hide_tweets){
-            tweetElement.style.visibility = "hidden";
+            console.log(tweetElement.style.display)
+            tweetElement.style.display = "none";
           } else if (filter_options.word_substitutes) {
-            tweetElement.style.visibility = "visible";
+            tweetElement.style.display = "inherit";
             var replacedText = text_content.replace(regex, 'I bet you sweat glitter!');
             text.innerHTML = replacedText;
           }
