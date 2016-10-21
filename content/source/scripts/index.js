@@ -17,7 +17,6 @@ const filterOnType = function() {
     var tweetElement = elements[i];
     var text = tweetElement.getElementsByClassName('tweet-text')[0];
     if (text) {
-      text = text.toLowerCase();
       harmful_words.forEach( word => {
         var regex = new RegExp(word, "gi");
         var text_content = text.textContent;
