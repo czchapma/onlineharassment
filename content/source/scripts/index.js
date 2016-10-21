@@ -5,7 +5,7 @@ const proxyStore = new Store({
 });
 
 //Removes the tweet entirely, previously known as filterAndRemove
-//trying to refactor to combine?
+//trying to refactor to write less code/combine
 const filterOnType = function() {
   let state = proxyStore.getState();
   let harmful_words = state.harmful_words;
@@ -17,17 +17,30 @@ const filterOnType = function() {
     var tweetElement = elements[i];
     var text = tweetElement.getElementsByClassName('tweet-text')[0];
     if (text) {
+
       harmful_words.forEach( word => {
         var regex = new RegExp(word, "gi");
+
         var text_content = text.textContent;
+        //making new node to add and remove but still saves original text to retrieve later
+        var parentNode = text.parentNode;
+        var newNode = text.cloneNode();
+        var replacedText = text_content.replace(regex, 'I bet you sweat glitter!');
+        newNode.innerHTML = replacedText;
+
+        //if tweet contains harmful word
         if (regex.test(text_content)) {
+          //hiding tweets
           if (filter_options.hide_tweets){
-            console.log(tweetElement.style.display)
+            if (parentNode.contains(newNode)){
+              parentNode.removeChild(newNode);
+            };
             tweetElement.style.display = "none";
+          //substituting tweets
           } else if (filter_options.word_substitutes) {
             tweetElement.style.display = "inherit";
-            var replacedText = text_content.replace(regex, 'I bet you sweat glitter!');
-            text.innerHTML = replacedText;
+            parentNode.appendChild(newNode);
+            text.style.display = "none";
           }
         }
       });
