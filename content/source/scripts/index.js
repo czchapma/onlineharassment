@@ -77,10 +77,6 @@ const filterAndReplace = function() {
             element.replaceChild(document.createTextNode(replacedText), node);
           }
         })
-        // var replacedText = text.replace(/test_word/gi, ' I bet you sweat glitter! ');
-        // replacedText = replacedText.replace(/badword1/gi, ' All my friends have birthdays this year! ');
-        // replacedText = replacedText.replace(/badword2/gi, ' I\'m pedaling backward!');
-
       }
     }
   }
@@ -91,16 +87,8 @@ const filter = function(){
 
   if (state.filter_on) {
     filterOnType();
+    setInterval(filterOnType, 1000);
   };
-  // let filter_options = state.filter_options;
-  // if (filter_options.hide_tweets){
-  //   filterAndRemove();
-  // } else if (filter_options.word_substitutes){
-  //   undoFilterAndRemove();
-  //   filterAndReplace();
-  // } else if (filter_options.option3){
-  //   console.log('options 3');
-  // }
 }
 
 proxyStore.subscribe(filter);
