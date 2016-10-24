@@ -27,6 +27,7 @@ const filterOnType = function() {
         var newNode = text.cloneNode();
         var replacedText = text_content.replace(regex, 'I bet you sweat glitter!');
         newNode.innerHTML = replacedText;
+        newNode.style.display = "inherit";
 
         //if tweet contains harmful word
         if (regex.test(text_content)) {
@@ -49,10 +50,11 @@ const filterOnType = function() {
           //substituting tweets
           } else if (filter_options.word_substitutes) {
             tweetElement.style.display = "inherit";
+            text.style.display = "none";
+
             if (numChildren === 1){
               parentNode.appendChild(newNode);
             }
-            text.style.display = "none";
           }
         }
       });
