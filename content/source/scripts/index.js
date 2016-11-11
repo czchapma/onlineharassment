@@ -25,36 +25,49 @@ const filterOnType = function() {
         var parentNode = text.parentNode;
         var numChildren = parentNode.children.length;
         var newNode = text.cloneNode();
-        var replacedText = text_content.replace(regex, 'I bet you sweat glitter!');
-        newNode.innerHTML = replacedText;
+        // var replacedText = text_content.replace(regex, 'I bet you sweat glitter!');
+        // var replacedText = "You have purpose. Make your voice heard.";
+        // newNode.innerHTML = replacedText;
         newNode.style.display = "inherit";
 
         //if tweet contains harmful word
         if (regex.test(text_content)) {
-
+          if (numChildren > 1){
+            var lastChild = parentNode.lastChild;
+            parentNode.removeChild(lastChild);
+          };
           //if filter is off
           if (!filter_on) {
             tweetElement.style.display = "inherit";
             text.style.display = "inherit";
-            if (numChildren > 1){
-              var lastChild = parentNode.lastChild;
-              parentNode.removeChild(lastChild);
-            };
+            // if (numChildren > 1){
+            //   var lastChild = parentNode.lastChild;
+            //   parentNode.removeChild(lastChild);
+            // };
           //hiding tweets
           } else if (filter_options.hide_tweets){
-            if (numChildren > 1){
-              var lastChild = parentNode.lastChild;
-              parentNode.removeChild(lastChild);
-            };
+            // if (numChildren > 1){
+            //   var lastChild = parentNode.lastChild;
+            //   parentNode.removeChild(lastChild);
+            // };
             tweetElement.style.display = "none";
           //substituting tweets
-          } else if (filter_options.word_substitutes) {
+        } else if (filter_options.word_substitutes) {
             tweetElement.style.display = "inherit";
             text.style.display = "none";
+            newNode.innerHTML = "You have purpose. Make your voice heard.";
 
-            if (numChildren === 1){
+            // if (numChildren === 1){
               parentNode.appendChild(newNode);
-            }
+            // }
+          } else if (filter_options.option3){
+            tweetElement.style.display = "inherit";
+            text.style.display = "none";
+            newNode.innerHTML = 'Warning this tweet contains hurtful words...'
+
+            // if (numChildren === 1){
+              parentNode.appendChild(newNode);
+            // }
           }
         }
       });
