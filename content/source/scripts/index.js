@@ -28,7 +28,7 @@ const filterOnType = function() {
         // var replacedText = text_content.replace(regex, 'I bet you sweat glitter!');
         // var replacedText = "You have purpose. Make your voice heard.";
         // newNode.innerHTML = replacedText;
-        newNode.style.display = "inherit";
+        newNode.style = "inherit";
 
         //if tweet contains harmful word
         if (regex.test(text_content)) {
@@ -38,8 +38,8 @@ const filterOnType = function() {
           };
           //if filter is off
           if (!filter_on) {
-            tweetElement.style.display = "inherit";
-            text.style.display = "inherit";
+            tweetElement.style = "inherit";
+            text.style = "inherit";
             // if (numChildren > 1){
             //   var lastChild = parentNode.lastChild;
             //   parentNode.removeChild(lastChild);
@@ -62,12 +62,11 @@ const filterOnType = function() {
             // }
           } else if (filter_options.option3){
             tweetElement.style.display = "inherit";
-            text.style.display = "none";
-            newNode.innerHTML = 'Warning this tweet contains hurtful words...'
+            //blur
+            text.style.display = "inherit";
+            text.style.color = "transparent";
+            text.style.textShadow = "0 0 5px rgba(0,0,0,0.5)";
 
-            // if (numChildren === 1){
-              parentNode.appendChild(newNode);
-            // }
           }
         }
       });
