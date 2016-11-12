@@ -29,6 +29,7 @@
     "react-redux": "^4.4.5",
     "react-toggle-switch": "^2.1.2",
     "redux": "^3.6.0",
+    "watson-developer-cloud": "^2.8.2",
     "webpack": "^1.13.2"
   },
   "devDependencies": {
