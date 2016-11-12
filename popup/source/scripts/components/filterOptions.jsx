@@ -26,19 +26,19 @@ class FilterOptions extends React.Component{
           <div className="radio">
             <label>
               <input type="radio" name="filter_options" value="hide_tweets" onChange={this.setFilter.bind(this)} checked={filters.hide_tweets}/>
-              Hide Tweets
+              Hide Me
             </label>
           </div>
           <div className="radio">
             <label>
               <input type="radio" name="filter_options" value="word_substitutes" onChange={this.setFilter.bind(this)} checked={filters.word_substitutes}/>
-              Word Substitutes
+              Replace Me
             </label>
           </div>
           <div className="radio">
             <label>
               <input type="radio" name="filter_options" value="option3" onChange={this.setFilter.bind(this)} checked={filters.option3}/>
-              Other Filter
+              Blur Me
             </label>
           </div>
         </form>
