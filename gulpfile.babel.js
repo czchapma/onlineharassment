@@ -84,11 +84,16 @@ gulp.task('copy-icon', ['clean'], () => {
     .pipe(gulp.dest('./build'));
 });
 
+gulp.task('copy-server', ['clean'], () => {
+  return gulp.src('server.js')
+    .pipe(gulp.dest('./build'));
+});
+
 gulp.task('clean', (cb) => {
   rimraf('./build', cb);
 });
 
-gulp.task('build', ['copy-manifest', 'popup-js', 'event-js', 'options-js', 'content-js', 'popup-html', 'options-html', 'popup-css', 'toggleswitch-css', 'copy-icon']);
+gulp.task('build', ['copy-manifest', 'copy-server', 'popup-js', 'event-js', 'options-js', 'content-js', 'popup-html', 'options-html', 'popup-css', 'toggleswitch-css', 'copy-icon']);
 
 gulp.task('watch', ['default'], () => {
   gulp.watch('popup/**/*', ['build']);
