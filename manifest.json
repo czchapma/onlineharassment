@@ -16,7 +16,8 @@
     {
       "matches": [
         "http://twitter.com/*",
-        "https://twitter.com/*"
+        "https://twitter.com/*",
+        "http://huffingtonpost.com/*"
       ],
       "js": ["content.js"]
     }

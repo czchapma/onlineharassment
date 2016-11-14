@@ -1,21 +1,21 @@
 import {Store} from 'react-chrome-redux';
-import AlchemyLanguageV1 from 'watson-developer-cloud/alchemy-language/v1';
+// import AlchemyLanguageV1 from 'watson-developer-cloud/alchemy-language/v1';
 // var AlchemyLanguageV1 = require('watson-developer-cloud/alchemy-language/v1');
 
-const alchemy_language = new AlchemyLanguageV1({
-  api_key: 'ca337bd9260cbf967aa5faa2fdd5c9ddbd7eae23'
-});
+// const alchemy_language = new AlchemyLanguageV1({
+//   api_key: 'ca337bd9260cbf967aa5faa2fdd5c9ddbd7eae23'
+// });
 
 const params = {
   text: 'IBM Watson won the Jeopardy television show hosted by Alex Trebek'
 };
 
-alchemy_language.sentiment(params, function (err, response) {
-  if (err)
-    console.log('error:', err);
-  else
-    console.log(JSON.stringify(response, null, 2));
-});
+// alchemy_language.sentiment(params, function (err, response) {
+//   if (err)
+//     console.log('error:', err);
+//   else
+//     console.log(JSON.stringify(response, null, 2));
+// });
 
 const proxyStore = new Store({
   portName: 'STOP_HARASSMENT'
@@ -92,14 +92,16 @@ const filterOnType = function() {
 }
 
 const filter = function(){
-  // alchemy_language.sentiment(params, function (err, response) {
-  //   if (err)
-  //     console.log('error:', err);
-  //   else
-  //     console.log(JSON.stringify(response, null, 2));
-  // });
   filterOnType();
   setInterval(filterOnType, 1000);
 }
 
-proxyStore.subscribe(filter);
+const test = function(){
+  console.log('in test');
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.open("POST", "http://localhost:3000", true);
+  xmlhttp.send(params);
+  console.log('end test');
+}
+
+proxyStore.subscribe(test);
