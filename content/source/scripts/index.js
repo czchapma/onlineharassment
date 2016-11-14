@@ -1,4 +1,5 @@
 import {Store} from 'react-chrome-redux';
+import $ from 'jQuery';
 // import AlchemyLanguageV1 from 'watson-developer-cloud/alchemy-language/v1';
 // var AlchemyLanguageV1 = require('watson-developer-cloud/alchemy-language/v1');
 
@@ -97,10 +98,28 @@ const filter = function(){
 }
 
 const test = function(){
+  let params = {
+    text: 'IBM Watson won the Jeopardy television show hosted by Alex Trebek'
+  };
   console.log('in test');
-  var xmlhttp = new XMLHttpRequest();
-  xmlhttp.open("POST", "http://localhost:3000", true);
-  xmlhttp.send(params);
+  $.ajax({
+    url: "http://localhost:3000/",
+    type: "POST",
+    data: params,
+    success: function (data) {
+      console.log('success:', data);
+    }
+  });
+  // var xmlhttp = new XMLHttpRequest();
+  // xmlhttp.open("POST", "http://localhost:3000/", true);
+  // xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  //
+  // xmlhttp.onreadystatechange = function() {//Call a function when the state changes.
+  //     if(xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+  //         alert(xmlhttp.responseText);
+  //     }
+  // }
+  // xmlhttp.send("Kate");
   console.log('end test');
 }
 
