@@ -1,22 +1,5 @@
 import {Store} from 'react-chrome-redux';
 import $ from 'jQuery';
-// import AlchemyLanguageV1 from 'watson-developer-cloud/alchemy-language/v1';
-// var AlchemyLanguageV1 = require('watson-developer-cloud/alchemy-language/v1');
-
-// const alchemy_language = new AlchemyLanguageV1({
-//   api_key: 'ca337bd9260cbf967aa5faa2fdd5c9ddbd7eae23'
-// });
-
-const params = {
-  text: 'IBM Watson won the Jeopardy television show hosted by Alex Trebek'
-};
-
-// alchemy_language.sentiment(params, function (err, response) {
-//   if (err)
-//     console.log('error:', err);
-//   else
-//     console.log(JSON.stringify(response, null, 2));
-// });
 
 const proxyStore = new Store({
   portName: 'STOP_HARASSMENT'
@@ -98,28 +81,21 @@ const filter = function(){
 }
 
 const test = function(){
-  let params = {
-    text: 'IBM Watson won the Jeopardy television show hosted by Alex Trebek'
-  };
+  let phrase = 'IBM Watson won the Jeopardy television show hosted by Alex Trebek';
   console.log('in test');
   $.ajax({
     url: "http://localhost:3000/",
     type: "POST",
-    data: params,
-    success: function (data) {
-      console.log('success:', data);
+    data: {text: phrase},
+    success: function (res) {
+      if (res) {
+        console.log('needs to be hidden');
+      } else {
+        console.log('no filter needed');
+      };
     }
   });
-  // var xmlhttp = new XMLHttpRequest();
-  // xmlhttp.open("POST", "http://localhost:3000/", true);
-  // xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  //
-  // xmlhttp.onreadystatechange = function() {//Call a function when the state changes.
-  //     if(xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-  //         alert(xmlhttp.responseText);
-  //     }
-  // }
-  // xmlhttp.send("Kate");
+
   console.log('end test');
 }
 

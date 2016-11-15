@@ -11,7 +11,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.listen(3000);
 
 app.post("/", function(req, res) {
-  console.log(req.body);
   let alchemy_language = new AlchemyLanguageV1({
     api_key: 'ca337bd9260cbf967aa5faa2fdd5c9ddbd7eae23'
   });
