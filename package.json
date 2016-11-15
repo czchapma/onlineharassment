@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/czchapma/onlineharassment#readme",
   "dependencies": {
+    "alchemy-api": "^1.3.3",
     "babel-core": "^6.14.0",
     "babel-loader": "^6.2.5",
     "babel-preset-es2015": "^6.16.0",
