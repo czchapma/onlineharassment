@@ -51,7 +51,25 @@ const filterOnType = function() {
             //   var lastChild = parentNode.lastChild;
             //   parentNode.removeChild(lastChild);
             // };
-            tweetElement.style.display = "none";
+
+            //testing if tweet is of negative sentiment, if so hide
+            if (test(text_content)){
+              tweetElement.style.display = "none";
+            }
+            //may need to use ajax directly in here
+            $.ajax({
+              url: "http://localhost:3000/",
+              type: "POST",
+              data: {text: phrase},
+              success: function (res) {
+                if (res){
+                  tweetElement.style.display = "none";
+                }
+              }
+            });
+
+
+
           //substituting tweets
         } else if (filter_options.word_substitutes) {
             tweetElement.style.display = "inherit";
@@ -80,23 +98,20 @@ const filter = function(){
   setInterval(filterOnType, 1000);
 }
 
-const test = function(){
-  let phrase = 'IBM Watson won the Jeopardy television show hosted by Alex Trebek';
-  console.log('in test');
+const test = function(phrase){
   $.ajax({
     url: "http://localhost:3000/",
     type: "POST",
     data: {text: phrase},
     success: function (res) {
-      if (res) {
-        console.log('needs to be hidden');
-      } else {
-        console.log('no filter needed');
-      };
+      return res;
+      // if (res) {
+      //   console.log('needs to be hidden');
+      // } else {
+      //   console.log('no filter needed');
+      // };
     }
   });
-
-  console.log('end test');
 }
 
-proxyStore.subscribe(test);
+proxyStore.subscribe(filter);
