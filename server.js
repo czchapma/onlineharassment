@@ -18,11 +18,12 @@ app.post("/", function(req, res) {
     if (err) {
       console.log('error:', err);
     } else {
-      if (response.docSentiment.type === 'negative') {
-        res.send(true);
-      } else {
-        res.send(false);
-      }
+      res.send(response.docSentiment.type === 'negative');
+      // if (response.docSentiment.type === 'negative') {
+      //   res.send(true);
+      // } else {
+      //   res.send(false);
+      // }
     };
   });
 });
