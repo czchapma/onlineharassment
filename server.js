@@ -1,12 +1,28 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
+var fs = require('fs');
 
-// var https = require('https');
+var https = require('https');
 var AlchemyLanguageV1 = require('watson-developer-cloud/alchemy-language/v1');
 
-app.use(bodyParser.urlencoded({ extended: true }));
+// start
+var options = {
+    key: fs.readFileSync('/etc/apache2/ssl/server.key'),
+    cert: fs.readFileSync('/etc/apache2/ssl/server.crt'),
+    requestCert: false,
+    rejectUnauthorized: false
+};
 
+
+var app = express();
+
+var server = https.createServer(options, app).listen(3000, function(){
+    console.log("server started at port 3000");
+});
+
+app.use(bodyParser.urlencoded({ extended: true }));
+// end
 
 app.listen(3000);
 
