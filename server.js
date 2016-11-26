@@ -6,12 +6,12 @@ var fs = require('fs');
 var https = require('https');
 var AlchemyLanguageV1 = require('watson-developer-cloud/alchemy-language/v1');
 
-// start
 var options = {
-    key: fs.readFileSync('/ssl/server.key'),
+    key: fs.readFileSync('ssl/server.key'),
     cert: fs.readFileSync('ssl/server.crt'),
     requestCert: false,
-    rejectUnauthorized: false
+    rejectUnauthorized: false,
+    passphrase: 'test'
 };
 
 var server = https.createServer(options, app).listen(3000, function(){
@@ -20,7 +20,9 @@ var server = https.createServer(options, app).listen(3000, function(){
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// app.listen(3000);
+app.get('/', function (req, res) {
+  res.send('Hello World!')
+});
 
 app.post("/", function(req, res) {
   let alchemy_language = new AlchemyLanguageV1({

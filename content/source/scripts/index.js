@@ -60,13 +60,16 @@ const filterOnType = function() {
             // }
             //may need to use ajax directly in here
             $.ajax({
-              url: "http://localhost:3000/",
+              url: "https://localhost:3000/",
               type: "POST",
-              data: {text: test_content},
+              data: {text: text_content},
               success: function (res) {
                 if (res){
                   tweetElement.style.display = "none";
-                  console.log('test passed');
+                  console.log(tweetElement);
+                  console.log('negative');
+                } else {
+                  console.log('positive');
                 }
               }
             });
@@ -74,22 +77,23 @@ const filterOnType = function() {
 
 
           //substituting tweets
-        } else if (filter_options.word_substitutes) {
-            tweetElement.style.display = "inherit";
-            text.style.display = "none";
-            newNode.innerHTML = "You have purpose. Make your voice heard.";
-
-            // if (numChildren === 1){
-              parentNode.appendChild(newNode);
-            // }
-          } else if (filter_options.option3){
-            tweetElement.style.display = "inherit";
-            //blur
-            text.style.display = "inherit";
-            text.style.color = "transparent";
-            text.style.textShadow = "0 0 5px rgba(0,0,0,0.5)";
-
-          }
+        }
+        // else if (filter_options.word_substitutes) {
+        //     tweetElement.style.display = "inherit";
+        //     text.style.display = "none";
+        //     newNode.innerHTML = "You have purpose. Make your voice heard.";
+        //
+        //     // if (numChildren === 1){
+        //       parentNode.appendChild(newNode);
+        //     // }
+        //   } else if (filter_options.option3){
+        //     tweetElement.style.display = "inherit";
+        //     //blur
+        //     text.style.display = "inherit";
+        //     text.style.color = "transparent";
+        //     text.style.textShadow = "0 0 5px rgba(0,0,0,0.5)";
+        //
+        //   }
         }
       });
     }
@@ -99,22 +103,6 @@ const filterOnType = function() {
 const filter = function(){
   filterOnType();
   setInterval(filterOnType, 1000);
-}
-
-const test = function(phrase){
-  $.ajax({
-    url: "http://localhost:3000/",
-    type: "POST",
-    data: {text: phrase},
-    success: function (res) {
-      return res;
-      // if (res) {
-      //   console.log('needs to be hidden');
-      // } else {
-      //   console.log('no filter needed');
-      // };
-    }
-  });
 }
 
 proxyStore.subscribe(filter);
