@@ -8,23 +8,19 @@ var AlchemyLanguageV1 = require('watson-developer-cloud/alchemy-language/v1');
 
 // start
 var options = {
-    key: fs.readFileSync('/etc/apache2/ssl/server.key'),
-    cert: fs.readFileSync('/etc/apache2/ssl/server.crt'),
+    key: fs.readFileSync('/ssl/server.key'),
+    cert: fs.readFileSync('ssl/server.crt'),
     requestCert: false,
     rejectUnauthorized: false
 };
-
-
-var app = express();
 
 var server = https.createServer(options, app).listen(3000, function(){
     console.log("server started at port 3000");
 });
 
 app.use(bodyParser.urlencoded({ extended: true }));
-// end
 
-app.listen(3000);
+// app.listen(3000);
 
 app.post("/", function(req, res) {
   let alchemy_language = new AlchemyLanguageV1({
@@ -38,8 +34,6 @@ app.post("/", function(req, res) {
     };
   });
 });
-
-// https.createServer(app).listen(3000);
 
 // const negSentiment = (text) => {
 //
