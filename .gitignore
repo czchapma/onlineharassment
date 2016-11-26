@@ -2,6 +2,7 @@ node_modules
 popup.js
 popup.html
 event.js
+server.js
 
 
 .DS_Store

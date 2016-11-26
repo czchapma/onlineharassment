@@ -53,17 +53,20 @@ const filterOnType = function() {
             // };
 
             //testing if tweet is of negative sentiment, if so hide
-            if (test(text_content)){
-              tweetElement.style.display = "none";
-            }
+            // console.log(text_content);
+            // if (test(text_content)){
+            //   tweetElement.style.display = "none";
+            //   console.log('test passed');
+            // }
             //may need to use ajax directly in here
             $.ajax({
               url: "http://localhost:3000/",
               type: "POST",
-              data: {text: phrase},
+              data: {text: test_content},
               success: function (res) {
                 if (res){
                   tweetElement.style.display = "none";
+                  console.log('test passed');
                 }
               }
             });
