@@ -19,11 +19,6 @@ app.post("/", function(req, res) {
       console.log('error:', err);
     } else {
       res.send(response.docSentiment.type === 'negative');
-      // if (response.docSentiment.type === 'negative') {
-      //   res.send(true);
-      // } else {
-      //   res.send(false);
-      // }
     };
   });
 });
