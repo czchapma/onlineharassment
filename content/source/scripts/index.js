@@ -35,26 +35,26 @@ const filterOnType = function() {
               url: "https://localhost:3000/",
               type: "POST",
               data: {text: text_content},
+              async: false,
               success: function (res) {
                 if (res){
                   tweetElement.style.display = "none";
-                  console.log('negative');
-                } else {
-                  tweetElement.style = "inherit";
-                  console.log('positive');
                 }
               }
             });
-          }
+          };
+
         }
+
       });
+
     }
   }
 }
 
 const filter = function(){
   filterOnType(); //can be removed?
-  setInterval(filterOnType, 1000);
+  // setInterval(filterOnType, 1000);
 }
 
 proxyStore.subscribe(filter);
