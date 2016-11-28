@@ -14,6 +14,7 @@ const filterOnType = function() {
 
   for (var i = 0; i < elements.length; i++) {
     var tweetElement = elements[i];
+    var tweetId = tweetElement.getAttribute('data-tweet-id');
     var text = tweetElement.getElementsByClassName('tweet-text')[0];
     if (text) {
 
@@ -34,11 +35,13 @@ const filterOnType = function() {
             $.ajax({
               url: "https://localhost:3000/",
               type: "POST",
-              data: {text: text_content},
-              async: false,
+              data: { text: text_content, tweet_id: tweetId },
+              // async: false,
               success: function (res) {
-                if (res){
-                  tweetElement.style.display = "none";
+                if (res.negative){
+                  var badTweet = $("[data-tweet-id=" + res.tweet_id + "]")[0];
+                  badTweet.style.display = "none";
+                  console.log(badTweet);
                 }
               }
             });

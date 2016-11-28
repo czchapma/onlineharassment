@@ -32,7 +32,10 @@ app.post("/", function(req, res) {
     if (err) {
       console.log('error:', err);
     } else {
-      res.send(response.docSentiment.type === 'negative');
+      res.send({
+            negative: response.docSentiment.type === 'negative',
+            tweet_id: req.body.tweet_id
+          });
     };
   });
 });
