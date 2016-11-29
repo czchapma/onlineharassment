@@ -5,6 +5,7 @@ const proxyStore = new Store({
   portName: 'STOP_HARASSMENT'
 });
 
+let hateful_tweet_ids = [];
 const filterOnType = function() {
   let state = proxyStore.getState();
   let harmful_words = state.harmful_words;
@@ -39,6 +40,7 @@ const filterOnType = function() {
               // async: false,
               success: function (res) {
                 if (res.negative){
+                  hateful_tweet_ids.push(res.tweet_id);
                   var badTweet = $("[data-tweet-id=" + res.tweet_id + "]")[0];
                   badTweet.style.display = "none";
                   console.log(badTweet);
