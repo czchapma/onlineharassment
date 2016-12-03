@@ -14,31 +14,40 @@ const filterOnType = function() {
 
   var elements = document.getElementsByClassName('tweet');
 
-  for (var i = 0; i < elements.length; i++) {
-    var tweetElement = elements[i];
-    var tweetId = tweetElement.getAttribute('data-tweet-id');
+  //if filter off, go through hateful_tweet_ids to make them visible again
+  if (!filter_on){
+    hateful_tweet_ids.forEach(function(id){
+      let unhide_tweet = $("[data-tweet-id=" + id + "]")[0];
+      unhide_tweet.style = "inherit";
+    }
+  } else {
 
-    //if tweet already deemed hateful, just hide, don't make ajax call
-    if (hateful_tweet_ids.includes(tweetId)){
-      tweetElement.style.display = "none";
-    } else {
-      var text = tweetElement.getElementsByClassName('tweet-text')[0];
-      if (text) {
+    for (var i = 0; i < elements.length; i++) {
+      var tweetElement = elements[i];
+      var tweetId = tweetElement.getAttribute('data-tweet-id');
 
-        harmful_words.forEach( word => {
-          var regex = new RegExp(word, "gi");
+      //if tweet already deemed hateful, just hide, don't make ajax call
+      if (hateful_tweet_ids.includes(tweetId)){
+        tweetElement.style.display = "none";
+      //make ajax call to see sentiment of tweet
+      } else {
+        var text = tweetElement.getElementsByClassName('tweet-text')[0];
+        if (text) {
 
-          var text_content = text.textContent;
+          harmful_words.forEach( word => {
+            var regex = new RegExp(word, "gi");
 
-          //if tweet contains harmful word
-          if (regex.test(text_content)) {
+            var text_content = text.textContent;
 
-            //if filter is off
-            if (!filter_on) {
-              tweetElement.style = "inherit";
+            //if tweet contains harmful word
+            if (regex.test(text_content)) {
 
-              //hiding tweets if negative sentiment
-            } else {
+              //if filter is off
+            //   if (!filter_on) {
+            //     tweetElement.style = "inherit";
+            //
+            //   //hiding tweets if negative sentiment
+            // } else {
               $.ajax({
                 url: "https://localhost:3000/",
                 type: "POST",
@@ -53,7 +62,6 @@ const filterOnType = function() {
                   }
                 }
               });
-            };
 
           }
 
@@ -64,10 +72,13 @@ const filterOnType = function() {
     }
 
   }
+
+  }
 }
 
 const filter = function(){
   filterOnType(); //can be removed?
+  //commented out to prevent exceeding daily limit of express https server
   // setInterval(filterOnType, 1000);
 }
 
