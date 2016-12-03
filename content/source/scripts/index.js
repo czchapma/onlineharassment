@@ -18,6 +18,7 @@ const filterOnType = function() {
     var tweetElement = elements[i];
     var tweetId = tweetElement.getAttribute('data-tweet-id');
 
+    //if tweet already deemed hateful, just hide, don't make ajax call
     if (hateful_tweet_ids.includes(tweetId)){
       tweetElement.style.display = "none";
     } else {
