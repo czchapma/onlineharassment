@@ -19,7 +19,7 @@ const filterOnType = function() {
     hateful_tweet_ids.forEach(function(id){
       let unhide_tweet = $("[data-tweet-id=" + id + "]")[0];
       unhide_tweet.style = "inherit";
-    }
+    })
   } else {
 
     for (var i = 0; i < elements.length; i++) {
@@ -41,13 +41,7 @@ const filterOnType = function() {
 
             //if tweet contains harmful word
             if (regex.test(text_content)) {
-
-              //if filter is off
-            //   if (!filter_on) {
-            //     tweetElement.style = "inherit";
-            //
             //   //hiding tweets if negative sentiment
-            // } else {
               $.ajax({
                 url: "https://localhost:3000/",
                 type: "POST",
@@ -61,25 +55,20 @@ const filterOnType = function() {
                     console.log(hateful_tweet_ids);
                   }
                 }
-              });
-
-          }
-
-        });
-
+              })
+            }
+          })
+        }
       }
-
     }
-
-  }
-
   }
 }
+
 
 const filter = function(){
   filterOnType(); //can be removed?
   //commented out to prevent exceeding daily limit of express https server
-  // setInterval(filterOnType, 1000);
+  setInterval(filterOnType, 30000);
 }
 
 proxyStore.subscribe(filter);
