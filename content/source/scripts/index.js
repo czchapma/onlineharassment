@@ -11,7 +11,7 @@ const filterOnType = function() {
   let harmful_words = state.harmful_words;
   let filter_on = state.filter_on;
 
-  var elements = document.getElementsByClassName('tweet');
+  let elements = document.getElementsByClassName('tweet');
 
   //if filter off, go through hateful_tweet_ids to make them visible again
   if (!filter_on){
@@ -21,22 +21,22 @@ const filterOnType = function() {
     })
   } else {
 
-    for (var i = 0; i < elements.length; i++) {
-      var tweetElement = elements[i];
-      var tweetId = tweetElement.getAttribute('data-tweet-id');
+    for (let i = 0; i < elements.length; i++) {
+      let tweetElement = elements[i];
+      let tweetId = tweetElement.getAttribute('data-tweet-id');
 
       //if tweet already deemed hateful, just hide, don't make ajax call
       if (hateful_tweet_ids.includes(tweetId)){
         tweetElement.style.display = "none";
       //make ajax call to see sentiment of tweet
       } else {
-        var text = tweetElement.getElementsByClassName('tweet-text')[0];
+        let text = tweetElement.getElementsByClassName('tweet-text')[0];
         if (text) {
 
           harmful_words.forEach( word => {
-            var regex = new RegExp(word, "gi");
+            let regex = new RegExp(word, "gi");
 
-            var text_content = text.textContent;
+            let text_content = text.textContent;
 
             //if tweet contains harmful word
             if (regex.test(text_content)) {
