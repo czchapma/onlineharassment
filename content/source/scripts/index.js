@@ -1,5 +1,4 @@
 import {Store} from 'react-chrome-redux';
-import $ from 'jQuery';
 
 const proxyStore = new Store({
   portName: 'STOP_HARASSMENT'
@@ -17,7 +16,7 @@ const filterOnType = function() {
   //if filter off, go through hateful_tweet_ids to make them visible again
   if (!filter_on){
     hateful_tweet_ids.forEach(function(id){
-      let unhide_tweet = $("[data-tweet-id=" + id + "]")[0];
+      let unhide_tweet = document.querySelectorAll("[data-tweet-id=\"" + id + "\"]")[0];
       unhide_tweet.style = "inherit";
     })
   } else {
@@ -41,21 +40,23 @@ const filterOnType = function() {
 
             //if tweet contains harmful word
             if (regex.test(text_content)) {
-            //   //hiding tweets if negative sentiment
-              $.ajax({
-                url: "https://localhost:3000/",
-                type: "POST",
-                data: { text: text_content, tweet_id: tweetId },
-                // async: false,
-                success: function (res) {
-                  if (res.negative){
-                    hateful_tweet_ids.push(res.tweet_id);
-                    var badTweet = $("[data-tweet-id=" + res.tweet_id + "]")[0];
-                    badTweet.style.display = "none";
-                    console.log(hateful_tweet_ids);
+            //hiding tweets if negative sentiment using xmlhttprequest
+              let xhr = new XMLHttpRequest();
+              let data = "text=" + text_content + "&tweet_id=" + tweetId;
+              xhr.open('POST', "https://localhost:3000/");
+              xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+              xhr.onload = function() {
+                if (xhr.status == 200) {
+                  let res = xhr.responseText;
+                  let jsonResponse = JSON.parse(res);
+                  if (jsonResponse.negative){
+                      hateful_tweet_ids.push(jsonResponse.tweet_id);
+                      let badTweet = document.querySelectorAll("[data-tweet-id=\"" + jsonResponse.tweet_id + "\"]")[0];
+                      badTweet.style.display = "none";
                   }
                 }
-              })
+              };
+              xhr.send(data);
             }
           })
         }
@@ -68,7 +69,7 @@ const filterOnType = function() {
 const filter = function(){
   filterOnType(); //can be removed?
   //commented out to prevent exceeding daily limit of express https server
-  setInterval(filterOnType, 30000);
+  // setInterval(filterOnType, 30000);
 }
 
 proxyStore.subscribe(filter);

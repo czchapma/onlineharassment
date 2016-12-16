@@ -26,12 +26,13 @@ app.get('/', function (req, res) {
 
 app.post("/", function(req, res) {
   let alchemy_language = new AlchemyLanguageV1({
-    api_key: 'ca337bd9260cbf967aa5faa2fdd5c9ddbd7eae23'
+    api_key: 'ab06f855ca866b658bf8cabdeb152f0c2c74a34b'
   });
   alchemy_language.sentiment(req.body, function(err, response){
     if (err) {
-      console.log('error:', err);
+      console.log('error:', req.body);
     } else {
+      console.log(req.body);
       res.send({
             negative: response.docSentiment.type === 'negative',
             tweet_id: req.body.tweet_id
