@@ -39,21 +39,3 @@ app.post("/", function(req, res) {
     };
   });
 });
-
-// const negSentiment = (text) => {
-//
-//   let alchemy_language = new AlchemyLanguageV1({
-//     api_key: 'ca337bd9260cbf967aa5faa2fdd5c9ddbd7eae23'
-//   });
-//   alchemy_language.sentiment(text, function(err, response){
-//     if (err) {
-//       console.log('error:', err);
-//     } else {
-//       if (response.docSentiment.type === 'negative') {
-//         return true;
-//       } else {
-//         return false;
-//       }
-//     };
-//   });
-// };

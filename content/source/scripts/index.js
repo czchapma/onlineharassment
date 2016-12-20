@@ -4,10 +4,11 @@ const proxyStore = new Store({
   portName: 'STOP_HARASSMENT'
 });
 
-//caching hateful tweets
+//caching tweets
 let negative_tweet_ids = [];
 let positive_tweet_ids = [];
-const filterOnType = function() {
+
+const checkFilter = function() {
   let state = proxyStore.getState();
   let harmful_words = state.harmful_words;
   let filter_on = state.filter_on;
@@ -73,9 +74,9 @@ const filterOnType = function() {
 
 
 const filter = function(){
-  filterOnType(); //can be removed?
+  checkFilter();
   //commented out to prevent exceeding daily limit of express https server
-  // setInterval(filterOnType, 30000);
+  // setInterval(filterOnType, 1000);
 }
 
 proxyStore.subscribe(filter);
