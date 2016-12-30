@@ -30,19 +30,27 @@ class App extends Component{
       return word.includes(this.state.inputVal);
     }) //list of words in the full list that include what has been typed in search
     let autocomplete =
-    <ul>
+    <ul id="autocompleteList">
       {filtered_words.map((word, i) => {
-        return (<li key={i}>{word}<button value={word} onClick={this.removeWord.bind(this)}>remove</button></li>);
+        return (
+            <li className="wordItem" key={i}>{word}<button className="removeButton pull-right" value={word} onClick={this.removeWord.bind(this)}>X</button></li>);
       })}
     </ul>
     return (
-      <div>
-        <h1>Stop Harassment Word Settings</h1>
-        <input type="text" placeholder="Search" valueLink={linkState(this, 'inputVal')} />
-        <h4>Word List</h4>
-        <input type="text" placeholder='Add Word and Press Enter' onKeyPress={this.addWord.bind(this)} />
-        <div>{autocomplete}</div>
-      </div>
+        <div id="outer" className="container">
+          <div id="title">
+            <h1>Stop Harassment Word Settings</h1>
+            <h4 id="subtitle">Tell us what grinds your gears...</h4>
+          </div>
+          <div id="mainContent">
+            <h4 id="wordList">Word List</h4>
+            <div className="row fullRow" id="listInputs">
+              <input type="text" id="wordInput" className="col-sm-6 pull-left" placeholder='Add Word and Press Enter' onKeyPress={this.addWord.bind(this)} />
+              <input id="search" type="text" className="col-sm-6 pull-right" placeholder="Search" valueLink={linkState(this, 'inputVal')} />
+            </div>
+            <div id="list">{autocomplete}</div>
+          </div>
+        </div>
     )
   }
 }
