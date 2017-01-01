@@ -1,1 +1,142 @@
-@import "toggleswitch.css"
+@import "toggleswitch.css";
+
+#main {
+	background-image:  linear-gradient(to bottom, rgba(255,255,255,0.8) 0%,rgba(255,255,255,0.8) 100%), url("/icon.png");
+	background-repeat: no-repeat;
+	background-size: 140px 100px;
+	background-position: center;
+}
+
+h1 {
+	font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Arial, sans-serif;
+	font-style: bold;
+	text-align: center;	
+	size: 30;
+	color: #0098A8;
+}
+
+h5 {
+	font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Arial, sans-serif;	
+	font-style: italic;
+	color: #004750;	
+	padding: 4%;
+}
+
+.myButton {
+  border-radius: 5px;
+  font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Arial, sans-serif;
+  color: #ffffff;
+  font-size: 9px;
+  background: #3E939C;
+  padding: 3px 6px 3px 7px;
+  text-decoration: none;
+}
+
+.myButton:hover {
+  background: #49B4C0;
+  text-decoration: none;
+}
+
+.fullRow {
+	width:100%;
+	right: 10px;
+}
+
+#title {
+	text-align: center;
+	color: #054750;
+	font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Arial, sans-serif;
+}
+
+#subtitle{
+	text-align: center;
+	color: #0c747f;
+	margin-bottom: 50px;
+	font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Arial, sans-serif;
+}
+
+#outer {
+	margin-left: 10%;
+	margin-right: 10%;
+}
+
+#search {
+	border-style: solid;
+	border-width: 0.5px;
+	border-color: grey;
+    border-radius: 15px;
+    width: 200px;
+}
+
+#search:focus{
+	outline: none;
+}
+
+#wordInput {
+	border-style: solid;
+	border-width: 0.5px;
+	border-color: grey;
+	border-radius: 2px;
+	width: 250px;
+}
+
+#wordInput:focus{
+	outline: none;
+}
+
+#listInputs {
+	margin-bottom: 10px;
+	margin-left: 0px;
+}
+
+#list {
+	width: 100%;
+}
+
+
+.wordItem {
+	list-style: none;
+	margin-top: 10px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left:10px;
+	border-style: solid;
+	border-width: 1px;
+	border-color: grey;
+	border-radius: 2px;
+	margin-left: -40px;
+	transition: all 0.3s ease;
+}
+
+.wordItem:hover{
+	margin-left: -60px;
+	margin-right: -20px;
+	border-color: #4499A8;
+	border-width: 2px;
+}
+
+#removeIcon{
+	margin-right: 3px;
+}
+
+.removeButton {
+	background-color: white;
+	border-style: none;
+	padding-left: 20px;
+	font-weight: bold;
+	font-size: 15px;
+}
+
+.removeButton:hover{
+	font-size: 17px;
+}
+
+.removeButton:focus {
+	outline: 0;
+}
+
+@media only screen and (min-width: 991px)  {
+	#outer{
+		width: 80%;
+	}
+}
