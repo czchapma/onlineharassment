@@ -17,6 +17,8 @@ module.exports = {
     modulesDirectories: ['node_modules']
   },
 
+  target: 'node',
+
   module: {
     loaders: [
       {
