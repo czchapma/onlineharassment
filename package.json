@@ -26,6 +26,7 @@
     "express": "^4.14.0",
     "express-browserify": "^1.0.2",
     "jQuery": "^1.7.4",
+    "natural": "^0.4.0",
     "react": "^15.3.2",
     "react-addons-linked-state-mixin": "^15.3.2",
     "react-chrome-redux": "0.0.8",
