@@ -34,7 +34,7 @@
     "react-link-state": "^0.1.2",
     "react-native-button-component": "0.0.6",
     "react-redux": "^4.4.5",
-    "react-toggle-switch": "^2.1.2",
+    "react-toggle-switch": "git+https://github.com/littlef00t/react-toggle-switch.git",
     "redux": "^3.6.0",
     "watson-developer-cloud": "^2.8.2",
     "webpack": "^1.13.2",
