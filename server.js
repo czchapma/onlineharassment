@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var fs = require('fs');
-
+var natural = require('natural');
 var https = require('https');
 var AlchemyLanguageV1 = require('watson-developer-cloud/alchemy-language/v1');
 
@@ -19,6 +19,10 @@ var server = https.createServer(options, app).listen(3000, function(){
 });
 
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.post('/stem/:word', function (req,res){
+  res.send(natural.PorterStemmer.stem(req.params.word));
+});
 
 app.get('/', function (req, res) {
   res.send('Hello World!')
