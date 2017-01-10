@@ -27,7 +27,7 @@ const checkFilter = function() {
     } else {
       areq.onload = function(){
         //stems are now in the array of harmful_words, now can go through logic to hide tweets
-        
+        harmful_words.push(areq.responseText);
         let elements = document.getElementsByClassName('tweet');
 
         //if filter off, go through negative_tweet_ids to make them visible again
@@ -54,7 +54,8 @@ const checkFilter = function() {
 
                 harmful_words.forEach( word => {
                   let regex = new RegExp(word, "gi");
-
+                  console.log("harmful_words: ");
+                  console.log(harmful_words);
                   let text_content = text.textContent;
 
                   //if tweet contains harmful word
@@ -65,7 +66,6 @@ const checkFilter = function() {
                     xhr.open('POST', "https://localhost:3000/");
                     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
                     xhr.onload = function() {
-                      console.log("xhr on load");
                       if (xhr.status == 200) {
                         let res = xhr.responseText;
                         let jsonResponse = JSON.parse(res);
