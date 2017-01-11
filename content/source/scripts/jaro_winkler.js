@@ -84,13 +84,13 @@ Jaro_Winkler.prototype.prefix = function(s1,s2) {
 	return 4;
 }
 
-export default Jaro_Winkler;
-
 var jw = new Jaro_Winkler(0.7, 0.1);
 console.log(jw.dist("martha", "marhta"));
 console.log(jw.dist("jones", "johnson"));
 console.log(jw.dist("ABCVWXYZ", "CABVWXYZ"));
 console.log(jw.dist("hello world", "hello world"));
+console.log(jw.dist("picklez", "pickles"));
 
+export default Jaro_Winkler;
 
 

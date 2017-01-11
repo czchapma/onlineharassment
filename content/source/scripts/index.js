@@ -11,7 +11,9 @@ let positive_tweet_ids = [];
 
 const contains_misspelling = function(text_content, word) {
   let jw = new Jaro_Winkler(0.7, 0.1);  
-  text_content.forEach(tweet_word => {
+  let tweets = text_content.split(" ");
+
+  tweets.forEach(tweet_word => {
     if (jw.dist(tweet_word.toLowerCase(), word.toLowerCase()) >= .85) {
       return true;
     }
@@ -56,7 +58,7 @@ const checkFilter = function() {
             let misspelled = contains_misspelling(text_content, word);
 
             //if tweet contains harmful word
-            if (regex.test(text_content || misspelled)) {
+            if (regex.test(text_content) || misspelled) {
               //hiding tweets if negative sentiment using xmlhttprequest
               let xhr = new XMLHttpRequest();
               let data = "text=" + text_content + "&tweet_id=" + tweetId;
@@ -87,7 +89,7 @@ const checkFilter = function() {
 
 const filter = function(){
   checkFilter();
-  //commented out to prevent exceeding daily limit of express https server
+  // commented out to prevent exceeding daily limit of express https server
   // setInterval(filterOnType, 1000);
 }
 
