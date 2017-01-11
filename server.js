@@ -3,6 +3,8 @@ var app = express();
 var bodyParser = require('body-parser');
 var fs = require('fs');
 var natural = require('natural');
+var verbInflector = new natural.PresentVerbInflector();
+var tensify = require('tensify');
 var https = require('https');
 var AlchemyLanguageV1 = require('watson-developer-cloud/alchemy-language/v1');
 
@@ -21,7 +23,13 @@ var server = https.createServer(options, app).listen(3000, function(){
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/stem/:word', function (req,res){
-  res.send(natural.PorterStemmer.stem(req.params.word));
+  var stem = natural.PorterStemmer.stem(req.params.word);
+  var singular = verbInflector.singularize(req.params.word);
+  var plural = verbInflector.pluralize(req.params.word);
+  var past = tensify(req.params.word).past;
+  var past_participle = tensify(req.params.word).past_participle;
+  var all = [stem, singular, plural, past, past_participle];
+  res.send(all);
 });
 
 app.get('/', function (req, res) {

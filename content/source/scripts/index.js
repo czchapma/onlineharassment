@@ -8,6 +8,13 @@ const proxyStore = new Store({
 let negative_tweet_ids = [];
 let positive_tweet_ids = [];
 
+const toArray = function(text){
+  var values = (text).replace(/\]/g,'');
+  values = (values).replace(/\[/g, '');
+  values = (values).replace(/\"/g, '');
+  return values.split(',');
+}
+
 const checkFilter = function() {
   let state = proxyStore.getState();
   let harmful_words = state.harmful_words;
@@ -20,16 +27,19 @@ const checkFilter = function() {
     areq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     if (i < harmful_words.length-1) { 
       areq.onload = function(){
-        if (harmful_words.indexOf(areq.responseText) < 0){
-          harmful_words.push(areq.responseText);
-        }
+        harmful_words = harmful_words.concat(toArray(areq.responseText));
       };
     } else {
       areq.onload = function(){
-        //stems are now in the array of harmful_words, now can go through logic to hide tweets
-        harmful_words.push(areq.responseText);
-        let elements = document.getElementsByClassName('tweet');
+        harmful_words = harmful_words.concat(toArray(areq.responseText));
 
+        //remove all duplicate entries in harmful_words
+        harmful_words = harmful_words.filter(function(item, pos) {
+          return harmful_words.indexOf(item) == pos;
+        });
+        console.log(harmful_words);
+
+        let elements = document.getElementsByClassName('tweet');
         //if filter off, go through negative_tweet_ids to make them visible again
         if (!filter_on){
           negative_tweet_ids.forEach(function(id){
@@ -54,8 +64,6 @@ const checkFilter = function() {
 
                 harmful_words.forEach( word => {
                   let regex = new RegExp(word, "gi");
-                  console.log("harmful_words: ");
-                  console.log(harmful_words);
                   let text_content = text.textContent;
 
                   //if tweet contains harmful word

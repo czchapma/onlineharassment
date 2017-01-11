@@ -36,6 +36,7 @@
     "react-redux": "^4.4.5",
     "react-toggle-switch": "git+https://github.com/littlef00t/react-toggle-switch.git",
     "redux": "^3.6.0",
+    "tensify": "0.0.2",
     "watson-developer-cloud": "^2.8.2",
     "webpack": "^1.13.2",
     "wordnet-db": "^3.1.2"
