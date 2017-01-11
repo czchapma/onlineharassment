@@ -22,7 +22,7 @@ const checkFilter = function() {
 
   for (var i=0; i<harmful_words.length; i++){
     let areq = new XMLHttpRequest();
-    let urlString = "https://localhost:3000/stem/" + harmful_words[i];
+    let urlString = "https://localhost:3000/wordvariations/" + harmful_words[i];
     areq.open('POST', urlString);
     areq.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     if (i < harmful_words.length-1) { 

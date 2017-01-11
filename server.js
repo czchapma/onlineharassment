@@ -22,7 +22,7 @@ var server = https.createServer(options, app).listen(3000, function(){
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.post('/stem/:word', function (req,res){
+app.post('/wordvariations/:word', function (req,res){
   var stem = natural.PorterStemmer.stem(req.params.word);
   var singular = verbInflector.singularize(req.params.word);
   var plural = verbInflector.pluralize(req.params.word);
