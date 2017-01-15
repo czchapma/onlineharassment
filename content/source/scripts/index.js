@@ -12,14 +12,15 @@ let positive_tweet_ids = [];
 const contains_misspelling = function(text_content, word) {
   let jw = new Jaro_Winkler(0.7, 0.1);  
   let tweets = text_content.split(" ");
+  let misspelled = false;
 
   tweets.forEach(tweet_word => {
     if (jw.dist(tweet_word.toLowerCase(), word.toLowerCase()) >= .85) {
-      return true;
+      misspelled = true;
     }
   })
   
-  return false;
+  return misspelled;
 }
 
 const checkFilter = function() {
@@ -55,10 +56,9 @@ const checkFilter = function() {
           harmful_words.forEach(word => {
             let regex = new RegExp(word, "gi");
             let text_content = text.textContent;
-            let misspelled = contains_misspelling(text_content, word);
 
             //if tweet contains harmful word
-            if (regex.test(text_content) || misspelled) {
+            if (regex.test(text_content) || contains_misspelling(text_content, word)) {
               //hiding tweets if negative sentiment using xmlhttprequest
               let xhr = new XMLHttpRequest();
               let data = "text=" + text_content + "&tweet_id=" + tweetId;
