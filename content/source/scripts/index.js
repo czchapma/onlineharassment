@@ -1,8 +1,5 @@
 import {Store} from 'react-chrome-redux';
-// import natural from 'natural';
-
-// tokenizer = new natural.WordTokenizer();
-// console.log(tokenizer.tokenize("your dog has fleas."));
+import Jaro_Winkler from './jaro_winkler';
 
 const proxyStore = new Store({
   portName: 'STOP_HARASSMENT'
@@ -11,6 +8,20 @@ const proxyStore = new Store({
 //caching tweets
 let negative_tweet_ids = [];
 let positive_tweet_ids = [];
+
+const contains_misspelling = function(text_content, word) {
+  let jw = new Jaro_Winkler(0.7, 0.1);  
+  let tweets = text_content.split(" ");
+  let misspelled = false;
+
+  tweets.forEach(tweet_word => {
+    if (jw.dist(tweet_word.toLowerCase(), word.toLowerCase()) >= .85) {
+      misspelled = true;
+    }
+  })
+  
+  return misspelled;
+}
 
 const checkFilter = function() {
   let state = proxyStore.getState();
@@ -42,14 +53,13 @@ const checkFilter = function() {
         let text = tweetElement.getElementsByClassName('tweet-text')[0];
         if (text) {
 
-          harmful_words.forEach( word => {
+          harmful_words.forEach(word => {
             let regex = new RegExp(word, "gi");
-
             let text_content = text.textContent;
 
             //if tweet contains harmful word
-            if (regex.test(text_content)) {
-            //hiding tweets if negative sentiment using xmlhttprequest
+            if (regex.test(text_content) || contains_misspelling(text_content, word)) {
+              //hiding tweets if negative sentiment using xmlhttprequest
               let xhr = new XMLHttpRequest();
               let data = "text=" + text_content + "&tweet_id=" + tweetId;
               xhr.open('POST', "https://localhost:3000/");
@@ -79,7 +89,7 @@ const checkFilter = function() {
 
 const filter = function(){
   checkFilter();
-  //commented out to prevent exceeding daily limit of express https server
+  // commented out to prevent exceeding daily limit of express https server
   // setInterval(filterOnType, 1000);
 }
 
