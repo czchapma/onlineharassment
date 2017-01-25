@@ -1,6 +1,6 @@
 // Jaro_Winkler object constructor
 // bt is the "boost threshold", typically 0.7
-// p is a constant scaling factor 
+// p is a constant scaling factor
 class Jaro_Winkler {
 	constructor(bt,p) {
 		this.bt = bt;
@@ -23,7 +23,7 @@ function matchHelper(s1,s2) {
 				substr1 += s1[i];
 				break;
 			}
-		}	
+		}
 	}
 
 	for (var i = 0; i < matched.length; i++) {
@@ -56,7 +56,7 @@ Jaro_Winkler.prototype.jaro = function(s1,s2) {
     	jaro = (1/3) * ((m/s1.length) + (m/s2.length) + (m-t)/m);
   	}
 
-  	return jaro; 
+  	return jaro;
 }
 
 Jaro_Winkler.prototype.dist = function(s1,s2) {
@@ -84,13 +84,11 @@ Jaro_Winkler.prototype.prefix = function(s1,s2) {
 	return 4;
 }
 
-var jw = new Jaro_Winkler(0.7, 0.1);
-console.log(jw.dist("martha", "marhta"));
-console.log(jw.dist("jones", "johnson"));
-console.log(jw.dist("ABCVWXYZ", "CABVWXYZ"));
-console.log(jw.dist("hello world", "hello world"));
-console.log(jw.dist("picklez", "pickles"));
+// var jw = new Jaro_Winkler(0.7, 0.1);
+// console.log(jw.dist("martha", "marhta"));
+// console.log(jw.dist("jones", "johnson"));
+// console.log(jw.dist("ABCVWXYZ", "CABVWXYZ"));
+// console.log(jw.dist("hello world", "hello world"));
+// console.log(jw.dist("picklez", "pickles"));
 
 export default Jaro_Winkler;
-
-
