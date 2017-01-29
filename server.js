@@ -26,7 +26,7 @@ app.get('/', function (req, res) {
 
 app.post("/", function(req, res) {
   let alchemy_language = new AlchemyLanguageV1({
-    api_key: 'ab06f855ca866b658bf8cabdeb152f0c2c74a34b'
+    api_key: '10f3b230fbb96172904ea8caf616a160ea7f80f9'
   });
   alchemy_language.sentiment(req.body, function(err, response){
     if (err) {
