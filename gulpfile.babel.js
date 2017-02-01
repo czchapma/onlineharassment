@@ -50,6 +50,18 @@ gulp.task('content-js', ['clean'], (cb) => {
   });
 });
 
+// gulp.task('content-js', ['clean'], () => {
+//   return gulp.src('content/index.js')
+//     .pipe(plugins.rename('content.js'))
+//     .pipe(gulp.dest('./build'))
+// });
+//
+// gulp.task('jarowinkler-js', ['clean'], () => {
+//   return gulp.src('content/jaro_winkler.js')
+//     .pipe(plugins.rename('jaro_winkler.js'))
+//     .pipe(gulp.dest('./build'))
+// });
+
 gulp.task('popup-html', ['clean'], () => {
   return gulp.src('popup/source/index.html')
     .pipe(plugins.rename('popup.html'))
@@ -89,11 +101,16 @@ gulp.task('copy-server', ['clean'], () => {
     .pipe(gulp.dest('./build'));
 });
 
+gulp.task('copy-natural', ['clean'], () => {
+  return gulp.src('natural.js')
+    .pipe(gulp.dest('./build'));
+});
+
 gulp.task('clean', (cb) => {
   rimraf('./build', cb);
 });
 
-gulp.task('build', ['copy-manifest', 'copy-server', 'popup-js', 'event-js', 'options-js', 'content-js', 'popup-html', 'options-html', 'popup-css', 'toggleswitch-css', 'copy-icon']);
+gulp.task('build', ['copy-manifest', 'copy-natural', 'copy-server', 'popup-js', 'event-js', 'options-js', 'content-js', 'popup-html', 'options-html', 'popup-css', 'toggleswitch-css', 'copy-icon']);
 
 gulp.task('watch', ['default'], () => {
   gulp.watch('popup/**/*', ['build']);

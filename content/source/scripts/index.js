@@ -1,16 +1,24 @@
 import {Store} from 'react-chrome-redux';
 import Jaro_Winkler from './jaro_winkler';
+// import {Tokenizer} from './natural';
+
+console.log('this should work');
+
+// let tokenizer = new natural.WordTokenizer();
+// console.log(tokenizer.tokenize("your dog has fleas."));
 
 const proxyStore = new Store({
   portName: 'STOP_HARASSMENT'
 });
+
+window.Store = proxyStore;
 
 //caching tweets
 let negative_tweet_ids = [];
 let positive_tweet_ids = [];
 
 const contains_misspelling = function(text_content, word) {
-  let jw = new Jaro_Winkler(0.7, 0.1);  
+  let jw = new Jaro_Winkler(0.7, 0.1);
   let tweets = text_content.split(" ");
   let misspelled = false;
 
@@ -19,7 +27,7 @@ const contains_misspelling = function(text_content, word) {
       misspelled = true;
     }
   })
-  
+
   return misspelled;
 }
 
