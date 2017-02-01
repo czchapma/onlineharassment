@@ -19,7 +19,6 @@ class App extends Component{
   }
 
   removeWord(e){
-    console.log(e.target.value);
     this.props.removeWord(e.target.value);
   }
 
