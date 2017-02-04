@@ -44,7 +44,7 @@ const contains_misspelling = function(text_content, word) {
   return misspelled;
 }
 
-const checkFilter = function(store) {
+const checkTwitterFilter = function(store) {
   let state = store.getState();
   let harmful_words = state.harmful_words;
   let filter_on = state.filter_on;
@@ -107,4 +107,4 @@ const checkFilter = function(store) {
   }
 }
 
-export default checkFilter;
+export default checkTwitterFilter;

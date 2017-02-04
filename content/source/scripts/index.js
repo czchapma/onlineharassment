@@ -1,5 +1,5 @@
 import {Store} from 'react-chrome-redux';
-import checkFilter from './twitter';
+import checkTwitterFilter from './twitter';
 
 const proxyStore = new Store({
   portName: 'STOP_HARASSMENT'
