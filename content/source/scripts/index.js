@@ -7,7 +7,7 @@ const proxyStore = new Store({
 
 
 const filter = function(){
-  checkFilter(proxyStore);
+  checkTwitterFilter(proxyStore);
   // commented out to prevent exceeding daily limit of express https server
   // setInterval(filterOnType, 1000);
 }
