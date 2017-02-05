@@ -25,35 +25,35 @@ require._core = {
 require.resolve = (function () {
     return function (x, cwd) {
         if (!cwd) cwd = '/';
-        
+
         if (require._core[x]) return x;
         var path = require.modules.path();
         cwd = path.resolve('/', cwd);
         var y = cwd || '/';
-        
+
         if (x.match(/^(?:\.\.?\/|\/)/)) {
             var m = loadAsFileSync(path.resolve(y, x))
                 || loadAsDirectorySync(path.resolve(y, x));
             if (m) return m;
         }
-        
+
         var n = loadNodeModulesSync(x, y);
         if (n) return n;
-        
+
         throw new Error("Cannot find module '" + x + "'");
-        
+
         function loadAsFileSync (x) {
             x = path.normalize(x);
             if (require.modules[x]) {
                 return x;
             }
-            
+
             for (var i = 0; i < require.extensions.length; i++) {
                 var ext = require.extensions[i];
                 if (require.modules[x + ext]) return x + ext;
             }
         }
-        
+
         function loadAsDirectorySync (x) {
             x = x.replace(/\/+$/, '');
             var pkgfile = path.normalize(x + '/package.json');
@@ -73,10 +73,10 @@ require.resolve = (function () {
                     if (m) return m;
                 }
             }
-            
+
             return loadAsFileSync(x + '/index');
         }
-        
+
         function loadNodeModulesSync (x, start) {
             var dirs = nodeModulesPathsSync(start);
             for (var i = 0; i < dirs.length; i++) {
@@ -86,23 +86,23 @@ require.resolve = (function () {
                 var n = loadAsDirectorySync(dir + '/' + x);
                 if (n) return n;
             }
-            
+
             var m = loadAsFileSync(x);
             if (m) return m;
         }
-        
+
         function nodeModulesPathsSync (start) {
             var parts;
             if (start === '/') parts = [ '' ];
             else parts = path.normalize(start).split('/');
-            
+
             var dirs = [];
             for (var i = parts.length - 1; i >= 0; i--) {
                 if (parts[i] === 'node_modules') continue;
                 var dir = parts.slice(0, i + 1).join('/') + '/node_modules';
                 dirs.push(dir);
             }
-            
+
             return dirs;
         }
     };
@@ -118,13 +118,13 @@ require.alias = function (from, to) {
         res = require.resolve(from, '/');
     }
     var basedir = path.dirname(res);
-    
+
     var keys = (Object.keys || function (obj) {
         var res = [];
         for (var key in obj) res.push(key);
         return res;
     })(require.modules);
-    
+
     for (var i = 0; i < keys.length; i++) {
         var key = keys[i];
         if (key.slice(0, basedir.length + 1) === basedir + '/') {
@@ -139,17 +139,17 @@ require.alias = function (from, to) {
 
 (function () {
     var process = {};
-    
+
     require.define = function (filename, fn) {
         if (require.modules.__browserify_process) {
             process = require.modules.__browserify_process();
         }
-        
+
         var dirname = require._core[filename]
             ? ''
             : require.modules.path().dirname(filename)
         ;
-        
+
         var require_ = function (file) {
             var requiredModule = require(file, dirname);
             var cached = require.cache[require.resolve(file, dirname)];
@@ -173,7 +173,7 @@ require.alias = function (from, to) {
             loaded : false,
             parent: null
         };
-        
+
         require.modules[filename] = function () {
             require.cache[filename] = module_;
             fn.call(
@@ -282,7 +282,7 @@ path = normalizeArray(filter(path.split('/'), function(p) {
   if (path && trailingSlash) {
     path += '/';
   }
-  
+
   return (isAbsolute ? '/' : '') + path;
 };
 
@@ -335,7 +335,7 @@ process.nextTick = (function () {
     var canPost = typeof window !== 'undefined'
         && window.postMessage && window.addEventListener
     ;
-    
+
     if (canPost) {
         window.addEventListener('message', function (ev) {
             if (ev.source === window && ev.data === 'browserify-tick') {
@@ -347,7 +347,7 @@ process.nextTick = (function () {
             }
         }, true);
     }
-    
+
     return function (fn) {
         if (canPost) {
             queue.push(fn);
@@ -405,32 +405,32 @@ var Script = exports.Script = function NodeScript (code) {
 
 Script.prototype.runInNewContext = function (context) {
     if (!context) context = {};
-    
+
     var iframe = document.createElement('iframe');
     if (!iframe.style) iframe.style = {};
     iframe.style.display = 'none';
-    
+
     document.body.appendChild(iframe);
-    
+
     var win = iframe.contentWindow;
-    
+
     forEach(Object_keys(context), function (key) {
         win[key] = context[key];
     });
-     
+
     if (!win.eval && win.execScript) {
         // win.eval() magically appears when this is called in IE:
         win.execScript('null');
     }
-    
+
     var res = win.eval(this.code);
-    
+
     forEach(Object_keys(win), function (key) {
         context[key] = win[key];
     });
-    
+
     document.body.removeChild(iframe);
-    
+
     return res;
 };
 
@@ -533,7 +533,7 @@ module.exports = SoundEx;
 
 SoundEx.process = function(token, maxLength) {
     token = token.toLowerCase();
-    
+
     return token.charAt(0).toUpperCase() + padRight0(condense(transformLipps(transformThroats(
         transformToungue(transformL(transformHum(transformR(
             token.substr(1, token.length - 1).replace(/[aeiouy]/g, '')))))))
@@ -588,19 +588,19 @@ module.exports = function() {
         String.prototype.soundsLike = function(compareTo) {
             return phonetic.compare(this, compareTo);
         }
-        
+
         String.prototype.phonetics = function() {
             return phonetic.process(this);
         }
-	
+
         String.prototype.tokenizeAndPhoneticize = function(keepStops) {
             var phoneticizedTokens = [];
-            
+
             tokenizer.tokenize(this).forEach(function(token) {
                 if(keepStops || stopwords.words.indexOf(token) < 0)
                     phoneticizedTokens.push(token.phonetics());
             });
-            
+
             return phoneticizedTokens;
         }
     };
@@ -645,8 +645,8 @@ var words = [
     'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
     'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '$', '1',
     '2', '3', '4', '5', '6', '7', '8', '9', '0', '_'];
-    
-// tell the world about the noise words.    
+
+// tell the world about the noise words.
 exports.words = words;
 });
 
@@ -681,7 +681,7 @@ function dedup(token) {
 function dropInitialLetters(token) {
     if(token.match(/^(kn|gn|pn|ae|wr)/))
         return token.substr(1, token.length - 1);
-        
+
     return token;
 }
 
@@ -693,30 +693,30 @@ function cTransform(token) {
     token = token.replace(/([^s]|^)(c)(h)/g, '$1x$3').trim();
     token = token.replace(/cia/g, 'xia');
     token = token.replace(/c(i|e|y)/g, 's$1');
-    token = token.replace(/c/g, 'k'); 
-    
+    token = token.replace(/c/g, 'k');
+
     return token;
 }
 
 function dTransform(token) {
     token = token.replace(/d(ge|gy|gi)/g, 'j$1');
     token = token.replace(/d/g, 't');
-    
+
     return token;
 }
 
 function dropG(token) {
     token = token.replace(/gh(^$|[^aeiou])/g, 'h$1');
-    token = token.replace(/g(n|ned)$/g, '$1');    
-    
+    token = token.replace(/g(n|ned)$/g, '$1');
+
     return token;
 }
 
 function transformG(token) {
     token = token.replace(/([^g]|^)(g)(i|e|y)/g, '$1j$3');
     token = token.replace(/gg/g, 'g');
-    token = token.replace(/g/g, 'k');    
-    
+    token = token.replace(/g/g, 'k');
+
     return token;
 }
 
@@ -742,7 +742,7 @@ function transformS(token) {
 function transformT(token) {
     token = token.replace(/t(ia|io)/g, 'x$1');
     token = token.replace(/th/, '0');
-    
+
     return token;
 }
 
@@ -798,7 +798,7 @@ Metaphone.process = function(token, maxLength) {
     token = transformPH(token);
     token = transformQ(token);
     token = transformS(token);
-    token = transformX(token);    
+    token = transformX(token);
     token = transformT(token);
     token = dropT(token);
     token = transformV(token);
@@ -807,15 +807,15 @@ Metaphone.process = function(token, maxLength) {
     token = dropY(token);
     token = transformZ(token);
     token = dropVowels(token);
-    
+
     token.toUpperCase();
     if(token.length >= maxLength)
-        token = token.substring(0, maxLength);        
+        token = token.substring(0, maxLength);
 
     return token.toUpperCase();
 };
 
-// expose functions for testing    
+// expose functions for testing
 Metaphone.dedup = dedup;
 Metaphone.dropInitialLetters = dropInitialLetters;
 Metaphone.dropBafterMAtEnd = dropBafterMAtEnd;
@@ -873,13 +873,13 @@ function isVowel(c) {
 function truncate(string, length) {
     if(string.length >= length)
         string = string.substring(0, length);
-        
+
     return string;
 }
 
 function process(token, maxLength) {
 	token = token.toUpperCase();
-	var primary = '', secondary = '';	
+	var primary = '', secondary = '';
     var pos = 0;
     maxLength == maxLength || 32;
 
@@ -907,7 +907,7 @@ function process(token, maxLength) {
     }
 
     function handleC() {
-        if(pos > 1 && !isVowel(token[pos - 2]) 
+        if(pos > 1 && !isVowel(token[pos - 2])
                 && token[pos - 1] == 'A' && token[pos + 1] == 'H'
                     && (token[pos + 2] != 'I' && token[pos + 2] != 'I')
                         || subMatch(-2, 4, ['BACHER', 'MACHER'])) {
@@ -923,8 +923,8 @@ function process(token, maxLength) {
             if(pos > 0 && token.substring(pos + 2, pos + 4) == 'AE') {
                 addSecondary('K', 'X');
                 pos++;
-            } else if(pos == 0 
-                        && (subMatch(1, 6, ['HARAC', 'HARIS']) 
+            } else if(pos == 0
+                        && (subMatch(1, 6, ['HARAC', 'HARIS'])
                             || subMatch(1, 3, ['HOR', 'HUM', 'HIA', 'HEM']))
                         && token.substring(pos + 1, pos + 5) != 'HORE') {
                 add('K');
@@ -933,22 +933,22 @@ function process(token, maxLength) {
                 if((subMatchAbsolute(0, 3, ['VAN', 'VON']) || token.substring(0,  3) == 'SCH')
                     || subMatch(-2, 4, ['ORCHES', 'ARCHIT', 'ORCHID'])
                     || subMatch(2, 3, ['T', 'S'])
-                    || ((subMatch(-1, 0, ['A', 'O', 'U', 'E']) || pos == 0) 
+                    || ((subMatch(-1, 0, ['A', 'O', 'U', 'E']) || pos == 0)
                         && subMatch(2, 3, ['B', 'F', 'H', 'L', 'M', 'N', 'R', 'V', 'W']))) {
                     add('K');
                 } else if(pos > 0) {
                     if(token.substring(0, 2) == 'MC') {
                         add('K');
                     } else {
-                        addSecondary('X', 'K');   
+                        addSecondary('X', 'K');
                     }
                 } else {
                     add('X');
                 }
 
                 pos++;
-            } 
-        } else if(token.substring(pos, pos + 2) == 'CZ' 
+            }
+        } else if(token.substring(pos, pos + 2) == 'CZ'
                 && token.substring(pos - 2, pos + 1) != 'WICZ') {
             addSecondary('S', 'X');
             pos++;
@@ -956,7 +956,7 @@ function process(token, maxLength) {
             add('X');
             pos += 2;
         } else if(token[pos + 1] == 'C' && pos != 1 && token[0] != 'M') {
-            if(['I', 'E', 'H'].indexOf(token[pos + 2]) > -1 
+            if(['I', 'E', 'H'].indexOf(token[pos + 2]) > -1
                     && token.substring(pos + 2, pos + 4) != 'HU') {
                 if(pos == 1 && token[pos - 1] == 'A'
                         || subMatch(-1, 4, ['UCCEE', 'UCCES'])) {
@@ -975,19 +975,19 @@ function process(token, maxLength) {
             pos++;
         } else if(['E', 'I', 'Y'].indexOf(token[pos + 1]) > -1) {
             if(subMatch(1, 3, ['IA', 'IE', 'IO'])) {
-                addSecondary('S', 'X');   
+                addSecondary('S', 'X');
             } else {
                 add('S');
             }
             pos++;
-        } else {            
+        } else {
             add('K');
             if(token[pos + 1] == ' ' && ['C', 'Q', 'G'].indexOf(token[pos + 2])) {
                 pos += 2;
             } else if(['C', 'K', 'Q'].indexOf(token[pos + 1]) > -1
                     && !subMatch(1, 3, ['CE', 'CI'])) {
                 pos++;
-            } 
+            }
         }
     }
 
@@ -1002,7 +1002,7 @@ function process(token, maxLength) {
     		}
 	    } else if(token[pos + 1] == 'T') {
     		add('T');
-	    	pos++;    		
+	    	pos++;
     	} else
     		addCompressedDouble('D', 'T');
     }
@@ -1019,7 +1019,7 @@ function process(token, maxLength) {
                     add('K');
                 }
                 pos++;
-            } else if(pos > 1 
+            } else if(pos > 1
                 && (['B', 'H', 'D'].indexOf(token[pos - 2]) > -1
                     || ['B', 'H', 'D'].indexOf(token[pos - 3]) > -1
                     || ['B', 'H'].indexOf(token[pos - 4]) > -1)) {
@@ -1050,7 +1050,7 @@ function process(token, maxLength) {
         } else if(token.substring(pos + 1, pos + 3) == 'LI' && !slavoGermanic) {
             addSecondary('KL', 'L');
             pos++;
-        } else if(pos == 0 && (token[pos + 1] == 'Y'                
+        } else if(pos == 0 && (token[pos + 1] == 'Y'
                 || subMatch(1, 3, ['ES', 'EP', 'EB', 'EL', 'EY', 'IB', 'IL', 'IN', 'IE', 'EI', 'ER']))) {
             addSecondary('K', 'J')
         } else {
@@ -1063,22 +1063,22 @@ function process(token, maxLength) {
 		if((pos == 0 || isVowel(token[pos - 1])) && isVowel(token[pos + 1])) {
 			add('H');
 			pos++;
-		}    	
-    }    
+		}
+    }
 
     function handleJ() {
         var jose = (token.substring(pos + 1, pos + 4) == 'OSE');
 
         if(san || jose) {
-            if((pos == 0 && token[pos + 4] == ' ') 
+            if((pos == 0 && token[pos + 4] == ' ')
                     || san) {
-                add('H');            
+                add('H');
             } else
                 add('J', 'H');
         } else {
             if(pos == 0/* && !jose*/) {
                 addSecondary('J', 'A');
-            } else if(isVowel(token[pos - 1]) && !slavoGermanic 
+            } else if(isVowel(token[pos - 1]) && !slavoGermanic
                     && (token[pos + 1] == 'A' || token[pos + 1] == 'O')) {
                 addSecondary('J', 'H');
             } else if(pos == token.length - 1) {
@@ -1099,14 +1099,14 @@ function process(token, maxLength) {
     			pos++;
     			return;
     		}
-    		pos++;	
+    		pos++;
     	}
     	add('L');
     }
 
     function handleM() {
     	addCompressedDouble('M');
-    	if(token[pos - 1] == 'U' && token[pos + 1] == 'B' && 
+    	if(token[pos - 1] == 'U' && token[pos + 1] == 'B' &&
     			((pos == token.length - 2  || token.substring(pos + 2, pos + 4) == 'ER')))
     		pos++;
     }
@@ -1114,10 +1114,10 @@ function process(token, maxLength) {
     function handleP() {
     	if(token[pos + 1] == 'H') {
     		add('F');
-    		pos++;	
+    		pos++;
     	} else {
     		addCompressedDouble('P');
-    		    		
+
 			if(token[pos + 1] == 'B')
     			pos++;
     	}
@@ -1129,7 +1129,7 @@ function process(token, maxLength) {
     			&& !subMatch(-4, -3, ['ME', 'MA'])) {
     		addSecondary('', 'R');
     	} else
-	    	addCompressedDouble('R');    		
+	    	addCompressedDouble('R');
     }
 
     function handleS() {
@@ -1149,7 +1149,7 @@ function process(token, maxLength) {
                 addSecondary('S', 'X');
             }
             pos++;
-        } else if((pos == 0 && ['M', 'N', 'L', 'W'].indexOf(token[pos + 1]) > -1) 
+        } else if((pos == 0 && ['M', 'N', 'L', 'W'].indexOf(token[pos + 1]) > -1)
                 || token[pos + 1] == 'Z') {
             addSecondary('S', 'X');
             if(token[pos + 1] == 'Z')
@@ -1163,18 +1163,18 @@ function process(token, maxLength) {
                 } else if(pos == 0 && !isVowel(token[3]) && token[3] != 'W') {
                     addSecondary('X', 'S');
                 } else {
-                    add('X');   
-                } 
+                    add('X');
+                }
             } else if(['I', 'E', 'Y'].indexOf(token[pos + 2]) > -1) {
                 add('S');
             } else {
                 add('SK');
             }
 
-            pos += 2;            
+            pos += 2;
         } else if(pos == token.length - 1
                 && subMatch(-2, 0, ['AI', 'OI'])) {
-            addSecondary('', 'S');            
+            addSecondary('', 'S');
         } else if(token[pos + 1] != 'L' && (
                 token[pos - 1] != 'A' && token[pos - 1] != 'I')) {
             addCompressedDouble('S');
@@ -1190,12 +1190,12 @@ function process(token, maxLength) {
         } else if(subMatch(1, 3, ['IA', 'CH'])) {
             add('X');
             pos += 2;
-        } else if(token[pos + 1] == 'H' 
+        } else if(token[pos + 1] == 'H'
                 || token.substring(1, 2) == 'TH') {
-            if(subMatch(2, 4, ['OM', 'AM']) 
+            if(subMatch(2, 4, ['OM', 'AM'])
                     || ['VAN ', 'VON '].indexOf(token.substring(0, 4)) > -1
                     || token.substring(0, 3) == 'SCH') {
-                add('T');            
+                add('T');
             } else
                 addSecondary('0', 'T');
             pos++;
@@ -1210,7 +1210,7 @@ function process(token, maxLength) {
     function handleX() {
     	if(pos == 0) {
     		add('S');
-    	} else if(!(pos == token.length - 1 
+    	} else if(!(pos == token.length - 1
 	    		&& (['IAU', 'EAU', 'IEU'].indexOf(token.substring(pos - 3, pos)) > -1
 	    			|| ['AU', 'OU'].indexOf(token.substring(pos - 2, pos)) > -1))) {
     		add('KS');
@@ -1224,7 +1224,7 @@ function process(token, maxLength) {
             } else if (isVowel(token[1])) {
                 addSecondary('A', 'F');
             }
-        } else if((pos == token.length - 1 && isVowel(token[pos - 1]) 
+        } else if((pos == token.length - 1 && isVowel(token[pos - 1])
                     || subMatch(-1, 4, ['EWSKI', 'EWSKY', 'OWSKI', 'OWSKY'])
                     || token.substring(0, 3) == 'SCH')) {
                 addSecondary('', 'F');
@@ -1238,11 +1238,11 @@ function process(token, maxLength) {
     function handleZ() {
         if(token[pos + 1] == 'H') {
             add('J');
-            pos++;            
-        } else if(subMatch(1, 3, ['ZO', 'ZI', 'ZA']) 
+            pos++;
+        } else if(subMatch(1, 3, ['ZO', 'ZI', 'ZA'])
                 || (slavoGermanic && pos > 0 && token[pos - 1] != 'T')) {
             addSecondary('S', 'TS');
-            pos++; 
+            pos++;
         } else
             addCompressedDouble('Z', 'S');
     }
@@ -1257,7 +1257,7 @@ function process(token, maxLength) {
 
     while(pos < token.length) {
     	switch(token[pos]) {
-	        case 'A': case 'E': case 'I': case 'O': case 'U': case 'Y': 	        
+	        case 'A': case 'E': case 'I': case 'O': case 'U': case 'Y':
 	        case 'Ê': case 'É': case 'É': case'À':
 		        if(pos == 0)
 		        	add('A');
@@ -1329,7 +1329,7 @@ function process(token, maxLength) {
         }
 
     	pos++;
-    }    
+    }
 
     return [truncate(primary, maxLength), truncate(secondary, maxLength)];
 }
@@ -1338,7 +1338,7 @@ function compare(stringA, stringB) {
     var encodingsA = process(stringA),
         encodingsB = process(stringB);
 
-    return encodingsA[0] == encodingsB[0] || 
+    return encodingsA[0] == encodingsB[0] ||
         encodingsA[1] == encodingsB[1];
 };
 
@@ -1401,12 +1401,12 @@ function endsWithDoublCons(token) {
 // returned.
 function attemptReplace(token, pattern, replacement, callback) {
     var result = null;
-    
+
     if((typeof pattern == 'string') && token.substr(0 - pattern.length) == pattern)
         result = token.replace(new RegExp(pattern + '$'), replacement);
     else if((pattern instanceof RegExp) && token.match(pattern))
         result = token.replace(pattern, replacement);
-        
+
     if(result && callback)
         return callback(result);
     else
@@ -1425,7 +1425,7 @@ function attemptReplacePatterns(token, replacements, measureThreshold) {
 	if(replacement)
 	    break;
     }
-    
+
     return replacement;
 }
 
@@ -1434,28 +1434,28 @@ function attemptReplacePatterns(token, replacements, measureThreshold) {
 function replacePatterns(token, replacements, measureThreshold) {
     var result = attemptReplacePatterns(token, replacements, measureThreshold);
     token = result == null ? token : result;
-    
+
     return token;
 }
 
-// step 1a as defined for the porter stemmer algorithm. 
-function step1a(token) {    
+// step 1a as defined for the porter stemmer algorithm.
+function step1a(token) {
     if(token.match(/(ss|i)es$/))
         return token.replace(/(ss|i)es$/, '$1');
- 
+
     if(token.substr(-1) == 's' && token.substr(-2, 1) != 's')
         return token.replace(/s?$/, '');
-    
+
     return token;
 }
 
-// step 1b as defined for the porter stemmer algorithm. 
-function step1b(token) {   
+// step 1b as defined for the porter stemmer algorithm.
+function step1b(token) {
     if(token.substr(-3) == 'eed') {
 	if(measure(token.substr(0, token.length - 3)) > 0)
             return token.replace(/eed$/, 'ee');
     } else {
-	var result = attemptReplace(token, /ed|ing$/, '', function(token) {	    
+	var result = attemptReplace(token, /ed|ing$/, '', function(token) {
 	    if(categorizeGroups(token).indexOf('V') > 0) {
 		var result = attemptReplacePatterns(token, [['at', 'ate'],  ['bl', 'ble'], ['iz', 'ize']]);
 
@@ -1466,33 +1466,33 @@ function step1b(token) {
 			return token.replace(/([^aeiou])\1$/, '$1');
 
 		    if(measure(token) == 1 && categorizeChars(token).substr(-3) == 'CVC' && token.match(/[^wxy]$/))
-			return token + 'e';                            
+			return token + 'e';
 		}
 
 		return token;
 	    }
-	    
+
 	    return null;
 	});
-	
+
 	if(result)
 	    return result;
     }
 
-    return token;   
+    return token;
 }
 
-// step 1c as defined for the porter stemmer algorithm. 
+// step 1c as defined for the porter stemmer algorithm.
 function step1c(token) {
     if(categorizeGroups(token).substr(-2, 1) == 'V') {
         if(token.substr(-1) == 'y')
             return token.replace(/y$/, 'i');
     }
-   
+
     return token;
 }
 
-// step 2 as defined for the porter stemmer algorithm. 
+// step 2 as defined for the porter stemmer algorithm.
 function step2(token) {
     return replacePatterns(token, [['ational', 'ate'], ['tional', 'tion'], ['enci', 'ence'], ['anci', 'ance'],
         ['izer', 'ize'], ['abli', 'able'], ['alli', 'al'], ['entli', 'ent'], ['eli', 'e'],
@@ -1501,38 +1501,38 @@ function step2(token) {
         ['iviti', 'ive'], ['biliti', 'ble']], 0);
 }
 
-// step 3 as defined for the porter stemmer algorithm. 
+// step 3 as defined for the porter stemmer algorithm.
 function step3(token) {
     return replacePatterns(token, [['icate', 'ic'], ['ative', ''], ['alize', 'al'],
-				   ['iciti', 'ic'], ['ical', 'ic'], ['ful', ''], ['ness', '']], 0); 
+				   ['iciti', 'ic'], ['ical', 'ic'], ['ful', ''], ['ness', '']], 0);
 }
 
-// step 4 as defined for the porter stemmer algorithm. 
+// step 4 as defined for the porter stemmer algorithm.
 function step4(token) {
-    return replacePatterns(token, [['al', ''], ['ance', ''], ['ence', ''], ['er', ''], 
+    return replacePatterns(token, [['al', ''], ['ance', ''], ['ence', ''], ['er', ''],
         ['ic', ''], ['able', ''], ['ible', ''], ['ant', ''],
         ['ement', ''], ['ment', ''], ['ent', ''], [/([st])ion/, '$1'], ['ou', ''], ['ism', ''],
-        ['ate', ''], ['iti', ''], ['ous', ''], ['ive', ''], 
+        ['ate', ''], ['iti', ''], ['ous', ''], ['ive', ''],
         ['ize', '']], 1);
 }
 
-// step 5a as defined for the porter stemmer algorithm. 
+// step 5a as defined for the porter stemmer algorithm.
 function step5a(token) {
     var m = measure(token);
-    
+
     if((m > 1 && token.substr(-1) == 'e') || (m == 1 && !(categorizeChars(token).substr(-4, 3) == 'CVC' && token.match(/[^wxy].$/))))
         return token.replace(/e$/, '');
 
     return token;
 }
 
-// step 5b as defined for the porter stemmer algorithm. 
+// step 5b as defined for the porter stemmer algorithm.
 function step5b(token) {
     if(measure(token) > 1) {
         if(endsWithDoublCons(token) && token.substr(-2) == 'll')
-           return token.replace(/ll$/, 'l'); 
+           return token.replace(/ll$/, 'l');
     }
-    
+
     return token;
 }
 
@@ -1589,12 +1589,12 @@ module.exports = function() {
 
     stemmer.tokenizeAndStem = function(text, keepStops) {
         var stemmedTokens = [];
-        
+
         new Tokenizer().tokenize(text).forEach(function(token) {
             if(keepStops || stopwords.words.indexOf(token) == -1)
                 stemmedTokens.push(stemmer.stem(token));
         });
-        
+
         return stemmedTokens;
     };
 
@@ -1602,7 +1602,7 @@ module.exports = function() {
         String.prototype.stem = function() {
             return stemmer.stem(this);
         };
-        
+
         String.prototype.tokenizeAndStem = function(keepStops) {
             return stemmer.tokenizeAndStem(this, keepStops);
         };
@@ -1636,7 +1636,7 @@ var Tokenizer = require('./tokenizer'),
     util = require('util');
 
 AggressiveTokenizer = function() {
-    Tokenizer.call(this);    
+    Tokenizer.call(this);
 };
 util.inherits(AggressiveTokenizer, Tokenizer);
 
@@ -1679,14 +1679,14 @@ Tokenizer.prototype.trim = function(array) {
 
     if(array[0] == '')
         array.shift();
-        
+
     return array;
 };
 
 // expose an attach function that will patch String with a tokenize method
 Tokenizer.prototype.attach = function() {
     var tokenizer = this;
-        
+
     String.prototype.tokenize = function() {
         return tokenizer.tokenize(this);
     }
@@ -2371,7 +2371,7 @@ module.exports = function() {
 
     stemmer.tokenizeAndStem = function(text, keepStops) {
         var stemmedTokens = [];
-        
+
         new Tokenizer().tokenize(text).forEach(function(token) {
             if (keepStops || stopwords.words.indexOf(token) == -1) {
                 var resultToken = token.toLowerCase();
@@ -2381,7 +2381,7 @@ module.exports = function() {
                 stemmedTokens.push(resultToken);
             }
         });
-        
+
         return stemmedTokens;
     };
 
@@ -2389,7 +2389,7 @@ module.exports = function() {
         String.prototype.stem = function() {
             return stemmer.stem(this);
         };
-        
+
         String.prototype.tokenizeAndStem = function(keepStops) {
             return stemmer.tokenizeAndStem(this, keepStops);
         };
@@ -2435,8 +2435,8 @@ var words = [
     'а', 'б', 'в', 'г', 'д', 'е', 'ё', 'ж', 'з', 'и', 'й', 'к', 'л', 'м', 'н',
     'o', 'п', 'р', 'с', 'т', 'у', 'ф', 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь',
     'э', 'ю', 'я','$', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '_'];
-    
-// tell the world about the noise words.    
+
+// tell the world about the noise words.
 exports.words = words;
 });
 
@@ -2466,7 +2466,7 @@ var Tokenizer = require('./tokenizer'),
     util = require('util');
 
 AggressiveTokenizer = function() {
-    Tokenizer.call(this);    
+    Tokenizer.call(this);
 };
 util.inherits(AggressiveTokenizer, Tokenizer);
 
@@ -2590,766 +2590,766 @@ THE SOFTWARE.
 exports.rules = {
     "a": [
         {
-            "continuation": false, 
-            "intact": true, 
-            "pattern": "ia", 
+            "continuation": false,
+            "intact": true,
+            "pattern": "ia",
             "size": "2"
-        }, 
+        },
         {
-            "continuation": false, 
-            "intact": true, 
-            "pattern": "a", 
+            "continuation": false,
+            "intact": true,
+            "pattern": "a",
             "size": "1"
         }
-    ], 
+    ],
     "b": [
         {
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "bb", 
+            "continuation": false,
+            "intact": false,
+            "pattern": "bb",
             "size": "1"
         }
-    ], 
+    ],
     "c": [
         {
-            "appendage": "s", 
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "ytic", 
+            "appendage": "s",
+            "continuation": false,
+            "intact": false,
+            "pattern": "ytic",
             "size": "3"
-        }, 
+        },
         {
-            "continuation": true, 
-            "intact": false, 
-            "pattern": "ic", 
+            "continuation": true,
+            "intact": false,
+            "pattern": "ic",
             "size": "2"
-       }, 
+       },
         {
-            "appendage": "t", 
-            "continuation": true, 
-            "intact": false, 
-            "pattern": "nc", 
+            "appendage": "t",
+            "continuation": true,
+            "intact": false,
+            "pattern": "nc",
             "size": "1"
         }
-    ], 
+    ],
     "d": [
         {
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "dd", 
+            "continuation": false,
+            "intact": false,
+            "pattern": "dd",
             "size": "1"
-        }, 
+        },
         {
-            "appendage": "y", 
-            "continuation": true, 
-            "intact": false, 
-            "pattern": "ied", 
+            "appendage": "y",
+            "continuation": true,
+            "intact": false,
+            "pattern": "ied",
             "size": "3"
-        }, 
+        },
         {
-            "appendage": "s", 
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "ceed", 
+            "appendage": "s",
+            "continuation": false,
+            "intact": false,
+            "pattern": "ceed",
             "size": "2"
-        }, 
+        },
         {
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "eed", 
+            "continuation": false,
+            "intact": false,
+            "pattern": "eed",
             "size": "1"
-        }, 
+        },
         {
-            "continuation": true, 
-            "intact": false, 
-            "pattern": "ed", 
+            "continuation": true,
+            "intact": false,
+            "pattern": "ed",
             "size": "2"
-        }, 
+        },
         {
-            "continuation": true, 
-            "intact": false, 
-            "pattern": "hood", 
+            "continuation": true,
+            "intact": false,
+            "pattern": "hood",
             "size": "4"
         }
-    ], 
+    ],
     "e": [
         {
-            "continuation": true, 
-            "intact": false, 
-            "pattern": "e", 
+            "continuation": true,
+            "intact": false,
+            "pattern": "e",
             "size": "1"
         }
-    ], 
+    ],
     "f": [
         {
-            "appendage": "v", 
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "lief", 
+            "appendage": "v",
+            "continuation": false,
+            "intact": false,
+            "pattern": "lief",
             "size": "1"
-        }, 
+        },
         {
-            "continuation": true, 
-            "intact": false, 
-            "pattern": "if", 
+            "continuation": true,
+            "intact": false,
+            "pattern": "if",
             "size": "2"
         }
-    ], 
+    ],
     "g": [
         {
-            "continuation": true, 
-            "intact": false, 
-            "pattern": "ing", 
+            "continuation": true,
+            "intact": false,
+            "pattern": "ing",
             "size": "3"
-        }, 
+        },
         {
-            "appendage": "y", 
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "iag", 
+            "appendage": "y",
+            "continuation": false,
+            "intact": false,
+            "pattern": "iag",
             "size": "3"
-        }, 
+        },
         {
-            "continuation": true, 
-            "intact": false, 
-            "pattern": "ag", 
+            "continuation": true,
+            "intact": false,
+            "pattern": "ag",
             "size": "2"
-        }, 
+        },
         {
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "gg", 
+            "continuation": false,
+            "intact": false,
+            "pattern": "gg",
             "size": "1"
         }
-    ], 
+    ],
     "h": [
         {
-            "continuation": false, 
-            "intact": true, 
-            "pattern": "th", 
+            "continuation": false,
+            "intact": true,
+            "pattern": "th",
             "size": "2"
-        }, 
+        },
         {
-            "appendage": "c", 
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "guish", 
+            "appendage": "c",
+            "continuation": false,
+            "intact": false,
+            "pattern": "guish",
             "size": "5"
-        }, 
+        },
         {
-            "continuation": true, 
-            "intact": false, 
-            "pattern": "ish", 
+            "continuation": true,
+            "intact": false,
+            "pattern": "ish",
             "size": "3"
         }
-    ], 
+    ],
     "i": [
         {
-            "continuation": false, 
-            "intact": true, 
-            "pattern": "i", 
+            "continuation": false,
+            "intact": true,
+            "pattern": "i",
             "size": "1"
-        }, 
+        },
         {
-            "appendage": "y", 
-            "continuation": true, 
-            "intact": false, 
-            "pattern": "i", 
+            "appendage": "y",
+            "continuation": true,
+            "intact": false,
+            "pattern": "i",
             "size": "1"
         }
-    ], 
+    ],
     "j": [
         {
-            "appendage": "d", 
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "ij", 
+            "appendage": "d",
+            "continuation": false,
+            "intact": false,
+            "pattern": "ij",
             "size": "1"
-        }, 
+        },
         {
-            "appendage": "s", 
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "fuj", 
+            "appendage": "s",
+            "continuation": false,
+            "intact": false,
+            "pattern": "fuj",
             "size": "1"
-        }, 
+        },
         {
-            "appendage": "d", 
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "uj", 
+            "appendage": "d",
+            "continuation": false,
+            "intact": false,
+            "pattern": "uj",
             "size": "1"
-        }, 
+        },
         {
-            "appendage": "d", 
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "oj", 
+            "appendage": "d",
+            "continuation": false,
+            "intact": false,
+            "pattern": "oj",
             "size": "1"
-        }, 
+        },
         {
-            "appendage": "r", 
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "hej", 
+            "appendage": "r",
+            "continuation": false,
+            "intact": false,
+            "pattern": "hej",
             "size": "1"
-        }, 
+        },
         {
-            "appendage": "t", 
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "verj", 
+            "appendage": "t",
+            "continuation": false,
+            "intact": false,
+            "pattern": "verj",
             "size": "1"
-        }, 
+        },
         {
-            "appendage": "t", 
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "misj", 
+            "appendage": "t",
+            "continuation": false,
+            "intact": false,
+            "pattern": "misj",
             "size": "2"
-        }, 
+        },
         {
-            "appendage": "d", 
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "nj", 
+            "appendage": "d",
+            "continuation": false,
+            "intact": false,
+            "pattern": "nj",
             "size": "1"
-        }, 
+        },
         {
-            "appendage": "s", 
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "j", 
+            "appendage": "s",
+            "continuation": false,
+            "intact": false,
+            "pattern": "j",
             "size": "1"
         }
-    ], 
+    ],
     "l": [
         {
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "ifiabl", 
+            "continuation": false,
+            "intact": false,
+            "pattern": "ifiabl",
             "size": "6"
-        }, 
+        },
         {
-            "appendage": "y", 
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "iabl", 
+            "appendage": "y",
+            "continuation": false,
+            "intact": false,
+            "pattern": "iabl",
             "size": "4"
-        }, 
+        },
         {
-            "continuation": true, 
-            "intact": false, 
-            "pattern": "abl", 
+            "continuation": true,
+            "intact": false,
+            "pattern": "abl",
             "size": "3"
-        }, 
+        },
         {
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "ibl", 
+            "continuation": false,
+            "intact": false,
+            "pattern": "ibl",
             "size": "3"
-        }, 
+        },
         {
-            "appendage": "l", 
-            "continuation": true, 
-            "intact": false, 
-            "pattern": "bil", 
+            "appendage": "l",
+            "continuation": true,
+            "intact": false,
+            "pattern": "bil",
             "size": "2"
-        }, 
+        },
         {
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "cl", 
+            "continuation": false,
+            "intact": false,
+            "pattern": "cl",
             "size": "1"
-        }, 
+        },
         {
-            "appendage": "y", 
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "iful", 
+            "appendage": "y",
+            "continuation": false,
+            "intact": false,
+            "pattern": "iful",
             "size": "4"
-        }, 
+        },
         {
-            "continuation": true, 
-            "intact": false, 
-            "pattern": "ful", 
+            "continuation": true,
+            "intact": false,
+            "pattern": "ful",
             "size": "3"
-        }, 
+        },
         {
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "ul", 
+            "continuation": false,
+            "intact": false,
+            "pattern": "ul",
             "size": "2"
-        }, 
+        },
         {
-            "continuation": true, 
-            "intact": false, 
-            "pattern": "ial", 
+            "continuation": true,
+            "intact": false,
+            "pattern": "ial",
             "size": "3"
-        }, 
+        },
         {
-            "continuation": true, 
-            "intact": false, 
-            "pattern": "ual", 
+            "continuation": true,
+            "intact": false,
+            "pattern": "ual",
             "size": "3"
-        }, 
+        },
         {
-            "continuation": true, 
-            "intact": false, 
-            "pattern": "al", 
+            "continuation": true,
+            "intact": false,
+            "pattern": "al",
             "size": "2"
-        }, 
+        },
         {
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "ll", 
+            "continuation": false,
+            "intact": false,
+            "pattern": "ll",
             "size": "1"
         }
-    ], 
+    ],
     "m": [
         {
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "ium", 
+            "continuation": false,
+            "intact": false,
+            "pattern": "ium",
             "size": "3"
-        }, 
+        },
         {
-            "continuation": false, 
-            "intact": true, 
-            "pattern": "um", 
+            "continuation": false,
+            "intact": true,
+            "pattern": "um",
             "size": "2"
-        }, 
+        },
         {
-            "continuation": true, 
-            "intact": false, 
-            "pattern": "ism", 
+            "continuation": true,
+            "intact": false,
+            "pattern": "ism",
             "size": "3"
-        }, 
+        },
         {
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "mm", 
+            "continuation": false,
+            "intact": false,
+            "pattern": "mm",
             "size": "1"
         }
-    ], 
+    ],
     "n": [
         {
-            "appendage": "j", 
-            "continuation": true, 
-            "intact": false, 
-            "pattern": "sion", 
+            "appendage": "j",
+            "continuation": true,
+            "intact": false,
+            "pattern": "sion",
             "size": "4"
-        }, 
+        },
         {
-            "appendage": "c", 
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "xion", 
+            "appendage": "c",
+            "continuation": false,
+            "intact": false,
+            "pattern": "xion",
             "size": "4"
-        }, 
+        },
         {
-            "continuation": true, 
-            "intact": false, 
-            "pattern": "ion", 
+            "continuation": true,
+            "intact": false,
+            "pattern": "ion",
             "size": "3"
-        }, 
+        },
         {
-            "continuation": true, 
-            "intact": false, 
-            "pattern": "ian", 
+            "continuation": true,
+            "intact": false,
+            "pattern": "ian",
             "size": "3"
-        }, 
+        },
         {
-            "continuation": true, 
-            "intact": false, 
-            "pattern": "an", 
+            "continuation": true,
+            "intact": false,
+            "pattern": "an",
             "size": "2"
-        }, 
+        },
         {
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "een", 
+            "continuation": false,
+            "intact": false,
+            "pattern": "een",
             "size": "0"
-        }, 
+        },
         {
-            "continuation": true, 
-            "intact": false, 
-            "pattern": "en", 
+            "continuation": true,
+            "intact": false,
+            "pattern": "en",
             "size": "2"
-        }, 
+        },
         {
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "nn", 
+            "continuation": false,
+            "intact": false,
+            "pattern": "nn",
             "size": "1"
         }
-    ], 
+    ],
     "p": [
         {
-            "continuation": true, 
-            "intact": false, 
-            "pattern": "ship", 
+            "continuation": true,
+            "intact": false,
+            "pattern": "ship",
             "size": "4"
-        }, 
+        },
         {
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "pp", 
+            "continuation": false,
+            "intact": false,
+            "pattern": "pp",
             "size": "1"
         }
-    ], 
+    ],
     "r": [
         {
-            "continuation": true, 
-            "intact": false, 
-            "pattern": "er", 
+            "continuation": true,
+            "intact": false,
+            "pattern": "er",
             "size": "2"
-        }, 
+        },
         {
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "ear", 
+            "continuation": false,
+            "intact": false,
+            "pattern": "ear",
             "size": "0"
-        }, 
+        },
         {
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "ar", 
+            "continuation": false,
+            "intact": false,
+            "pattern": "ar",
             "size": "2"
-        }, 
+        },
         {
-            "continuation": true, 
-            "intact": false, 
-            "pattern": "or", 
+            "continuation": true,
+            "intact": false,
+            "pattern": "or",
             "size": "2"
-        }, 
+        },
         {
-            "continuation": true, 
-            "intact": false, 
-            "pattern": "ur", 
+            "continuation": true,
+            "intact": false,
+            "pattern": "ur",
             "size": "2"
-        }, 
+        },
         {
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "rr", 
+            "continuation": false,
+            "intact": false,
+            "pattern": "rr",
             "size": "1"
-        }, 
+        },
         {
-            "continuation": true, 
-            "intact": false, 
-            "pattern": "tr", 
+            "continuation": true,
+            "intact": false,
+            "pattern": "tr",
             "size": "1"
-        }, 
+        },
         {
-            "appendage": "y", 
-            "continuation": true, 
-            "intact": false, 
-            "pattern": "ier", 
+            "appendage": "y",
+            "continuation": true,
+            "intact": false,
+            "pattern": "ier",
             "size": "3"
         }
-    ], 
+    ],
     "s": [
         {
-            "appendage": "y", 
-            "continuation": true, 
-            "intact": false, 
-            "pattern": "ies", 
+            "appendage": "y",
+            "continuation": true,
+            "intact": false,
+            "pattern": "ies",
             "size": "3"
-        }, 
+        },
         {
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "sis", 
+            "continuation": false,
+            "intact": false,
+            "pattern": "sis",
             "size": "2"
-        }, 
+        },
         {
-            "continuation": true, 
-            "intact": false, 
-            "pattern": "is", 
+            "continuation": true,
+            "intact": false,
+            "pattern": "is",
             "size": "2"
-        }, 
+        },
         {
-            "continuation": true, 
-            "intact": false, 
-            "pattern": "ness", 
+            "continuation": true,
+            "intact": false,
+            "pattern": "ness",
             "size": "4"
-        }, 
+        },
         {
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "ss", 
+            "continuation": false,
+            "intact": false,
+            "pattern": "ss",
             "size": "0"
-        }, 
+        },
         {
-            "continuation": true, 
-            "intact": false, 
-            "pattern": "ous", 
+            "continuation": true,
+            "intact": false,
+            "pattern": "ous",
             "size": "3"
-        }, 
+        },
         {
-            "continuation": false, 
-            "intact": true, 
-            "pattern": "us", 
+            "continuation": false,
+            "intact": true,
+            "pattern": "us",
             "size": "2"
-        }, 
+        },
         {
-            "continuation": true, 
-            "intact": true, 
-            "pattern": "s", 
+            "continuation": true,
+            "intact": true,
+            "pattern": "s",
             "size": "1"
-        }, 
+        },
         {
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "s", 
+            "continuation": false,
+            "intact": false,
+            "pattern": "s",
             "size": "0"
         }
-    ], 
+    ],
     "t": [
         {
-            "appendage": "y", 
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "plicat", 
+            "appendage": "y",
+            "continuation": false,
+            "intact": false,
+            "pattern": "plicat",
             "size": "4"
-        }, 
+        },
         {
-            "continuation": true, 
-            "intact": false, 
-            "pattern": "at", 
+            "continuation": true,
+            "intact": false,
+            "pattern": "at",
             "size": "2"
-        }, 
+        },
         {
-            "continuation": true, 
-            "intact": false, 
-            "pattern": "ment", 
+            "continuation": true,
+            "intact": false,
+            "pattern": "ment",
             "size": "4"
-        }, 
+        },
         {
-            "continuation": true, 
-            "intact": false, 
-            "pattern": "ent", 
+            "continuation": true,
+            "intact": false,
+            "pattern": "ent",
             "size": "3"
-        }, 
+        },
         {
-            "continuation": true, 
-            "intact": false, 
-            "pattern": "ant", 
+            "continuation": true,
+            "intact": false,
+            "pattern": "ant",
             "size": "3"
-        }, 
+        },
         {
-            "appendage": "b", 
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "ript", 
+            "appendage": "b",
+            "continuation": false,
+            "intact": false,
+            "pattern": "ript",
             "size": "2"
-        }, 
+        },
         {
-            "appendage": "b", 
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "orpt", 
+            "appendage": "b",
+            "continuation": false,
+            "intact": false,
+            "pattern": "orpt",
             "size": "2"
-        }, 
+        },
         {
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "duct", 
+            "continuation": false,
+            "intact": false,
+            "pattern": "duct",
             "size": "1"
-        }, 
+        },
         {
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "sumpt", 
+            "continuation": false,
+            "intact": false,
+            "pattern": "sumpt",
             "size": "2"
-        }, 
+        },
         {
-            "appendage": "i", 
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "cept", 
+            "appendage": "i",
+            "continuation": false,
+            "intact": false,
+            "pattern": "cept",
             "size": "2"
-        }, 
+        },
         {
-            "appendage": "v", 
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "olut", 
+            "appendage": "v",
+            "continuation": false,
+            "intact": false,
+            "pattern": "olut",
             "size": "2"
-        }, 
+        },
         {
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "sist", 
+            "continuation": false,
+            "intact": false,
+            "pattern": "sist",
             "size": "0"
-        }, 
+        },
         {
-            "continuation": true, 
-            "intact": false, 
-            "pattern": "ist", 
+            "continuation": true,
+            "intact": false,
+            "pattern": "ist",
             "size": "3"
-        }, 
+        },
         {
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "tt", 
+            "continuation": false,
+            "intact": false,
+            "pattern": "tt",
             "size": "1"
         }
-    ], 
+    ],
     "u": [
         {
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "iqu", 
+            "continuation": false,
+            "intact": false,
+            "pattern": "iqu",
             "size": "3"
-        }, 
+        },
         {
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "ogu", 
+            "continuation": false,
+            "intact": false,
+            "pattern": "ogu",
             "size": "1"
         }
-    ], 
+    ],
     "v": [
         {
-            "appendage": "j", 
-            "continuation": true, 
-            "intact": false, 
-            "pattern": "siv", 
+            "appendage": "j",
+            "continuation": true,
+            "intact": false,
+            "pattern": "siv",
             "size": "3"
-        }, 
+        },
         {
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "eiv", 
+            "continuation": false,
+            "intact": false,
+            "pattern": "eiv",
             "size": "0"
-        }, 
+        },
         {
-            "continuation": true, 
-            "intact": false, 
-            "pattern": "iv", 
+            "continuation": true,
+            "intact": false,
+            "pattern": "iv",
             "size": "2"
         }
-    ], 
+    ],
     "y": [
         {
-            "continuation": true, 
-            "intact": false, 
-            "pattern": "bly", 
+            "continuation": true,
+            "intact": false,
+            "pattern": "bly",
             "size": "1"
-        }, 
+        },
         {
-            "appendage": "y", 
-            "continuation": true, 
-            "intact": false, 
-            "pattern": "ily", 
+            "appendage": "y",
+            "continuation": true,
+            "intact": false,
+            "pattern": "ily",
             "size": "3"
-        }, 
+        },
         {
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "ply", 
+            "continuation": false,
+            "intact": false,
+            "pattern": "ply",
             "size": "0"
-        }, 
+        },
         {
-            "continuation": true, 
-            "intact": false, 
-            "pattern": "ly", 
+            "continuation": true,
+            "intact": false,
+            "pattern": "ly",
             "size": "2"
-        }, 
+        },
         {
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "ogy", 
+            "continuation": false,
+            "intact": false,
+            "pattern": "ogy",
             "size": "1"
-        }, 
+        },
         {
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "phy", 
+            "continuation": false,
+            "intact": false,
+            "pattern": "phy",
             "size": "1"
-        }, 
+        },
         {
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "omy", 
+            "continuation": false,
+            "intact": false,
+            "pattern": "omy",
             "size": "1"
-        }, 
+        },
         {
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "opy", 
+            "continuation": false,
+            "intact": false,
+            "pattern": "opy",
             "size": "1"
-        }, 
+        },
         {
-            "continuation": true, 
-            "intact": false, 
-            "pattern": "ity", 
+            "continuation": true,
+            "intact": false,
+            "pattern": "ity",
             "size": "3"
-        }, 
+        },
         {
-            "continuation": true, 
-            "intact": false, 
-            "pattern": "ety", 
+            "continuation": true,
+            "intact": false,
+            "pattern": "ety",
             "size": "3"
-        }, 
+        },
         {
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "lty", 
+            "continuation": false,
+            "intact": false,
+            "pattern": "lty",
             "size": "2"
-        }, 
+        },
         {
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "istry", 
+            "continuation": false,
+            "intact": false,
+            "pattern": "istry",
             "size": "5"
-        }, 
+        },
         {
-            "continuation": true, 
-            "intact": false, 
-            "pattern": "ary", 
+            "continuation": true,
+            "intact": false,
+            "pattern": "ary",
             "size": "3"
-        }, 
+        },
         {
-            "continuation": true, 
-            "intact": false, 
-            "pattern": "ory", 
+            "continuation": true,
+            "intact": false,
+            "pattern": "ory",
             "size": "3"
-        }, 
+        },
         {
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "ify", 
+            "continuation": false,
+            "intact": false,
+            "pattern": "ify",
             "size": "3"
-        }, 
+        },
         {
-            "appendage": "t", 
-            "continuation": true, 
-            "intact": false, 
-            "pattern": "ncy", 
+            "appendage": "t",
+            "continuation": true,
+            "intact": false,
+            "pattern": "ncy",
             "size": "2"
-        }, 
+        },
         {
-            "continuation": true, 
-            "intact": false, 
-            "pattern": "acy", 
+            "continuation": true,
+            "intact": false,
+            "pattern": "acy",
             "size": "3"
         }
-    ], 
+    ],
     "z": [
         {
-            "continuation": true, 
-            "intact": false, 
-            "pattern": "iz", 
+            "continuation": true,
+            "intact": false,
+            "pattern": "iz",
             "size": "2"
-        }, 
+        },
         {
-            "appendage": "s", 
-            "continuation": false, 
-            "intact": false, 
-            "pattern": "yz", 
+            "appendage": "s",
+            "continuation": false,
+            "intact": false,
+            "pattern": "yz",
             "size": "1"
         }
     ]
@@ -3391,7 +3391,7 @@ RegexpTokenizer = function(options) {
 
     // Match and split on GAPS not the actual WORDS
     this._gaps = options.gaps;
-    
+
     if (this._gaps === undefined) {
         this._gaps = true;
     }
@@ -3418,7 +3418,7 @@ exports.RegexpTokenizer = RegexpTokenizer;
  *
  *      >>> WordTokenizer().tokenize("She said 'hello'.")
  *      ['She', 'said', 'hello']
- * 
+ *
  */
 WordTokenizer = function(options) {
     this._pattern = /\W+/;
@@ -3434,7 +3434,7 @@ exports.WordTokenizer = WordTokenizer;
  *
  *      >>> WordPunctTokenizer().tokenize("She said 'hello'.")
  *      ['She', 'said', "'", 'hello', "'."]
- * 
+ *
  */
 WordPunctTokenizer = function(options) {
     this._pattern = new RegExp(/(\w+|\!|\'|\"")/i);
@@ -4561,7 +4561,7 @@ TreebankWordTokenizer.prototype.tokenize = function(text) {
     contractions2.forEach(function(regexp) {
 	text = text.replace(regexp,"$1 $2");
     });
-    
+
     contractions3.forEach(function(regexp) {
 	text = text.replace(regexp,"$1 $2 $3");
     });
@@ -4577,8 +4577,8 @@ TreebankWordTokenizer.prototype.tokenize = function(text) {
 
     // periods before newline or end of string
     text = text.replace(/\. *(\n|$)/g, " . ");
-    
-    return  _.without(text.split(/\s+/), '');	
+
+    return  _.without(text.split(/\s+/), '');
 }
 
 module.exports = TreebankWordTokenizer;
@@ -4612,11 +4612,11 @@ var SingularPluralInflector = require('./singular_plural_inflector'),
 
 function attach() {
     var inflector = this;
-    
+
     String.prototype.singularizeNoun = function() {
         return inflector.singularize(this);
     }
-    
+
     String.prototype.pluralizeNoun = function() {
         return inflector.pluralize(this);
     }
@@ -4630,9 +4630,9 @@ var NounInflector = function() {
         'mackerel', 'mews', 'money', 'news', 'rice', 'rabies', 'salmon', 'series',
         'sheep', 'shrimp', 'species', 'swine', 'trout', 'tuna', 'whiting', 'wildebeest'
     ];
-    
+
     this.customPluralForms = [];
-    this.customSingularForms = [];    
+    this.customSingularForms = [];
     this.singularForms = new FormSet();
     this.pluralForms = new FormSet();
 
@@ -4647,15 +4647,15 @@ var NounInflector = function() {
     this.addIrregular("foot", "feet");
     this.addIrregular("tooth", "teeth");
     this.addIrregular("goose", "geese");
-    
+
     // see if it is possible to unify the creation of both the singular and
     // plural regexes or maybe even just have one list. with a complete list
-    // of rules it may only be possible for some regular forms, but worth a shot    
+    // of rules it may only be possible for some regular forms, but worth a shot
     this.pluralForms.regularForms.push([/y$/i, 'ies']);
     this.pluralForms.regularForms.push([/ife$/i, 'ives']);
-    this.pluralForms.regularForms.push([/(antenn|formul|nebul|vertebr|vit)a$/i, '$1ae']);    
-    this.pluralForms.regularForms.push([/(octop|vir|radi|nucle|fung|cact|stimul)us$/i, '$1i']);    
-    this.pluralForms.regularForms.push([/(buffal|tomat)o$/i, '$1oes']);    
+    this.pluralForms.regularForms.push([/(antenn|formul|nebul|vertebr|vit)a$/i, '$1ae']);
+    this.pluralForms.regularForms.push([/(octop|vir|radi|nucle|fung|cact|stimul)us$/i, '$1i']);
+    this.pluralForms.regularForms.push([/(buffal|tomat)o$/i, '$1oes']);
     this.pluralForms.regularForms.push([/(sis)$/i, 'ses']);
     this.pluralForms.regularForms.push([/(matr|vert|ind)(ix|ex)$/i, '$1ices']);
     this.pluralForms.regularForms.push([/(x|ch|ss|sh|s|z)$/i, '$1es']);
@@ -4675,18 +4675,18 @@ var NounInflector = function() {
     this.singularForms.regularForms.push([/(x|ch|ss|sh|s|z)es$/i, '$1']);
     this.singularForms.regularForms.push([/men$/i, 'man']);
     this.singularForms.regularForms.push([/s$/i, '']);
-    
+
     this.pluralize = function (token) {
         return this.ize(token, this.pluralForms, this.customPluralForms);
     };
-    
+
     this.singularize = function(token) {
         return this.ize(token, this.singularForms, this.customSingularForms);
     };
 };
 
 util.inherits(NounInflector, SingularPluralInflector);
-    
+
 module.exports = NounInflector;
 });
 
@@ -4716,7 +4716,7 @@ var TenseInflector = function () {
 };
 
 TenseInflector.prototype.addSingular = function(pattern, replacement) {
-    this.customSingularForms.push([pattern, replacement]);    
+    this.customSingularForms.push([pattern, replacement]);
 };
 
 TenseInflector.prototype.addPlural = function(pattern, replacement) {
@@ -4743,7 +4743,7 @@ TenseInflector.prototype.pluralize = function (token) {
 
 TenseInflector.prototype.singularize = function(token) {
     return this.ize(token, this.singularForms, this.customSingularForms);
-};    
+};
 
 var uppercaseify = function(token) {
     return token.toUpperCase();
@@ -4769,7 +4769,7 @@ TenseInflector.prototype.restoreCase = function(token) {
 
 TenseInflector.prototype.izeRegulars = function(token, formSet) {
     token = token.toLowerCase();
-    
+
     if(formSet.irregularForms[token])
         return formSet.irregularForms[token];
 
@@ -4791,11 +4791,11 @@ TenseInflector.prototype.izeRegExps = function(token, forms) {
         var i, form;
         for(i = 0; i < forms.length; i++) {
             form = forms[i];
-            
+
             if(token.match(form[0]))
                 return token.replace(form[0], form[1]);
         }
-        
+
         return false;
     }
 
@@ -4860,11 +4860,11 @@ var util = require('util'),
 
 function attach() {
     var inflector = this;
-    
+
     String.prototype.singularizePresentVerb = function() {
         return inflector.singularize(this);
     }
-    
+
     String.prototype.pluralizePresentVerb = function() {
         return inflector.pluralize(this);
     }
@@ -4874,21 +4874,21 @@ var VerbInflector = function() {
     this.ambiguous = [
         'will'
     ];
-    
+
     this.attach = attach;
-        
+
     this.customPluralForms = [];
-    this.customSingularForms = [];    
+    this.customSingularForms = [];
     this.singularForms = new FormSet();
     this.pluralForms = new FormSet();
 
-    this.addIrregular("am", "are");    
+    this.addIrregular("am", "are");
     this.addIrregular("is", "are");
     this.addIrregular("was", "were");
-    
+
     this.singularForms.regularForms.push([/ed$/i, 'ed']);
     this.singularForms.regularForms.push([/ss$/i, 'sses']);
-    this.singularForms.regularForms.push([/x$/i, 'xes']);    
+    this.singularForms.regularForms.push([/x$/i, 'xes']);
     this.singularForms.regularForms.push([/(h|z|o)$/i, '$1es']);
     this.singularForms.regularForms.push([/$zz/i, 'zzes']);
     this.singularForms.regularForms.push([/$/i, 's']);
@@ -4898,7 +4898,7 @@ var VerbInflector = function() {
     this.pluralForms.regularForms.push([/([cs])hes$/i, '$1h']);
     this.pluralForms.regularForms.push([/zzes$/i, 'zz']);
     this.pluralForms.regularForms.push([/([^h|z|o])es$/i, '$1e']);
-    this.pluralForms.regularForms.push([/e?s$/i, '']); 
+    this.pluralForms.regularForms.push([/e?s$/i, '']);
 };
 
 util.inherits(VerbInflector, SingularPluralInflector);
@@ -4940,7 +4940,7 @@ function nthForm(i) {
                 break;
             case 2:
                 return 'nd';
-                break;            
+                break;
             case 3:
                 return 'rd';
                 break;
@@ -4991,7 +4991,7 @@ var _ = require("underscore")._,
 
 function buildDocument(text, key) {
     var stopOut;
-    
+
     if(typeof text === 'string') {
         text = tokenizer.tokenize(text.toLowerCase());
         stopOut = true;
@@ -5003,7 +5003,7 @@ function buildDocument(text, key) {
     return text.reduce(function(document, term) {
         if(!stopOut || stopwords.indexOf(term) < 0)
             document[term] = (document[term] ? document[term] + 1 : 1);
-            
+
         return document;
     }, {__key: key});
 }
@@ -5030,7 +5030,7 @@ TfIdf.prototype.idf = function(term) {
     var docsWithTerm = this.documents.reduce(function(count, document) {
         return count + (documentHasTerm(term, document) ? 1 : 0);
     }, 1);
-        
+
     return Math.log(this.documents.length + 1 / docsWithTerm /* inited to 1 so
         no addition needed */);
 };
@@ -5042,17 +5042,17 @@ TfIdf.prototype.addDocument = function(document, key) {
 TfIdf.prototype.addFileSync = function(path, encoding, key) {
     if(encoding)
         encoding = 'UTF-8';
-        
+
     var document = fs.readFileSync(path, 'UTF-8');
     this.documents.push(buildDocument(document, key));
 };
 
 TfIdf.prototype.tfidf = function(terms, d) {
     var _this = this;
-    
+
     if(!_.isArray(terms))
         terms = tokenizer.tokenize(terms.toString().toLowerCase());
-    
+
     return terms.reduce(function(value, term) {
         return value + (tf(term, _this.documents[d]) * _this.idf(term));
     }, 0.0);
@@ -5070,10 +5070,10 @@ TfIdf.prototype.listTerms = function(d) {
 
 TfIdf.prototype.tfidfs = function(terms, callback) {
     var tfidfs = new Array(this.documents.length);
-    
+
     for(var i = 0; i < this.documents.length; i++) {
         tfidfs[i] = this.tfidf(terms, i);
-        
+
         if(callback)
             callback(i, tfidfs[i], this.documents[i].__key);
     }
@@ -5117,9 +5117,9 @@ var _ = require("underscore")._;
   - Type of Sentense
      - Interrogative
        - Tag Questions
-       - 
+       -
      - Declarative
-     - Exclamatory 
+     - Exclamatory
      - Imperative
 
   - Parts of a Sentense
@@ -5139,9 +5139,9 @@ Sentences.prototype.part = function(callback) {
     var subject = [],
 	predicat = [],
 	verbFound = false;
-	
+
     this.prepositionPhrases();
-	
+
     for (var i = 0; i < this.posObj.tags.length; i++) {
         if (this.posObj.tags[i].pos == "VB") {
             if (i === 0) {
@@ -5152,7 +5152,7 @@ Sentences.prototype.part = function(callback) {
                     verbFound = true;
                 } else {
                     predicat.push(this.posObj.tags[i].token);
-                }					
+                }
             }
         }
 
@@ -5160,21 +5160,21 @@ Sentences.prototype.part = function(callback) {
         if (!verbFound) {
             if (this.posObj.tags[i].pp != true)
                 this.posObj.tags[i].spos = "SP";
-            
+
             subject.push(this.posObj.tags[i].token);
         } else {
             if (this.posObj.tags[i].pp != true)
                 this.posObj.tags[i].spos = "PP";
-            
+
             predicat.push(this.posObj.tags[i].token)
         }
     }
-	
+
     if (subject.length == 0) {
 	this.posObj.tags.push({token:"You",spos:"SP",pos:"PRP",added:true});
     }
-    
-    callback(this);	
+
+    callback(this);
 }
 
 // Takes POS and removes IN to NN or NNS
@@ -5186,15 +5186,15 @@ Sentences.prototype.prepositionPhrases = function() {
         if (this.posObj.tags[i].pos.match("IN")) {
             remove = true;
         }
-    
+
         if (remove) {
             this.posObj.tags[i].pp = true;
         }
-    
+
         if (this.posObj.tags[i].pos.match("NN")) {
             remove = false;
         }
-    }	
+    }
 }
 
 Sentences.prototype.subjectToString = function() {
@@ -5211,7 +5211,7 @@ Sentences.prototype.implicitYou = function() {
             return true;
         }
     }
-    
+
     return false;
 }
 
@@ -5222,11 +5222,11 @@ Sentences.prototype.toString = function() {
 // This is quick and incomplete.
 Sentences.prototype.type = function(callback) {
     var callback = callback || false;
-	
+
     // FIXME - punct seems useless
     var lastElement = this.posObj.punct();
     lastElement = (lastElement.length != 0) ? lastElement.pop() : this.posObj.tags.pop();
-	
+
     if (lastElement.pos !== ".") {
         if (this.implicitYou()) {
             this.senType = "COMMAND";
@@ -5241,7 +5241,7 @@ Sentences.prototype.type = function(callback) {
         } else {
             this.senType = "UNKNOWN";
         }
-            
+
     } else {
         switch(lastElement.token) {
             case "?": this.senType = "INTERROGATIVE"; break;
@@ -5249,7 +5249,7 @@ Sentences.prototype.type = function(callback) {
             case ".": this.senType = (this.implicitYou()) ? "COMMAND":"DECLARATIVE";	break;
         }
     }
-    
+
     if (callback && _(callback).isFunction()) {
         callback(this);
     } else {
@@ -5300,17 +5300,17 @@ exports.trigrams = function(sequence) {
 
 var ngrams = function(sequence, n) {
     var result = [];
-    
+
     if (!_(sequence).isArray()) {
         sequence = tokenizer.tokenize(sequence);
     }
 
     var count = _.max([0, sequence.length - n + 1]);
-    
+
     for (var i = 0; i < count; i++) {
         result.push(sequence.slice(i, i + n));
     }
-    
+
     return result;
 }
 
@@ -5346,7 +5346,7 @@ THE SOFTWARE.
 // s2 is the second string to compare
 function distance(s1, s2) {
     if (typeof(s1) != "string" || typeof(s2) != "string") return 0;
-    if (s1.length == 0 || s2.length == 0) 
+    if (s1.length == 0 || s2.length == 0)
         return 0;
     s1 = s1.toLowerCase(), s2 = s2.toLowerCase();
     var matchWindow = (Math.floor(Math.max(s1.length, s2.length) / 2.0)) - 1;
@@ -5403,7 +5403,7 @@ function distance(s1, s2) {
     	    k++;
     	}
     }
-    
+
     //debug helpers:
     //console.log(" - matches: " + m);
     //console.log(" - transpositions: " + t);
@@ -5423,7 +5423,7 @@ function JaroWinklerDistance(s1, s2, dj) {
     var l = 0 // length of the matching prefix
     while(s1[l] == s2[l] && l < 4)
         l++;
-    
+
     return jaro + l * p * (1 - jaro);
 }
 module.exports = JaroWinklerDistance;

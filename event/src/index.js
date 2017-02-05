@@ -2,6 +2,9 @@ import {createStore} from 'redux';
 import RootReducer from './reducers/root_reducer';
 
 import {wrapStore} from 'react-chrome-redux';
+import * as natural from './natural';
+
+console.log(natural);
 
 
 const store = createStore(
@@ -12,9 +15,3 @@ const store = createStore(
 wrapStore(store, {
   portName: 'STOP_HARASSMENT'
 });
-
-// chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-//     chrome.tabs.sendMessage(tabId, {greeting: "hello"}, function(response) {
-//     console.log("in background");
-//     });
-// });

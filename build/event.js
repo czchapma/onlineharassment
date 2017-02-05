@@ -61,7 +61,15 @@
 
 	var _reactChromeRedux = __webpack_require__(20);
 
+	var _natural = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./natural\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+
+	var natural = _interopRequireWildcard(_natural);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	console.log(natural);
 
 	var store = (0, _redux.createStore)(_root_reducer2.default, {} //preloaded state
 	);
@@ -69,12 +77,6 @@
 	(0, _reactChromeRedux.wrapStore)(store, {
 	  portName: 'STOP_HARASSMENT'
 	});
-
-	// chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-	//     chrome.tabs.sendMessage(tabId, {greeting: "hello"}, function(response) {
-	//     console.log("in background");
-	//     });
-	// });
 
 /***/ },
 /* 2 */

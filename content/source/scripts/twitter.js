@@ -1,30 +1,7 @@
-
 import Jaro_Winkler from './jaro_winkler';
-// import {Tokenizer} from './natural';
 
-// function injectScript(file, node) {
-//   var th = document.getElementsByTagName(node)[0];
-//   var s = document.createElement('script');
-//   s.setAttribute('type', 'text/javascript');
-//   s.setAttribute('src', file);
-//   th.appendChild(s);
-// }
-// injectScript(chrome.extension.getURL('natural.js'), 'body');
-
-var s = document.createElement('script');
-s.src = chrome.extension.getURL('natural.js');
-s.onload = function() {
-  // console.log(this);
-    this.remove();
-};
-(document.head || document.documentElement).appendChild(s);
-
-// let tokenizer = natural.WordTokenizer;
-// console.log(tokenizer);
-// console.log(tokenizer.tokenize("your dog has fleas."));
-// setTimeout(() => console.log(natural), 2000);
-
-
+let tokenizer = new natural.WordTokenizer();
+console.log(tokenizer.tokenize("your dog has fleas."));
 
 //caching tweets
 let negative_tweet_ids = [];

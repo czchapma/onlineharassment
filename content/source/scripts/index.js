@@ -5,7 +5,6 @@ const proxyStore = new Store({
   portName: 'STOP_HARASSMENT'
 });
 
-
 const filter = function(){
   checkTwitterFilter(proxyStore);
   // commented out to prevent exceeding daily limit of express https server
