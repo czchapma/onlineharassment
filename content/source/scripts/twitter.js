@@ -1,8 +1,5 @@
 import Jaro_Winkler from './jaro_winkler';
 
-let tokenizer = new natural.WordTokenizer();
-console.log(tokenizer.tokenize("your dog has fleas."));
-
 //caching tweets
 let negative_tweet_ids = [];
 let positive_tweet_ids = [];

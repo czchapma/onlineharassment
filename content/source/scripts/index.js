@@ -1,6 +1,10 @@
 import {Store} from 'react-chrome-redux';
 import checkTwitterFilter from './twitter';
 
+
+let tokenizer = new natural.WordTokenizer();
+console.log(tokenizer.tokenize("your dog has fleas."));
+
 const proxyStore = new Store({
   portName: 'STOP_HARASSMENT'
 });
