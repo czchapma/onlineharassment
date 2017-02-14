@@ -19,7 +19,7 @@ const contains_misspelling = function(text_content, word) {
 }
 
 const checkYoutubeFilter = function(store) {
-  console.log('in youtube filter');
+  console.log('in youtube filter', window.location.href);
   let state = store.getState();
   let harmful_words = state.harmful_words;
   let filter_on = state.filter_on;
