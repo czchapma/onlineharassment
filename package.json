@@ -38,7 +38,8 @@
     "redux": "^3.6.0",
     "watson-developer-cloud": "^2.8.2",
     "webpack": "^1.13.2",
-    "wordnet-db": "^3.1.2"
+    "wordnet-db": "^3.1.2",
+    "youtube-comment-scraper": "^0.1.0"
   },
   "devDependencies": {
     "gulp": "^3.9.1",

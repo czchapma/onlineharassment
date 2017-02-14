@@ -24,9 +24,6 @@ const checkYoutubeFilter = function(store) {
   let harmful_words = state.harmful_words;
   let filter_on = state.filter_on;
 
-  // let element = document.getElementById('page').getElementsByClassName('comment-section-renderer-items')[0];
-  let element = document.querySelector('.comment-section-renderer-items');
-  console.log(element);
 };
 
   //if filter off, go through negative_tweet_ids to make them visible again
