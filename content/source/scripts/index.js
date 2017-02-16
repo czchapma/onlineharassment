@@ -11,8 +11,16 @@ const proxyStore = new Store({
 });
 
 const filter = function(){
-  checkTwitterFilter(proxyStore);
-  checkYoutubeFilter(proxyStore);
+  const url = window.location.href;
+  const youtube = /youtube\.com/;
+  const twitter = /twitter\.com/;
+  if (youtube.test(url)){
+    checkYoutubeFilter(proxyStore);
+  } else if (twitter.test(url)){
+    checkTwitterFilter(proxyStore);
+  } else {
+    console.log('error', url, youtube, twitter);
+  }
   // commented out to prevent exceeding daily limit of express https server
   // setInterval(filterOnType, 1000);
 }
