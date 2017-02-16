@@ -20,38 +20,54 @@ const contains_misspelling = function(text_content, word) {
   return misspelled;
 }
 
+function checkIsLoading() {
+  var isLoading = $('#watch-discussion').find('.action-panel-loading').length;
+  if (isLoading) {
+    setTimeout(function() {
+      checkIsLoading();
+    }, 500);
+  } else {
+    console.log("Comment section loaded.");
+
+    var commentSection = $('.comment-thread-renderer');
+    commentSection.each((index, comments) => {
+      var comments = $(comments);
+      var textContents = comments.find('.comment-renderer');
+      textContents.each((index, comment) => {
+        var comment1 = $(comment);
+        if (negative_comments.includes(comment1)){
+          comment1.css('display', 'none');
+          console.log(negative_comments, comment1);
+        // } else if (positive_comments.includes(comment)){
+        //   continue;
+        } else {
+          var commentText = comment1.find('.comment-renderer-text-content:first').text();
+          // console.log(commentText);
+          console.log('not already in negative _comments');
+          console.log(negative_comments);
+          if (commentText.includes('Jessie')){
+            negative_comments.push(comment1);
+            comment1.css('display', 'none');
+          }
+        }
+      })
+    })
+  }
+}
+
 const checkYoutubeFilter = function(store) {
   let state = store.getState();
   let harmful_words = state.harmful_words;
   let filter_on = state.filter_on;
 
-  function checkIsLoading() {
-		var isLoading = $('#watch-discussion').find('.action-panel-loading').length;
-    console.log(isLoading);
-		if (isLoading) {
-			setTimeout(function() {
-				checkIsLoading();
-			}, 500);
-		} else {
-			console.log("Comment section loaded.");
 
-      var commentSection = $('.comment-thread-renderer');
-      commentSection.each((index, comments) => {
-        var comments = $(comments);
-        var textContents = comments.find('.comment-renderer');
-        textContents.each((index, comment) => {
-          var comment = $(comment);
-          var commentText = comment.find('.comment-renderer-text-content:first').text();
-          console.log(commentText);
-          if (commentText.includes('Jessie')){
-            comment.css('display', 'none');
-          }
-        })
-      })
-		}
-	}
-
-  checkIsLoading();
+  if (!filter_on){
+    negative_comments.forEach(comment => {
+      comment.css('display', 'inline');
+    })
+  } else {
+    checkIsLoading();
+  }
   // setTimeout(() => {
   //   let comments = $(".comment-renderer");
   //   comments.push('test');
