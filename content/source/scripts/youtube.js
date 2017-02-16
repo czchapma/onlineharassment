@@ -20,16 +20,16 @@ const contains_misspelling = function(text_content, word) {
 }
 
 function checkIsLoading(harmful_words) {
-  const harmfulWords = harmful_words;
   let isLoading = document.getElementById('watch-discussion').getElementsByClassName('action-panel-loading').length;
   if (isLoading) {
     setTimeout(function() {
-      checkIsLoading();
+      checkIsLoading(harmful_words);
     }, 500);
   } else {
     console.log("Comment section loaded.");
     let comments = Array.from(document.getElementsByClassName('comment-renderer'));
     comments.forEach(comment => {
+      console.log(comment);
       if (negative_comments.includes(comment)){
         comment.style.display = 'none';
         console.log('in caching');
@@ -37,8 +37,8 @@ function checkIsLoading(harmful_words) {
       //   continue;
       } else {
         let textContent = comment.getElementsByClassName('comment-renderer-text-content')[0].innerHTML;
-        console.log(harmfulWords);
-        harmfulWords.forEach(word => {
+
+        harmful_words.forEach(word => {
           let regex = new RegExp(word, "gi");
 
           //if tweet contains harmful word
@@ -84,7 +84,6 @@ const checkYoutubeFilter = function(store) {
       comment.style.display = 'inline';
     })
   } else {
-    console.log(harmful_words);
     checkIsLoading(harmful_words);
   }
 };

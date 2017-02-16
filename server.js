@@ -32,6 +32,7 @@ app.post("/", function(req, res) {
     if (err) {
       console.log('error:', req.body);
     } else {
+      console.log(req.body);
       res.send({
             negative: response.docSentiment.type === 'negative',
             tweet_id: req.body.tweet_id
