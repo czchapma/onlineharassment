@@ -21,7 +21,6 @@ const contains_misspelling = function(text_content, word) {
 }
 
 function checkIsLoading() {
-  // var isLoading = $('#watch-discussion').find('.action-panel-loading').length;
   let isLoading = document.getElementById('watch-discussion').getElementsByClassName('action-panel-loading').length;
   if (isLoading) {
     setTimeout(function() {
@@ -29,30 +28,21 @@ function checkIsLoading() {
     }, 500);
   } else {
     console.log("Comment section loaded.");
-    let commentSection = document.getElementsByClassName('comment-thread-renderer');
-    // console.log(commentSection);
-    var commentSection = $('.comment-thread-renderer');
-    commentSection.each((index, comments) => {
-      var comments = $(comments);
-      var textContents = comments.find('.comment-renderer');
-      textContents.each((index, comment) => {
-        var comment1 = $(comment);
-        if (negative_comments.includes(comment1)){
-          comment1.css('display', 'none');
-          console.log(negative_comments, comment1);
-        // } else if (positive_comments.includes(comment)){
-        //   continue;
-        } else {
-          var commentText = comment1.find('.comment-renderer-text-content:first').text();
-          // console.log(commentText);
-          console.log('not already in negative _comments');
-          console.log(negative_comments);
-          if (commentText.includes('Jessie')){
-            negative_comments.push(comment1);
-            comment1.css('display', 'none');
-          }
+    let comments = Array.from(document.getElementsByClassName('comment-renderer'));
+    comments.forEach(comment => {
+      if (negative_comments.includes(comment)){
+        comment.style.display = 'none';
+        console.log('in caching');
+      // } else if (positive_comments.includes(comment)){
+      //   continue;
+      } else {
+        let text = comment.getElementsByClassName('comment-renderer-text-content')[0].innerHTML;
+        if (text.includes('Jessie')){
+          negative_comments.push(comment);
+          comment.style.display = 'none';
         }
-      })
+      }
+
     })
   }
 }
@@ -65,7 +55,7 @@ const checkYoutubeFilter = function(store) {
 
   if (!filter_on){
     negative_comments.forEach(comment => {
-      comment.css('display', 'inline');
+      comment.style.display = 'inline';
     })
   } else {
     checkIsLoading();
