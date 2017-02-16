@@ -17,6 +17,7 @@
       "matches": [
         "<all_urls>"
       ],
+      "run_at": "document_end",
       "js": ["natural.js", "content.js"]
     }
   ],

@@ -1,4 +1,6 @@
 import Jaro_Winkler from './jaro_winkler';
+import $ from 'jQuery';
+// import scraper from 'youtube-comment-scraper';
 
 //caching tweets
 let negative_comments = [];
@@ -19,11 +21,35 @@ const contains_misspelling = function(text_content, word) {
 }
 
 const checkYoutubeFilter = function(store) {
-  console.log('in youtube filter', window.location.href);
   let state = store.getState();
   let harmful_words = state.harmful_words;
   let filter_on = state.filter_on;
 
+  function checkIsLoading() {
+		var isLoading = $('#watch-discussion').find('.action-panel-loading').length;
+    console.log(isLoading);
+		if (isLoading) {
+			setTimeout(function() {
+				checkIsLoading();
+			}, 500);
+		} else {
+			console.log("Comment section loaded.");
+
+			var commentCount = $('.comment-thread-renderer').length;
+      var comments = $('.comment-renderer');
+      console.log(comments);
+		}
+	}
+
+  checkIsLoading();
+  // setTimeout(() => {
+  //   let comments = $(".comment-renderer");
+  //   comments.push('test');
+  //   comments.each(function(index, element){
+  //     var el = $(element);
+  //     console.log('inside each function');
+  //   })
+  // }, 3000);
 };
 
   //if filter off, go through negative_tweet_ids to make them visible again
