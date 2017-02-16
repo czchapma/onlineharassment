@@ -35,16 +35,18 @@ const checkYoutubeFilter = function(store) {
 		} else {
 			console.log("Comment section loaded.");
 
-			var commentCount = $('.comment-thread-renderer').length;
-      var comments = $('.comment-renderer');
-      console.log(comments);
-      comments.each((index, element) => {
-        var el = $(element);
-        var comment = el.find('.comment-renderer-text-content:first').text();
-        if (comment.includes('Brooke')){
-          el.css('display', 'none');
-        }
-        console.log(comment);
+      var commentSection = $('.comment-thread-renderer');
+      commentSection.each((index, comments) => {
+        var comments = $(comments);
+        var textContents = comments.find('.comment-renderer-text-content');
+        textContents.each((index, comment) => {
+          var comment = $(comment);
+          var commentText = comment.text();
+          console.log(commentText);
+          if (commentText.includes('Jessie')){
+            comment.css('display', 'none');
+          }
+        })
       })
 		}
 	}
