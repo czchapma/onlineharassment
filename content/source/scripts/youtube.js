@@ -1,5 +1,4 @@
 import Jaro_Winkler from './jaro_winkler';
-import $ from 'jQuery';
 // import scraper from 'youtube-comment-scraper';
 
 //caching tweets
@@ -20,7 +19,8 @@ const contains_misspelling = function(text_content, word) {
   return misspelled;
 }
 
-function checkIsLoading() {
+function checkIsLoading(harmful_words) {
+  const harmfulWords = harmful_words;
   let isLoading = document.getElementById('watch-discussion').getElementsByClassName('action-panel-loading').length;
   if (isLoading) {
     setTimeout(function() {
@@ -36,11 +36,37 @@ function checkIsLoading() {
       // } else if (positive_comments.includes(comment)){
       //   continue;
       } else {
-        let text = comment.getElementsByClassName('comment-renderer-text-content')[0].innerHTML;
-        if (text.includes('Jessie')){
-          negative_comments.push(comment);
-          comment.style.display = 'none';
-        }
+        let textContent = comment.getElementsByClassName('comment-renderer-text-content')[0].innerHTML;
+        console.log(harmfulWords);
+        harmfulWords.forEach(word => {
+          let regex = new RegExp(word, "gi");
+
+          //if tweet contains harmful word
+          if (regex.test(textContent) || contains_misspelling(textContent, word)) {
+            //hiding tweets if negative sentiment using xmlhttprequest
+            let xhr = new XMLHttpRequest();
+            let data = "text=" + textContent + "&tweet_id=" + comment;
+            xhr.open('POST', "https://localhost:3000/");
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onload = function() {
+              if (xhr.status == 200) {
+                let res = xhr.responseText;
+                let jsonResponse = JSON.parse(res);
+                if (jsonResponse.negative){
+                  negative_comments.push(jsonResponse.tweet_id);
+                  jsonResponse.tweet_id.style.display = 'none';
+                } else {
+                  positive_comments.push(jsonResponse.tweet_id);
+                }
+              }
+            };
+            xhr.send(data);
+          }
+        })
+        // if (text.includes('Jessie')){
+        //   negative_comments.push(comment);
+        //   comment.style.display = 'none';
+        // }
       }
 
     })
@@ -58,72 +84,9 @@ const checkYoutubeFilter = function(store) {
       comment.style.display = 'inline';
     })
   } else {
-    checkIsLoading();
+    console.log(harmful_words);
+    checkIsLoading(harmful_words);
   }
-  // setTimeout(() => {
-  //   let comments = $(".comment-renderer");
-  //   comments.push('test');
-  //   comments.each(function(index, element){
-  //     var el = $(element);
-  //     console.log('inside each function');
-  //   })
-  // }, 3000);
 };
-
-  //if filter off, go through negative_tweet_ids to make them visible again
-//   if (!filter_on){
-//     negative_tweet_ids.forEach(function(id){
-//       let unhide_tweet = document.querySelectorAll("[data-tweet-id=\"" + id + "\"]")[0];
-//       unhide_tweet.style = "inherit";
-//     })
-//   } else {
-//
-//     for (let i = 0; i < elements.length; i++) {
-//       let tweetElement = elements[i];
-//       let tweetId = tweetElement.getAttribute('data-tweet-id');
-//
-//       //if tweet already deemed negative, just hide, don't make ajax call
-//       if (negative_tweet_ids.includes(tweetId)){
-//         tweetElement.style.display = "none";
-//       //if tweet already deemed positive, skip to next iteration;
-//       } else if (positive_tweet_ids.includes(tweetId)) {
-//         continue;
-//       //make ajax call to see sentiment of tweet
-//       } else {
-//         let text = tweetElement.getElementsByClassName('tweet-text')[0];
-//         if (text) {
-//
-//           harmful_words.forEach(word => {
-//             let regex = new RegExp(word, "gi");
-//             let text_content = text.textContent;
-//
-//             //if tweet contains harmful word
-//             if (regex.test(text_content) || contains_misspelling(text_content, word)) {
-//               //hiding tweets if negative sentiment using xmlhttprequest
-//               let xhr = new XMLHttpRequest();
-//               let data = "text=" + text_content + "&tweet_id=" + tweetId;
-//               xhr.open('POST', "https://localhost:3000/");
-//               xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-//               xhr.onload = function() {
-//                 if (xhr.status == 200) {
-//                   let res = xhr.responseText;
-//                   let jsonResponse = JSON.parse(res);
-//                   if (jsonResponse.negative){
-//                     negative_tweet_ids.push(jsonResponse.tweet_id);
-//                     let badTweet = document.querySelectorAll("[data-tweet-id=\"" + jsonResponse.tweet_id + "\"]")[0];
-//                     badTweet.style.display = "none";
-//                   } else {
-//                     positive_tweet_ids.push(jsonResponse.tweet_id);
-//                   }
-//                 }
-//               };
-//               xhr.send(data);
-//             }
-//           })
-//         }
-//       }
-//     }
-//   }
-// }
 
 export default checkYoutubeFilter;

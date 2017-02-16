@@ -1,4 +1,4 @@
-const HarmfulWordsReducer = (state = ['pickles', 'rainbows', 'puppies'], action) => {
+const HarmfulWordsReducer = (state = ['pickles', 'rainbows', 'puppies', 'gay', 'frown'], action) => {
   switch(action.type){
     case 'ADD_WORD':
       return [...state, action.word];
