@@ -56,7 +56,7 @@ const checkTwitterFilter = function(store) {
             if (regex.test(text_content) || contains_misspelling(text_content, word)) {
               //hiding tweets if negative sentiment using xmlhttprequest
               let xhr = new XMLHttpRequest();
-              let data = "text=" + text_content + "&tweet_id=" + tweetId;
+              let data = "text=" + text_content + "&comment_id=" + tweetId;
               xhr.open('POST', "https://localhost:3000/");
               xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
               xhr.onload = function() {
@@ -64,11 +64,11 @@ const checkTwitterFilter = function(store) {
                   let res = xhr.responseText;
                   let jsonResponse = JSON.parse(res);
                   if (jsonResponse.negative){
-                    negative_tweet_ids.push(jsonResponse.tweet_id);
-                    let badTweet = document.querySelectorAll("[data-tweet-id=\"" + jsonResponse.tweet_id + "\"]")[0];
+                    negative_tweet_ids.push(jsonResponse.comment_id);
+                    let badTweet = document.querySelectorAll("[data-tweet-id=\"" + jsonResponse.comment_id + "\"]")[0];
                     badTweet.style.display = "none";
                   } else {
-                    positive_tweet_ids.push(jsonResponse.tweet_id);
+                    positive_tweet_ids.push(jsonResponse.comment_id);
                   }
                 }
               };

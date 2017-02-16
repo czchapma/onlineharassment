@@ -45,7 +45,7 @@ function checkIsLoading(harmful_words) {
           if (regex.test(textContent) || contains_misspelling(textContent, word)) {
             //hiding tweets if negative sentiment using xmlhttprequest
             let xhr = new XMLHttpRequest();
-            let data = "text=" + textContent + "&tweet_id=" + comment;
+            let data = "text=" + textContent + "&comment_id=" + comment;
             xhr.open('POST', "https://localhost:3000/");
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             xhr.onload = function() {
@@ -53,10 +53,10 @@ function checkIsLoading(harmful_words) {
                 let res = xhr.responseText;
                 let jsonResponse = JSON.parse(res);
                 if (jsonResponse.negative){
-                  negative_comments.push(jsonResponse.tweet_id);
-                  jsonResponse.tweet_id.style.display = 'none';
+                  negative_comments.push(jsonResponse.comment_id);
+                  jsonResponse.comment_id.style.display = 'none';
                 } else {
-                  positive_comments.push(jsonResponse.tweet_id);
+                  positive_comments.push(jsonResponse.comment_id);
                 }
               }
             };
