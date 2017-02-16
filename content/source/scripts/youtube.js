@@ -21,14 +21,16 @@ const contains_misspelling = function(text_content, word) {
 }
 
 function checkIsLoading() {
-  var isLoading = $('#watch-discussion').find('.action-panel-loading').length;
+  // var isLoading = $('#watch-discussion').find('.action-panel-loading').length;
+  let isLoading = document.getElementById('watch-discussion').getElementsByClassName('action-panel-loading').length;
   if (isLoading) {
     setTimeout(function() {
       checkIsLoading();
     }, 500);
   } else {
     console.log("Comment section loaded.");
-
+    let commentSection = document.getElementsByClassName('comment-thread-renderer');
+    // console.log(commentSection);
     var commentSection = $('.comment-thread-renderer');
     commentSection.each((index, comments) => {
       var comments = $(comments);
