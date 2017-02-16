@@ -38,6 +38,14 @@ const checkYoutubeFilter = function(store) {
 			var commentCount = $('.comment-thread-renderer').length;
       var comments = $('.comment-renderer');
       console.log(comments);
+      comments.each((index, element) => {
+        var el = $(element);
+        var comment = el.find('.comment-renderer-text-content:first').text();
+        if (comment.includes('Brooke')){
+          el.css('display', 'none');
+        }
+        console.log(comment);
+      })
 		}
 	}
 
