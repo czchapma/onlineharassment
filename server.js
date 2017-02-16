@@ -35,7 +35,7 @@ app.post("/", function(req, res) {
       console.log(req.body);
       res.send({
             negative: response.docSentiment.type === 'negative',
-            tweet_id: req.body.comment_id
+            comment_id: req.body.comment_id
           });
     };
   });

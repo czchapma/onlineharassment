@@ -29,10 +29,9 @@ function checkIsLoading(harmful_words) {
     console.log("Comment section loaded.");
     let comments = Array.from(document.getElementsByClassName('comment-renderer'));
     comments.forEach(comment => {
-      console.log(comment);
-      if (negative_comments.includes(comment)){
+      let commentId = comment.getAttribute('data-cid');
+      if (negative_comments.includes(commentId)){
         comment.style.display = 'none';
-        console.log('in caching');
       // } else if (positive_comments.includes(comment)){
       //   continue;
       } else {
@@ -45,7 +44,7 @@ function checkIsLoading(harmful_words) {
           if (regex.test(textContent) || contains_misspelling(textContent, word)) {
             //hiding tweets if negative sentiment using xmlhttprequest
             let xhr = new XMLHttpRequest();
-            let data = "text=" + textContent + "&comment_id=" + comment;
+            let data = "text=" + textContent + "&comment_id=" + commentId;
             xhr.open('POST', "https://localhost:3000/");
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             xhr.onload = function() {
@@ -54,7 +53,8 @@ function checkIsLoading(harmful_words) {
                 let jsonResponse = JSON.parse(res);
                 if (jsonResponse.negative){
                   negative_comments.push(jsonResponse.comment_id);
-                  jsonResponse.comment_id.style.display = 'none';
+                  let badComment = document.querySelectorAll("[data-cid=\"" + jsonResponse.comment_id + "\"]")[0];
+                  badComment.style.display = "none";
                 } else {
                   positive_comments.push(jsonResponse.comment_id);
                 }
@@ -63,10 +63,6 @@ function checkIsLoading(harmful_words) {
             xhr.send(data);
           }
         })
-        // if (text.includes('Jessie')){
-        //   negative_comments.push(comment);
-        //   comment.style.display = 'none';
-        // }
       }
 
     })
@@ -80,8 +76,9 @@ const checkYoutubeFilter = function(store) {
 
 
   if (!filter_on){
-    negative_comments.forEach(comment => {
-      comment.style.display = 'inline';
+    negative_comments.forEach(id => {
+      let commentToHide = document.querySelectorAll("[data-cid=\"" + id + "\"]");
+      commentToHide.style.display = 'none';
     })
   } else {
     checkIsLoading(harmful_words);
