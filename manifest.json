@@ -15,10 +15,9 @@
   "content_scripts": [
     {
       "matches": [
-        "*://www.youtube.com/*",
-        "*://www.twitter.com/*"
+        "*://www.youtube.com/watch*",
+        "*://twitter.com/*"
       ],
-      "run_at": "document_end",
       "js": ["natural.js", "content.js"]
     }
   ],
