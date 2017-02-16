@@ -38,10 +38,10 @@ const checkYoutubeFilter = function(store) {
       var commentSection = $('.comment-thread-renderer');
       commentSection.each((index, comments) => {
         var comments = $(comments);
-        var textContents = comments.find('.comment-renderer-text-content');
+        var textContents = comments.find('.comment-renderer');
         textContents.each((index, comment) => {
           var comment = $(comment);
-          var commentText = comment.text();
+          var commentText = comment.find('.comment-renderer-text-content:first').text();
           console.log(commentText);
           if (commentText.includes('Jessie')){
             comment.css('display', 'none');
