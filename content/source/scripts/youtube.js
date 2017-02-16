@@ -77,8 +77,8 @@ const checkYoutubeFilter = function(store) {
 
   if (!filter_on){
     negative_comments.forEach(id => {
-      let commentToHide = document.querySelectorAll("[data-cid=\"" + id + "\"]");
-      commentToHide.style.display = 'none';
+      let commentToHide = document.querySelectorAll("[data-cid=\"" + id + "\"]")[0];
+      commentToHide.style.display = 'inline';
     })
   } else {
     checkIsLoading(harmful_words);
