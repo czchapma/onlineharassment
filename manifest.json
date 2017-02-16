@@ -15,7 +15,8 @@
   "content_scripts": [
     {
       "matches": [
-        "<all_urls>"
+        "*://www.youtube.com/*",
+        "*://www.twitter.com/*"
       ],
       "run_at": "document_end",
       "js": ["natural.js", "content.js"]
