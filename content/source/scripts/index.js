@@ -18,9 +18,7 @@ const filter = function(){
     checkYoutubeFilter(proxyStore);
   } else if (twitter.test(url)){
     checkTwitterFilter(proxyStore);
-  } else {
-    console.log('error', url, youtube, twitter);
-  }
+  } 
   // commented out to prevent exceeding daily limit of express https server
   // setInterval(filterOnType, 1000);
 }

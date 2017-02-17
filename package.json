@@ -24,7 +24,6 @@
     "babel-preset-react": "^6.11.1",
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
-    "express-browserify": "^1.0.2",
     "jQuery": "^1.7.4",
     "natural": "^0.4.0",
     "react": "^15.3.2",
@@ -32,14 +31,11 @@
     "react-chrome-redux": "0.0.8",
     "react-dom": "^15.3.2",
     "react-link-state": "^0.1.2",
-    "react-native-button-component": "0.0.6",
     "react-redux": "^4.4.5",
     "react-toggle-switch": "git+https://github.com/littlef00t/react-toggle-switch.git",
     "redux": "^3.6.0",
     "watson-developer-cloud": "^2.8.2",
-    "webpack": "^1.13.2",
-    "wordnet-db": "^3.1.2",
-    "youtube-comment-scraper": "^0.1.0"
+    "webpack": "^1.13.2"
   },
   "devDependencies": {
     "gulp": "^3.9.1",

@@ -1,7 +1,5 @@
 import Jaro_Winkler from './jaro_winkler';
-// import scraper from 'youtube-comment-scraper';
 
-//caching tweets
 let negative_comments = [];
 let positive_comments = [];
 
@@ -19,11 +17,11 @@ const contains_misspelling = function(text_content, word) {
   return misspelled;
 }
 
-function checkIsLoading(harmful_words) {
+function checkCommentLoaded(harmful_words) {
   let isLoading = document.getElementById('watch-discussion').getElementsByClassName('action-panel-loading').length;
   if (isLoading) {
     setTimeout(function() {
-      checkIsLoading(harmful_words);
+      checkCommentLoaded(harmful_words);
     }, 500);
   } else {
     console.log("Comment section loaded.");
@@ -40,9 +38,7 @@ function checkIsLoading(harmful_words) {
         harmful_words.forEach(word => {
           let regex = new RegExp(word, "gi");
 
-          //if tweet contains harmful word
           if (regex.test(textContent) || contains_misspelling(textContent, word)) {
-            //hiding tweets if negative sentiment using xmlhttprequest
             let xhr = new XMLHttpRequest();
             let data = "text=" + textContent + "&comment_id=" + commentId;
             xhr.open('POST', "https://localhost:3000/");
@@ -81,7 +77,7 @@ const checkYoutubeFilter = function(store) {
       commentToHide.style.display = 'inline';
     })
   } else {
-    checkIsLoading(harmful_words);
+    checkCommentLoaded(harmful_words);
   }
 };
 
