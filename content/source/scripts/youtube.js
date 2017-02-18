@@ -51,8 +51,7 @@ function checkCommentLoaded(harmful_words) {
   }
 }
 
-const checkYoutubeFilter = function(store) {
-  let state = store.getState();
+const checkYoutubeFilter = function(state) {
   let harmful_words = state.harmful_words;
   let filter_on = state.filter_on;
 

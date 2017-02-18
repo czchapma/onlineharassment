@@ -14,11 +14,12 @@ const filter = function(){
   const url = window.location.href;
   const youtube = /youtube\.com/;
   const twitter = /twitter\.com/;
+  const state = proxyStore.getState();
   if (youtube.test(url)){
-    checkYoutubeFilter(proxyStore);
+    checkYoutubeFilter(state);
   } else if (twitter.test(url)){
-    checkTwitterFilter(proxyStore);
-  } 
+    checkTwitterFilter(state);
+  }
   // commented out to prevent exceeding daily limit of express https server
   // setInterval(filterOnType, 1000);
 }

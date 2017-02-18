@@ -3,8 +3,7 @@ import { contains_misspelling } from './jaro_winkler';
 const negative_tweet_ids = [];
 const positive_tweet_ids = [];
 
-const checkTwitterFilter = function(store) {
-  let state = store.getState();
+const checkTwitterFilter = function(state) {
   let harmful_words = state.harmful_words;
   let filter_on = state.filter_on;
 
