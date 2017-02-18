@@ -84,11 +84,16 @@ Jaro_Winkler.prototype.prefix = function(s1,s2) {
 	return 4;
 }
 
-// var jw = new Jaro_Winkler(0.7, 0.1);
-// console.log(jw.dist("martha", "marhta"));
-// console.log(jw.dist("jones", "johnson"));
-// console.log(jw.dist("ABCVWXYZ", "CABVWXYZ"));
-// console.log(jw.dist("hello world", "hello world"));
-// console.log(jw.dist("picklez", "pickles"));
+export const contains_misspelling = function(text_content, word) {
+  let jw = new Jaro_Winkler(0.7, 0.1);
+  let tweets = text_content.split(" ");
+  let misspelled = false;
 
-export default Jaro_Winkler;
+  tweets.forEach(tweet_word => {
+    if (jw.dist(tweet_word.toLowerCase(), word.toLowerCase()) >= .85) {
+      misspelled = true;
+    }
+  })
+
+  return misspelled;
+}

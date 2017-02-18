@@ -1,22 +1,7 @@
-import Jaro_Winkler from './jaro_winkler';
+import { contains_misspelling } from './jaro_winkler';
 
-//caching tweets
-let negative_tweet_ids = [];
-let positive_tweet_ids = [];
-
-const contains_misspelling = function(text_content, word) {
-  let jw = new Jaro_Winkler(0.7, 0.1);
-  let tweets = text_content.split(" ");
-  let misspelled = false;
-
-  tweets.forEach(tweet_word => {
-    if (jw.dist(tweet_word.toLowerCase(), word.toLowerCase()) >= .85) {
-      misspelled = true;
-    }
-  })
-
-  return misspelled;
-}
+const negative_tweet_ids = [];
+const positive_tweet_ids = [];
 
 const checkTwitterFilter = function(store) {
   let state = store.getState();

@@ -1,21 +1,7 @@
-import Jaro_Winkler from './jaro_winkler';
+import { contains_misspelling } from './jaro_winkler';
 
-let negative_comments = [];
-let positive_comments = [];
-
-const contains_misspelling = function(text_content, word) {
-  let jw = new Jaro_Winkler(0.7, 0.1);
-  let words = text_content.split(" ");
-  let misspelled = false;
-
-  words.forEach(tweet_word => {
-    if (jw.dist(tweet_word.toLowerCase(), word.toLowerCase()) >= .85) {
-      misspelled = true;
-    }
-  })
-
-  return misspelled;
-}
+const negative_comments = [];
+const positive_comments = [];
 
 function checkCommentLoaded(harmful_words) {
   let isLoading = document.getElementById('watch-discussion').getElementsByClassName('action-panel-loading').length;
