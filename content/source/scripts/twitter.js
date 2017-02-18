@@ -4,8 +4,8 @@ const negative_tweet_ids = [];
 const positive_tweet_ids = [];
 
 const checkTwitterFilter = function(state) {
-  let harmful_words = state.harmful_words;
-  let filter_on = state.filter_on;
+  const harmful_words = state.harmful_words;
+  const filter_on = state.filter_on;
 
   let elements = document.getElementsByClassName('tweet');
 

@@ -3,11 +3,11 @@ import { contains_misspelling } from './jaro_winkler';
 const negative_comments = [];
 const positive_comments = [];
 
-function checkCommentLoaded(harmful_words) {
+function checkCommentsLoaded(harmful_words) {
   let isLoading = document.getElementById('watch-discussion').getElementsByClassName('action-panel-loading').length;
   if (isLoading) {
     setTimeout(function() {
-      checkCommentLoaded(harmful_words);
+      checkCommentsLoaded(harmful_words);
     }, 500);
   } else {
     console.log("Comment section loaded.");
@@ -16,8 +16,9 @@ function checkCommentLoaded(harmful_words) {
       let commentId = comment.getAttribute('data-cid');
       if (negative_comments.includes(commentId)){
         comment.style.display = 'none';
-      // } else if (positive_comments.includes(comment)){
-      //   continue;
+      } else if (positive_comments.includes(commentId)){
+        //need to figure out 'continue' error
+        console.log('already deemed positive, continue...');
       } else {
         let textContent = comment.getElementsByClassName('comment-renderer-text-content')[0].innerHTML;
 
@@ -52,9 +53,8 @@ function checkCommentLoaded(harmful_words) {
 }
 
 const checkYoutubeFilter = function(state) {
-  let harmful_words = state.harmful_words;
-  let filter_on = state.filter_on;
-
+  const harmful_words = state.harmful_words;
+  const filter_on = state.filter_on;
 
   if (!filter_on){
     negative_comments.forEach(id => {
@@ -62,7 +62,7 @@ const checkYoutubeFilter = function(state) {
       commentToHide.style.display = 'inline';
     })
   } else {
-    checkCommentLoaded(harmful_words);
+    checkCommentsLoaded(harmful_words);
   }
 };
 
