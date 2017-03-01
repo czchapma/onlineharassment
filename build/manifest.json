@@ -16,7 +16,8 @@
     {
       "matches": [
         "*://www.youtube.com/watch*",
-        "*://twitter.com/*"
+        "*://twitter.com/*",
+        "*://www.facebook.com/*"
       ],
       "js": ["natural.js", "content.js"]
     }
