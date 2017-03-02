@@ -30,12 +30,13 @@ app.post("/", function(req, res) {
   });
   alchemy_language.sentiment(req.body, function(err, response){
     if (err) {
-      console.log('error:', req.body);
+      console.log('error:', err);
     } else {
       console.log(req.body);
       res.send({
             negative: response.docSentiment.type === 'negative',
-            comment_id: req.body.comment_id
+            comment_id: req.body.comment_id,
+            username: req.body.username
           });
     };
   });

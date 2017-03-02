@@ -33,6 +33,7 @@ const checkTwitterFilter = function(state) {
     for (let i = 0; i < elements.length; i++) {
       let tweetElement = elements[i];
       let tweetId = tweetElement.getAttribute('data-tweet-id');
+      let screenName = tweetElement.getAttribute('data-screen-name');
 
       //if tweet already deemed negative, just hide, don't make ajax call
       if (negative_tweet_ids.includes(tweetId)){
@@ -53,7 +54,7 @@ const checkTwitterFilter = function(state) {
             if (regex.test(text_content) || contains_misspelling(text_content, word)) {
               //hiding tweets if negative sentiment using xmlhttprequest
               let xhr = new XMLHttpRequest();
-              let data = "text=" + text_content + "&comment_id=" + tweetId;
+              let data = "text=" + text_content + "&comment_id=" + tweetId + "&username=" + screenName;
               xhr.open('POST', "https://localhost:3000/");
               xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
               xhr.onload = function() {
@@ -61,9 +62,11 @@ const checkTwitterFilter = function(state) {
                   let res = xhr.responseText;
                   let jsonResponse = JSON.parse(res);
                   if (jsonResponse.negative){
+                    console.log('negative');
                     negative_tweet_ids.push(jsonResponse.comment_id);
                     let badTweet = document.querySelectorAll("[data-tweet-id=\"" + jsonResponse.comment_id + "\"]")[0];
                     badTweet.style.display = "none";
+                    checkForAbuse(jsonResponse.username);
                   } else {
                     positive_tweet_ids.push(jsonResponse.comment_id);
                   }
