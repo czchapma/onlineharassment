@@ -3,6 +3,19 @@ import { contains_misspelling } from './jaro_winkler';
 const negative_tweet_ids = [];
 const positive_tweet_ids = [];
 
+const users = {};
+
+const checkForAbuse = function(username){
+  if (users[username]){
+    users[username] += 1;
+    if (users[username] === 5) {
+      alert('${username} has 5 negative tweets. Report user?');
+    }
+  } else {
+    users[username] = 1;
+  }
+}
+
 const checkTwitterFilter = function(state) {
   const harmful_words = state.harmful_words;
   const filter_on = state.filter_on;
