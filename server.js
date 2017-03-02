@@ -30,7 +30,7 @@ app.post("/", function(req, res) {
   });
   alchemy_language.sentiment(req.body, function(err, response){
     if (err) {
-      console.log('error:', err);
+      console.log('error:', req.body);
     } else {
       console.log(req.body);
       res.send({

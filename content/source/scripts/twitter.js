@@ -1,6 +1,6 @@
 import { contains_misspelling } from './jaro_winkler';
 
-const negative_tweet_ids = [];
+const negative_tweet_ids = ['825838202011291648', '818995631326777344', '818629213481598977'];
 const positive_tweet_ids = [];
 
 const users = {};
@@ -25,7 +25,7 @@ const checkTwitterFilter = function(state) {
   //if filter off, go through negative_tweet_ids to make them visible again
   if (!filter_on){
     negative_tweet_ids.forEach(function(id){
-      let unhide_tweet = document.querySelectorAll("[data-tweet-id=\"" + id + "\"]")[0];
+      let unhide_tweet = document.querySelectorAll(`[data-tweet-id="${id}"]`)[0];
       unhide_tweet.style = "inherit";
     })
   } else {
@@ -54,7 +54,8 @@ const checkTwitterFilter = function(state) {
             if (regex.test(text_content) || contains_misspelling(text_content, word)) {
               //hiding tweets if negative sentiment using xmlhttprequest
               let xhr = new XMLHttpRequest();
-              let data = "text=" + text_content + "&comment_id=" + tweetId + "&username=" + screenName;
+              // let data = "text=" + text_content + "&comment_id=" + tweetId + "&username=" + screenName;
+              let data = `text=${text_content}&comment_id=${tweetId}&username=${screenName}`;
               xhr.open('POST', "https://localhost:3000/");
               xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
               xhr.onload = function() {
@@ -62,9 +63,8 @@ const checkTwitterFilter = function(state) {
                   let res = xhr.responseText;
                   let jsonResponse = JSON.parse(res);
                   if (jsonResponse.negative){
-                    console.log('negative');
                     negative_tweet_ids.push(jsonResponse.comment_id);
-                    let badTweet = document.querySelectorAll("[data-tweet-id=\"" + jsonResponse.comment_id + "\"]")[0];
+                    let badTweet = document.querySelectorAll(`[data-tweet-id="${jsonResponse.comment_id}"]`)[0];
                     badTweet.style.display = "none";
                     checkForAbuse(jsonResponse.username);
                   } else {
