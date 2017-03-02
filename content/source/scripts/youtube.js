@@ -27,7 +27,7 @@ function checkCommentsLoaded(harmful_words) {
 
           if (regex.test(textContent) || contains_misspelling(textContent, word)) {
             let xhr = new XMLHttpRequest();
-            let data = "text=" + textContent + "&comment_id=" + commentId;
+            let data = `text=${textContent}&comment_id=${commentId}&username=""`;
             xhr.open('POST', "https://localhost:3000/");
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             xhr.onload = function() {
@@ -35,10 +35,12 @@ function checkCommentsLoaded(harmful_words) {
                 let res = xhr.responseText;
                 let jsonResponse = JSON.parse(res);
                 if (jsonResponse.negative){
+                  console.log('negative');
                   negative_comments.push(jsonResponse.comment_id);
-                  let badComment = document.querySelectorAll("[data-cid=\"" + jsonResponse.comment_id + "\"]")[0];
+                  let badComment = document.querySelectorAll(`[data-cid="${jsonResponse.comment_id}"]`)[0];
                   badComment.style.display = "none";
                 } else {
+                  console.log('positive');
                   positive_comments.push(jsonResponse.comment_id);
                 }
               }
@@ -58,7 +60,7 @@ const checkYoutubeFilter = function(state) {
 
   if (!filter_on){
     negative_comments.forEach(id => {
-      let commentToHide = document.querySelectorAll("[data-cid=\"" + id + "\"]")[0];
+      let commentToHide = document.querySelectorAll(`[data-cid="${id}"]`)[0];
       commentToHide.style.display = 'inline';
     })
   } else {
