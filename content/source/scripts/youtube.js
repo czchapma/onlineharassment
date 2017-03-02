@@ -35,12 +35,10 @@ function checkCommentsLoaded(harmful_words) {
                 let res = xhr.responseText;
                 let jsonResponse = JSON.parse(res);
                 if (jsonResponse.negative){
-                  console.log('negative');
                   negative_comments.push(jsonResponse.comment_id);
                   let badComment = document.querySelectorAll(`[data-cid="${jsonResponse.comment_id}"]`)[0];
                   badComment.style.display = "none";
                 } else {
-                  console.log('positive');
                   positive_comments.push(jsonResponse.comment_id);
                 }
               }
