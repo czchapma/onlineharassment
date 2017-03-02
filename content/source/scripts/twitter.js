@@ -1,6 +1,6 @@
 import { contains_misspelling } from './jaro_winkler';
 
-const negative_tweet_ids = ['825838202011291648', '818995631326777344', '818629213481598977'];
+const negative_tweet_ids = [];
 const positive_tweet_ids = [];
 
 const users = {};
@@ -9,7 +9,7 @@ const checkForAbuse = function(username){
   if (users[username]){
     users[username] += 1;
     if (users[username] === 5) {
-      alert('${username} has 5 negative tweets. Report user?');
+      console.log(`${username} has 5 negative tweets. Report user?`);
     }
   } else {
     users[username] = 1;
