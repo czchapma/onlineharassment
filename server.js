@@ -4,7 +4,6 @@ var bodyParser = require('body-parser');
 var fs = require('fs');
 
 var https = require('https');
-// var AlchemyLanguageV1 = require('watson-developer-cloud/alchemy-language/v1');
 var NaturalLanguageUnderstandingV1 = require('watson-developer-cloud/natural-language-understanding/v1.js');
 
 var nlu = new NaturalLanguageUnderstandingV1({
@@ -32,31 +31,20 @@ app.get('/', function (req, res) {
 });
 
 app.post("/", function(req, res) {
-  // let alchemy_language = new AlchemyLanguageV1({
-  //   api_key: '83673f180f59d9674eb6a6fccf661aede35e6ae1'
-  // });
-  // alchemy_language.sentiment(req.body, function(err, response){
-  //   if (err) {
-  //     console.log('error:', req.body);
-  //   } else {
-  //     console.log(req.body);
-  //     res.send({
-  //           negative: response.docSentiment.type === 'negative',
-  //           comment_id: req.body.comment_id,
-  //           username: req.body.username
-  //         });
-  //   };
-  // });
   nlu.analyze({
-  'text': file_data, // Buffer or String
-  'features': {
-    'concepts': {},
-    'keywords': {},
-  }
-}, function(err, response) {
-     if (err)
-       console.log('error:', err);
-     else
-       console.log(JSON.stringify(response, null, 2));
- });
+    'text': req.body.text,
+    'features': {
+      'sentiment': {},
+    }
+  }, function(err, response){
+    if (err) {
+      console.log('error', err);
+    } else {
+      res.send({
+        negative: response.sentiment.document.label === 'negative',
+        comment_id: req.body.comment_id,
+        username: req.body.username
+      })
+    }
+  })
 });
