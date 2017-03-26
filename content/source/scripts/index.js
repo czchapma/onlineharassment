@@ -18,7 +18,9 @@ const filter = function(){
   } else if (twitter.test(url)){
     checkTwitterFilter(state);
   } else if (facebook.test(url)){
-    checkFacebookFilter(state);
+    setTimeout(
+      checkFacebookFilter(state), 1000
+    );
   }
   // commented out to prevent exceeding daily limit of express https server
   // setInterval(filterOnType, 1000);
