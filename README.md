@@ -8,6 +8,9 @@ their place.
 
 The problem is the harassing content, not the users, so the solution needs to lie in the content itself.
 
+## Demo video
+https://www.youtube.com/watch?v=d6UqXjn9Cd0
+
 ## Current Status
 * Basic UI for the Chrome Extension that allows users to put words in their blacklist and choose whether they're filtering out or not
 * Integration with Watson's API to analyze the sentiment of words and remove posts containing harassing uses of the word
